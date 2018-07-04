@@ -20,4 +20,5 @@ def create_app(configfile=None):
 
     return app
 
-create_app().run()
+if __name__ == "__main__":
+    create_app().run(port=os.environ['PORT'], host='0.0.0.0')
