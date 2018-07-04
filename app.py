@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, g
 from flask_appconfig import HerokuConfig
 from flask_bootstrap import Bootstrap
