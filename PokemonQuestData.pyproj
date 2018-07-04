@@ -5,13 +5,13 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{8bd65e2f-3acc-4771-8da5-03bf7fb0791c}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>app.py</StartupFile>
+    <StartupFile>app_local.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <InterpreterId />
+    <InterpreterId>Global|PythonCore|3.6</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
@@ -20,6 +20,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="requirements.txt" />
+    <Content Include="runtime.txt" />
     <Content Include="static\html5shiv.min.js" />
     <Content Include="static\Icon\1.png" />
     <Content Include="static\Icon\10.png" />
@@ -194,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="app.py" />
+    <Compile Include="app_local.py" />
     <Compile Include="default_config.py" />
     <Compile Include="forms.py" />
     <Compile Include="frontend.py" />
@@ -205,6 +207,9 @@
     <Folder Include="static\Item" />
     <Folder Include="static\Pot" />
     <Folder Include="templates" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.6" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
