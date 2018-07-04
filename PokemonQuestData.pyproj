@@ -1,0 +1,210 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8bd65e2f-3acc-4771-8da5-03bf7fb0791c}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>app.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="requirements.txt" />
+    <Content Include="static\html5shiv.min.js" />
+    <Content Include="static\Icon\1.png" />
+    <Content Include="static\Icon\10.png" />
+    <Content Include="static\Icon\100.png" />
+    <Content Include="static\Icon\101.png" />
+    <Content Include="static\Icon\102.png" />
+    <Content Include="static\Icon\103.png" />
+    <Content Include="static\Icon\104.png" />
+    <Content Include="static\Icon\105.png" />
+    <Content Include="static\Icon\106.png" />
+    <Content Include="static\Icon\107.png" />
+    <Content Include="static\Icon\108.png" />
+    <Content Include="static\Icon\109.png" />
+    <Content Include="static\Icon\11.png" />
+    <Content Include="static\Icon\110.png" />
+    <Content Include="static\Icon\111.png" />
+    <Content Include="static\Icon\112.png" />
+    <Content Include="static\Icon\113.png" />
+    <Content Include="static\Icon\114.png" />
+    <Content Include="static\Icon\115.png" />
+    <Content Include="static\Icon\116.png" />
+    <Content Include="static\Icon\117.png" />
+    <Content Include="static\Icon\118.png" />
+    <Content Include="static\Icon\119.png" />
+    <Content Include="static\Icon\12.png" />
+    <Content Include="static\Icon\120.png" />
+    <Content Include="static\Icon\121.png" />
+    <Content Include="static\Icon\122.png" />
+    <Content Include="static\Icon\123.png" />
+    <Content Include="static\Icon\124.png" />
+    <Content Include="static\Icon\125.png" />
+    <Content Include="static\Icon\126.png" />
+    <Content Include="static\Icon\127.png" />
+    <Content Include="static\Icon\128.png" />
+    <Content Include="static\Icon\129.png" />
+    <Content Include="static\Icon\13.png" />
+    <Content Include="static\Icon\130.png" />
+    <Content Include="static\Icon\131.png" />
+    <Content Include="static\Icon\132.png" />
+    <Content Include="static\Icon\133.png" />
+    <Content Include="static\Icon\134.png" />
+    <Content Include="static\Icon\135.png" />
+    <Content Include="static\Icon\136.png" />
+    <Content Include="static\Icon\137.png" />
+    <Content Include="static\Icon\138.png" />
+    <Content Include="static\Icon\139.png" />
+    <Content Include="static\Icon\14.png" />
+    <Content Include="static\Icon\140.png" />
+    <Content Include="static\Icon\141.png" />
+    <Content Include="static\Icon\142.png" />
+    <Content Include="static\Icon\143.png" />
+    <Content Include="static\Icon\144.png" />
+    <Content Include="static\Icon\145.png" />
+    <Content Include="static\Icon\146.png" />
+    <Content Include="static\Icon\147.png" />
+    <Content Include="static\Icon\148.png" />
+    <Content Include="static\Icon\149.png" />
+    <Content Include="static\Icon\15.png" />
+    <Content Include="static\Icon\150.png" />
+    <Content Include="static\Icon\151.png" />
+    <Content Include="static\Icon\16.png" />
+    <Content Include="static\Icon\17.png" />
+    <Content Include="static\Icon\18.png" />
+    <Content Include="static\Icon\19.png" />
+    <Content Include="static\Icon\2.png" />
+    <Content Include="static\Icon\20.png" />
+    <Content Include="static\Icon\21.png" />
+    <Content Include="static\Icon\22.png" />
+    <Content Include="static\Icon\23.png" />
+    <Content Include="static\Icon\24.png" />
+    <Content Include="static\Icon\25.png" />
+    <Content Include="static\Icon\26.png" />
+    <Content Include="static\Icon\27.png" />
+    <Content Include="static\Icon\28.png" />
+    <Content Include="static\Icon\29.png" />
+    <Content Include="static\Icon\3.png" />
+    <Content Include="static\Icon\30.png" />
+    <Content Include="static\Icon\31.png" />
+    <Content Include="static\Icon\32.png" />
+    <Content Include="static\Icon\33.png" />
+    <Content Include="static\Icon\34.png" />
+    <Content Include="static\Icon\35.png" />
+    <Content Include="static\Icon\36.png" />
+    <Content Include="static\Icon\37.png" />
+    <Content Include="static\Icon\38.png" />
+    <Content Include="static\Icon\39.png" />
+    <Content Include="static\Icon\4.png" />
+    <Content Include="static\Icon\40.png" />
+    <Content Include="static\Icon\41.png" />
+    <Content Include="static\Icon\42.png" />
+    <Content Include="static\Icon\43.png" />
+    <Content Include="static\Icon\44.png" />
+    <Content Include="static\Icon\45.png" />
+    <Content Include="static\Icon\46.png" />
+    <Content Include="static\Icon\47.png" />
+    <Content Include="static\Icon\48.png" />
+    <Content Include="static\Icon\49.png" />
+    <Content Include="static\Icon\5.png" />
+    <Content Include="static\Icon\50.png" />
+    <Content Include="static\Icon\51.png" />
+    <Content Include="static\Icon\52.png" />
+    <Content Include="static\Icon\53.png" />
+    <Content Include="static\Icon\54.png" />
+    <Content Include="static\Icon\55.png" />
+    <Content Include="static\Icon\56.png" />
+    <Content Include="static\Icon\57.png" />
+    <Content Include="static\Icon\58.png" />
+    <Content Include="static\Icon\59.png" />
+    <Content Include="static\Icon\6.png" />
+    <Content Include="static\Icon\60.png" />
+    <Content Include="static\Icon\61.png" />
+    <Content Include="static\Icon\62.png" />
+    <Content Include="static\Icon\63.png" />
+    <Content Include="static\Icon\64.png" />
+    <Content Include="static\Icon\65.png" />
+    <Content Include="static\Icon\66.png" />
+    <Content Include="static\Icon\67.png" />
+    <Content Include="static\Icon\68.png" />
+    <Content Include="static\Icon\69.png" />
+    <Content Include="static\Icon\7.png" />
+    <Content Include="static\Icon\70.png" />
+    <Content Include="static\Icon\71.png" />
+    <Content Include="static\Icon\72.png" />
+    <Content Include="static\Icon\73.png" />
+    <Content Include="static\Icon\74.png" />
+    <Content Include="static\Icon\75.png" />
+    <Content Include="static\Icon\76.png" />
+    <Content Include="static\Icon\77.png" />
+    <Content Include="static\Icon\78.png" />
+    <Content Include="static\Icon\79.png" />
+    <Content Include="static\Icon\8.png" />
+    <Content Include="static\Icon\80.png" />
+    <Content Include="static\Icon\81.png" />
+    <Content Include="static\Icon\82.png" />
+    <Content Include="static\Icon\83.png" />
+    <Content Include="static\Icon\84.png" />
+    <Content Include="static\Icon\85.png" />
+    <Content Include="static\Icon\86.png" />
+    <Content Include="static\Icon\87.png" />
+    <Content Include="static\Icon\88.png" />
+    <Content Include="static\Icon\89.png" />
+    <Content Include="static\Icon\9.png" />
+    <Content Include="static\Icon\90.png" />
+    <Content Include="static\Icon\91.png" />
+    <Content Include="static\Icon\92.png" />
+    <Content Include="static\Icon\93.png" />
+    <Content Include="static\Icon\94.png" />
+    <Content Include="static\Icon\95.png" />
+    <Content Include="static\Icon\96.png" />
+    <Content Include="static\Icon\97.png" />
+    <Content Include="static\Icon\98.png" />
+    <Content Include="static\Icon\99.png" />
+    <Content Include="static\Item\B1.png" />
+    <Content Include="static\Item\B2.png" />
+    <Content Include="static\Item\G1.png" />
+    <Content Include="static\Item\G2.png" />
+    <Content Include="static\Item\Mystic.png" />
+    <Content Include="static\Item\R1.png" />
+    <Content Include="static\Item\R2.png" />
+    <Content Include="static\Item\Rainbow.png" />
+    <Content Include="static\Item\Y1.png" />
+    <Content Include="static\Item\Y2.png" />
+    <Content Include="static\Pot\1.png" />
+    <Content Include="static\Pot\2.png" />
+    <Content Include="static\Pot\3.png" />
+    <Content Include="static\Pot\4.png" />
+    <Content Include="static\respond.min.js" />
+    <Content Include="static\sample-app.css" />
+    <Content Include="templates\base.html" />
+    <Content Include="templates\index.html" />
+    <Content Include="templates\signup.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="app.py" />
+    <Compile Include="default_config.py" />
+    <Compile Include="forms.py" />
+    <Compile Include="frontend.py" />
+    <Compile Include="nav.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="static" />
+    <Folder Include="static\Icon" />
+    <Folder Include="static\Item" />
+    <Folder Include="static\Pot" />
+    <Folder Include="templates" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
