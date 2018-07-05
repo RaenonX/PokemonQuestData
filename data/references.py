@@ -1,0 +1,21 @@
+import ex
+
+class PokeType(ex.EnumWithName):
+    BUG = 0, "蟲"
+    DRAGON = 1, "龍"
+    FAIRY = 2, "妖精"
+    FIRE = 3, "火"
+    GHOST = 4, "幽靈"
+    GROUND = 5, "地面"
+    NORMAL = 6, "一般"
+    PSYCHIC = 7, "超能力"
+    STEEL = 8, "鋼"
+    DARK = 9, "惡"
+    ELECTRIC = 10, "電"
+    FIGHTING = 11, "格鬥"
+    FLYING = 12, "飛行"
+    GRASS = 13, "草"
+    ICE = 14, "冰"
+    POISON = 15, "毒"
+    ROCK = 16, "岩石"
+    WATER = 17, "水"

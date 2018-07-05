@@ -4,3 +4,4 @@ flask-nav
 Flask-WTF
 Flask
 pymongo
+dnspython

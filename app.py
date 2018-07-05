@@ -1,11 +1,10 @@
 import os
 
-from flask import Flask, g
+from flask import Flask
 from flask_appconfig import HerokuConfig
 from flask_bootstrap import Bootstrap
 
-from frontend import frontend
-from nav import nav
+import blueprints
 
 def create_app(configfile=None):
     app = Flask(__name__)
@@ -13,14 +12,18 @@ def create_app(configfile=None):
     HerokuConfig(app, configfile)
     
     Bootstrap(app)
+    
+    app.register_blueprint(blueprints.err)
+    app.register_blueprint(blueprints.frontend)
 
-    app.register_blueprint(frontend)
+    app.secret_key = os.urandom(24)
 
-    app.config['BOOTSTRAP_SERVE_LOCAL'] = True
+    app.config["BOOTSTRAP_SERVE_LOCAL"] = True
 
-    nav.init_app(app)
+    blueprints.nav.init_app(app)
 
     return app
 
 if __name__ == "__main__":
-    create_app().run(port=os.environ['PORT'], host='0.0.0.0')
+    app = create_app()
+    app.run(port=os.environ["PORT"], host="0.0.0.0")

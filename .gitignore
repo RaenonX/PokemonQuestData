@@ -260,3 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 /app_local.py
+/sandbox.py
