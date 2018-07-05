@@ -188,25 +188,51 @@
     <Content Include="static\Pot\3.png" />
     <Content Include="static\Pot\4.png" />
     <Content Include="static\respond.min.js" />
-    <Content Include="static\sample-app.css" />
+    <Content Include="static\main.css" />
     <Content Include="templates\base.html" />
+    <Content Include="templates\error\404.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="templates\index.html" />
+    <Content Include="templates\pokelist.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="templates\signup.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="app.py" />
     <Compile Include="app_local.py" />
-    <Compile Include="default_config.py" />
-    <Compile Include="forms.py" />
-    <Compile Include="frontend.py" />
-    <Compile Include="nav.py" />
+    <Compile Include="blueprints\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="data\references.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="data\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="blueprints\err.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ex.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="blueprints\PRESERVE-forms.py" />
+    <Compile Include="blueprints\frontend.py" />
+    <Compile Include="blueprints\nav.py" />
+    <Compile Include="sandbox.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="data\" />
+    <Folder Include="blueprints\" />
     <Folder Include="static" />
     <Folder Include="static\Icon" />
     <Folder Include="static\Item" />
     <Folder Include="static\Pot" />
     <Folder Include="templates" />
+    <Folder Include="templates\error\" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.6" />
