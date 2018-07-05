@@ -8,10 +8,9 @@ import blueprints
 
 def create_app(configfile=None):
     app = Flask(__name__)
+    Bootstrap(app)
 
     HerokuConfig(app, configfile)
-    
-    Bootstrap(app)
     
     app.register_blueprint(blueprints.err)
     app.register_blueprint(blueprints.frontend)
