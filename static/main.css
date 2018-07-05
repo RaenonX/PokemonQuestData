@@ -7,9 +7,18 @@ body {
     height: 25px;
 }
 
-.icon-fluid {
-    width: 100%;
-    margin-bottom: 5px;
+@media (max-width: 768px) {
+    .icon-pokelist {
+        width: 15.7%;
+        margin-bottom: 5px;
+    }
+}
+
+@media (min-width: 769px) {
+    .icon-pokelist {
+        width: 9.5%;
+        margin-bottom: 5px;
+    }
 }
 
 .btn-big {

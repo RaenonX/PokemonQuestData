@@ -3,9 +3,7 @@
 {% block content %}
 <div class="container">
     {% for entry in pokedata %}
-    <div class="col-md-1">
-        <a href="{{ url_for('.find_recipe', id=entry["id"]) }}"><img class="icon-fluid" src="/static/Icon/{{ entry["id"] }}.png"></a>
-    </div>
+    <a href="{{ url_for('.find_recipe', id=entry["id"]) }}"><img class="icon-pokelist" src="/static/Icon/{{ entry["id"] }}.png"></a>
     {% endfor %}
 </div>
 {%- endblock %}
