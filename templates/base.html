@@ -11,15 +11,15 @@
 <script src={{ url_for('static', filename='less.min.js') }} type="text/javascript"></script>
 {%- endblock %}
 
+{% block scripts %}
+{{ super() }}
+{{ google.uanalytics('UA-121868554-1') }}
+{% endblock %}
+
 {% block styles -%}
 {{ super() }}
 <link rel="stylesheet/less" type="text/css"
       href="{{ url_for('static', filename='main.less') }}">
-{% endblock %}
-
-{% block scripts %}
-{{super()}}
-{{google.uanalytics('UA-121868554-1')}}
 {% endblock %}
 
 {% block navbar %}

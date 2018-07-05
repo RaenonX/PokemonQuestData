@@ -10,11 +10,18 @@
         {{ utils.flashed_messages(messages) }}
     </div>
     {%- endif %}
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="glyphicon glyphicon-remove-circle alert alert-danger show" role="alert">
+                目前網頁尚未完全建置完畢，發生錯誤還請見諒。
+            </div>
+        </div>
+    </div>
+
     {%- endwith %}
     <div class="col-md-12 jumbotron">
         <h1>歡迎來到Pokemon Quest資訊站！</h1>
-        <p>目前網頁尚未建置完畢，發生錯誤還請見諒。</p>
-        <p>本網站使用<a href="http://lesscss.org/">less.js</a>輔助排版，如果排版發生奇怪的現象時，請先嘗試使用Chrome, Safari...等較常更新的瀏覽器。</p>
     </div>
     <div class="row">
         <div class="col-md-6">
