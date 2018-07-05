@@ -183,12 +183,13 @@
     <Content Include="static\Item\Rainbow.png" />
     <Content Include="static\Item\Y1.png" />
     <Content Include="static\Item\Y2.png" />
+    <Content Include="static\less.min.js" />
     <Content Include="static\Pot\1.png" />
     <Content Include="static\Pot\2.png" />
     <Content Include="static\Pot\3.png" />
     <Content Include="static\Pot\4.png" />
     <Content Include="static\respond.min.js" />
-    <Content Include="static\main.css" />
+    <Content Include="static\main.less" />
     <Content Include="templates\base.html" />
     <Content Include="templates\error\404.html">
       <SubType>Code</SubType>
