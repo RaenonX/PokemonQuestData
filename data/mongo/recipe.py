@@ -13,7 +13,7 @@ class recipe_collection(base_collection):
 
         for entry in self.find().sort([(recipe.ID, 1)]):
             entry = recipe(entry)
-            ret.append((entry.id, entry.title_zh))
+            ret.append((entry.id, "{} ({}；{}愛吃的東西)".format(entry.title_zh, entry.description_zh, entry.result_zh)))
 
         return ret
 

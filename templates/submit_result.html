@@ -10,43 +10,145 @@
         {{ utils.flashed_messages(messages) }}
     </div>
     {%- endif %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="glyphicon glyphicon-remove-circle alert alert-danger hide" role="alert" id="PokeMissing">
+                沒有選擇寶可夢。
+            </div>
+            <div class="glyphicon glyphicon-remove-circle alert alert-danger hide" role="alert" id="RcpMissing">
+                沒有選擇食譜。
+            </div>
+            <div class="glyphicon glyphicon-remove-circle alert alert-danger hide" role="alert" id="QltMissing">
+                沒有選擇食物品質。
+            </div>
+        </div>
+    </div>
     {%- endwith %}
+
     <div class="jumbotron">
         <h1>感謝您為Pokemon Quest資料站提供資料！</h1>
     </div>
-    <form class="form-horizontal" method="post" action="{{ url_for(".submit_result") }}">
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="pokemon">寶可夢:</label>
-            <div class="col-sm-10">
-                <select class="form-control" name="pokemon">
-                    {% for id, choice in poke_choices %}
-                    <option value="{{ id }}">{{ choice }}</option>{% endfor %}
-                </select>
+
+    <form class="form-horizontal" method="post" action="{{ url_for(".submit_result") }}" id="resultForm">
+        <div class="form-group selection-panel">
+            <input type="hidden" id="pokeSelected" name="pokemon">
+            <div class="form-group row">
+                <label class="control-label col-md-2">選擇寶可夢:</label>
+                <div class="col-md-10">
+                    <input class="form-control" id="pokeSearch" type="text" placeholder="輸入關鍵字搜尋...">
+                </div>
+            </div>
+            <div class="form-group row col-md-12 selection-area" id="pokeList">
+                {% for id, choice in poke_choices %}
+                <button type="button" class="list-group-item list-group-item-action poke" value="{{ id }}">
+                    <img class="icon" src="/static/Icon/{{ id }}.png" />
+                    {{ choice }}
+                </button>
+                {% endfor %}
             </div>
         </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="recipe">食譜:</label>
-            <div class="col-sm-10">
-                <select class="form-control" name="recipe">
-                    {% for id, choice in recipe_choices %}
-                    <option value="{{ id }}">{{ choice }}</option>{% endfor %}
-                </select>
+
+        <div class="form-group selection-panel">
+            <input type="hidden" id="rcpSelected" name="recipe">
+            <div class="form-group row">
+                <label class="control-label col-md-2">選擇食譜:</label>
+                <div class="col-md-10">
+                    <input class="form-control" id="rcpSearch" type="text" placeholder="輸入關鍵字搜尋...">
+                </div>
+            </div>
+            <div class="form-group row col-md-12 selection-area" id="rcpList">
+                {% for id, choice in recipe_choices %}
+                <button type="button" class="list-group-item list-group-item-action rcp" value="{{ id }}">
+                    <img class="icon" src="/static/Recipe/{{ id }}.png" />
+                    {{ choice }}
+                </button>
+                {% endfor %}
             </div>
         </div>
-        <div class="form-group">
-            <label class="control-label col-sm-2" for="quality">品質:</label>
-            <div class="col-sm-10">
-                <select class="form-control" name="quality">
-                    {% for id, choice in quality_choices %}
-                    <option value="{{ id }}">{{ choice }}</option>{% endfor %}
-                </select>
+
+        <div class="form-group selection-panel">
+            <input type="hidden" id="qltSelected" name="quality">
+            <div class="form-group row">
+                <label class="control-label col-md-2">選擇食物品質:</label>
+                <div class="col-md-10">
+                    <input class="form-control" id="qltSearch" type="text" placeholder="輸入關鍵字搜尋...">
+                </div>
+            </div>
+            <div class="form-group row col-md-12 selection-area" id="qltList">
+                {% for id, choice in quality_choices %}
+                <button type="button" class="list-group-item list-group-item-action qlt" value="{{ id }}">{{ choice }}</button>
+                {% endfor %}
             </div>
         </div>
+
         <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Submit</button>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-default">提交結果</button>
             </div>
         </div>
     </form>
 </div>
+{%- endblock %}
+
+{% block scripts %}
+<script>
+    $(document).keypress(function (e) {
+        if (e.which == 13) {
+            $("#resultForm").submit();
+        }
+    });
+
+    $(document).ready(
+        search_list_events(".poke", "#pokeSelected", "#pokeSearch", "#pokeList button"),
+        search_list_events(".rcp", "#rcpSelected", "#rcpSearch", "#rcpList button"),
+        search_list_events(".qlt", "#qltSelected", "#qltSearch", "#qltList button"),
+        $("#resultForm").submit(function () {
+            var pokeMissing = $("#pokeSelected").val() === ""
+            if (pokeMissing) {
+                $("#PokeMissing").removeClass("hide")
+                $("#PokeMissing").fadeIn()
+            } else {
+                $("#PokeMissing").fadeOut()
+            }
+
+            var rcpMissing = $("#rcpSelected").val() === ""
+            if (rcpMissing) {
+                $("#RcpMissing").removeClass("hide")
+                $("#RcpMissing").fadeIn()
+            } else {
+                $("#RcpMissing").fadeOut()
+            }
+
+            var qltMissing = $("#qltSelected").val() === ""
+            if (qltMissing) {
+                $("#QltMissing").removeClass("hide")
+                $("#QltMissing").fadeIn()
+            } else {
+                $("#QltMissing").fadeOut()
+            }
+
+            result = pokeMissing || rcpMissing || qltMissing
+
+            if (result) {
+                $(window).scrollTop(0);
+            }
+
+            return !result
+        })
+    );
+
+    function search_list_events(btn_id, indicator_id, query_id, list_id) {
+        $(query_id).on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $(list_id).filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+        $(btn_id).click(function () {
+            $(btn_id).removeClass("active");
+            $(this).addClass("active");
+            $(indicator_id).val($(this).val());
+        });
+    };
+</script>
 {%- endblock %}

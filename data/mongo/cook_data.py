@@ -84,8 +84,11 @@ class cook_data_manager(base_collection):
 
         return poke_data_result(rcp, quality_unit_arr, time.time() - _start)
 
-    def get_last_5(self):
-        return [cook_data(d) for d in self.find().sort([("_id", -1)]).limit(5)]
+    def get_last(self, count):
+        return [cook_data(d) for d in self.find().sort([("_id", -1)]).limit(count)]
+
+    def get_count(self):
+        return self.find().count()
 
     def add_record(self, recipe_id, quality_id, pokemon_id):
         return self.insert_one(cook_data.init_by_field(recipe_id, quality_id, pokemon_id)).acknowledged
@@ -125,6 +128,8 @@ class cook_data(dict_like_mapping):
 
     def get_recipe_comp_dict(self):
         return { cook_data.RECIPE: self.recipe_id, cook_data.QUALITY: int(self.quality) }
+
+##### Result Classes #####
 
 class cook_data_result:
     def __init__(self, recipe, recipe_quality, appearance, appearance_all):
@@ -199,7 +204,6 @@ class poke_data_result:
     @property
     def time_consumed(self):
         return self._time_consumed
-
 
 class poke_data_quality_unit:
     def __init__(self, quality, dishes, distribution):

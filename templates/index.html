@@ -35,7 +35,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="well">
-                <p class="set-center">更新日誌</p>
+                <p class="set-center h3">更新日誌</p>
                 <ul class="list-group">
                     {% for entry in site_log %}
                     <li class="list-group-item list-group-item-{{ entry.type }}">
@@ -47,7 +47,7 @@
         </div>
         <div class="col-md-6 set-center">
             <div class="well">
-                <p class="set-center h5">最新開鍋</p>
+                <p class="set-center h3">最新開鍋</p>
                 <div class="list-group">
                     {% for entry in recent %}
                     <a href="{{ url_for('.find_recipe', id=entry.pokemon_id) }}" class="list-group-item">
@@ -59,6 +59,14 @@
                     {% endfor %}
                 </div>
                 <a class="btn btn-success" href="{{ url_for('.submit_result') }}">我也要登記</a>
+            </div>
+        </div>
+        <div class="col-md-6 set-center">
+            <div class="panel panel-primary">
+                <div class="panel-heading">開鍋總數</div>
+                <div class="panel-body">
+                    <span class="h1">{{ count }}</span>
+                </div>
             </div>
         </div>
     </div>

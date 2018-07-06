@@ -18,7 +18,7 @@ class pokemon_collection(base_collection):
 
         for entry in self.find().sort([(pokemon.ID, 1)]):
             entry = pokemon(entry)
-            ret.append((entry.id, "#{:03d} {}".format(entry.id, entry.name_zh)))
+            ret.append((entry.id, "#{:03d} {} (英: {}、日: {})".format(entry.id, entry.name_zh, entry.name_en, entry.name_jp)))
 
         return ret
 

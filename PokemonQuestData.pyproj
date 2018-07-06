@@ -185,6 +185,7 @@
     <Content Include="static\Item\3.png" />
     <Content Include="static\Item\4.png" />
     <Content Include="static\Item\5.png" />
+    <Content Include="static\jquery.min.js" />
     <Content Include="static\less.min.js" />
     <Content Include="static\Pot\1.png" />
     <Content Include="static\Pot\2.png" />

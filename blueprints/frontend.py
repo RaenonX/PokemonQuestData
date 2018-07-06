@@ -1,4 +1,4 @@
-### https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_filters_list&stacked=h Improved Search List
+### Improve adding result layout
 
 import os
 
@@ -18,9 +18,12 @@ mongo = pymongo.MongoClient(os.environ["MONGO_URI"])
 
 @frontend.route("/")
 def index():
+    cdm = cook_data_manager(mongo)
+    slm = site_log_manager(mongo)
     return render_template("index.html", 
-                           recent=cook_data_manager(mongo).get_last_5(), 
-                           site_log=site_log_manager(mongo).get_last_5())
+                           recent=cdm.get_last(10), 
+                           count=cdm.get_count(),
+                           site_log=slm.get_last(7))
 
 @frontend.route("/find-recipe")
 def find_recipe_index():
@@ -47,7 +50,7 @@ def submit_result():
 
 @frontend.route("/submit-result", methods=["POST"])
 def submit_result_post():
-    acknowledged = cook_data_manager(mongo).add_record(request.form["recipe"], request.form["quality"], request.form["pokemon"])
+    cook_data_manager(mongo).add_record(request.form["recipe"], request.form["quality"], request.form["pokemon"])
     if acknowledged:
         flash("感謝您協助提供資料！")
         return redirect(url_for(".index"))

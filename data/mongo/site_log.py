@@ -14,8 +14,8 @@ class site_log_manager(base_collection):
     def insert_record(self, type, content, timestamp=datetime.utcnow()):
         return self.insert_one(site_log_entry.init_by_field(type, content, timestamp)).acknowledged
 
-    def get_last_5(self):
-        return [site_log_entry(d) for d in self.find().sort([("_id", -1)]).limit(5)]
+    def get_last(self, count):
+        return [site_log_entry(d) for d in self.find().sort([("_id", -1)]).limit(count)]
 
 class site_log_entry(dict_like_mapping):
     TYPE = "tp"
