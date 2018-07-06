@@ -1,0 +1,87 @@
+﻿{%- extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 recipe-title">
+            <img class="icon-title" src="/static/Recipe/{{ result.recipe.id }}.png" />&nbsp;&nbsp;{{ result.recipe.title_zh }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">說明</div>
+                <div class="panel-body"><span class="h3">{{ result.recipe.description_zh }}</span></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">偏好的寶可夢</div>
+                <div class="panel-body"><span class="h3">{{ result.recipe.result_zh }}</span></div>
+            </div>
+        </div>
+    </div>
+    {% for quality_unit in result.quality_unit_arr %}
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading set-center">
+                    <span class="h3">{{ quality_unit.quality|string() }}</span>
+                </div>
+                <div class="panel-body set-center">
+                    {% if quality_unit.dishes|length > 0 -%}
+                    <p class="set-center">配方</p>
+                    <ul class="list-group">
+                        {% for dish in quality_unit.dishes -%}
+                        <li class="list-group-item set-center">
+                            {% for item in dish -%}
+                            <img class="icon icon-dish" src="/static/Item/{{ item }}.png" />
+                            {%- endfor %}
+                        </li>
+                        {%- endfor %}
+                    </ul>
+                    {%- else -%}
+                    <span class="h3">(無配方)</span>
+                    {%- endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>寶可夢</th>
+                            <th>機率</th>
+                            <th>樣本</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for distribution_data in quality_unit.distribution.data %}
+                        <tr>
+                            <td>
+                                <a href="{{ url_for('.find_recipe', id=distribution_data.pokemon_id) }}">
+                                    <img class="icon" src="/static/Icon/{{ distribution_data.pokemon_id }}.png" />
+                                    &nbsp;&nbsp;{{ distribution_data.pokename_zh }}
+                                </a>
+                            </td>
+                            <td>
+                                {{ "{:.2%}".format(distribution_data.dist_percent) }}
+                            </td>
+                            <td>{{ distribution_data.get_sample_string() }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+    <div class="well well-sm foot-info">
+        資料處理花費 {{ "{:.3f}".format(result.time_consumed) }}秒
+    </div>
+</div>
+    {%- endblock %}
+

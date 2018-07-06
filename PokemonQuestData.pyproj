@@ -218,6 +218,9 @@
     <Content Include="templates\poke_list.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="templates\poke_result.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="templates\recipe_list.html">
       <SubType>Code</SubType>
     </Content>

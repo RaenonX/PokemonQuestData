@@ -11,7 +11,7 @@ class site_log_manager(base_collection):
     def __init__(self, mongo_client):
         super().__init__(mongo_client, site_log_manager.DB_NAME, site_log_manager.COL_NAME)
 
-    def insert_record(self, type, content, timestamp=datetime.today()):
+    def insert_record(self, type, content, timestamp=datetime.utcnow()):
         return self.insert_one(site_log_entry.init_by_field(type, content, timestamp)).acknowledged
 
     def get_last_5(self):

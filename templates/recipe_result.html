@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="table-responsive">
-        <table class="table">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>食譜</th>
@@ -23,7 +23,7 @@
             </thead>
             {% for entry in result.data %}
             <tr>
-                <td><img class="icon" src="/static/Recipe/{{ entry.recipe.id }}.png" />&nbsp;{{ entry.recipe.title_zh }}</td>
+                <td><a href="{{ url_for('.find_pokemon', id=entry.recipe.id) }}"><img class="icon" src="/static/Recipe/{{ entry.recipe.id }}.png" />&nbsp;{{ entry.recipe.title_zh }}</a></td>
                 <td>{{ entry.recipe_quality|string() }}</td>
                 <td>{{ "{:.2%}".format(entry.probability) }}</td>
                 <td>{{ entry.get_sample_size_string() }}</td>

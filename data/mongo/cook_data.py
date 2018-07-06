@@ -16,7 +16,7 @@ class cook_data_manager(base_collection):
         self._pokemon_col = pokemon_collection(mongo_client)
         self._recipe_col = recipe_collection(mongo_client)
 
-    def get_data_collection_by_pokemon_id(self, id):
+    def get_cook_data_by_pokemon_id(self, id):
         _start = time.time()
 
         data_pack = []
@@ -48,6 +48,41 @@ class cook_data_manager(base_collection):
         return cook_data_result_collection(self._pokemon_col.get_pokemon_by_id(id),
                                            sorted(data_pack, key=lambda x: x.probability, reverse=True), 
                                            time.time() - _start)
+
+    def get_poke_data_by_recipe_id(self, id):
+        _start = time.time()
+        rcp = self._recipe_col.get_recipe_by_id(id)
+        quality_unit_arr = []
+
+        for x in RecipeQuality:
+            filter_dict = { "r": id, "q": int(x) }
+
+            aggr_dist_data = self.aggregate([
+                { "$match": filter_dict },
+                { "$group": { 
+                    "_id": { 
+                        "r": "$" + "r", 
+                        "q": "$" + "q", 
+                        "p": "$" + "p"
+                    }, 
+                    "count": { 
+                        "$sum": 1 
+                    } 
+                } },
+                { "$project": {
+                    "_id": 0,
+                    "p": "$_id.p",
+                    "count": "$count"
+                } },
+                { "$sort": {
+                    "count": -1
+                } }
+            ])
+            total = self.find(filter_dict).count()
+
+            quality_unit_arr.append(poke_data_quality_unit(x, rcp.get_recipe_dish(x).items, poke_data_poke_distribution(total, aggr_dist_data, self._pokemon_col)))
+
+        return poke_data_result(rcp, quality_unit_arr, time.time() - _start)
 
     def get_last_5(self):
         return [cook_data(d) for d in self.find().sort([("_id", -1)]).limit(5)]
@@ -146,3 +181,86 @@ class cook_data_result_collection:
     @property
     def time_consumed(self):
         return self._time_consumed
+
+class poke_data_result:
+    def __init__(self, recipe, quality_unit_arr, time_consumed):
+        self._recipe = recipe
+        self._quality_unit_arr = quality_unit_arr
+        self._time_consumed = time_consumed
+
+    @property
+    def recipe(self):
+        return self._recipe
+
+    @property
+    def quality_unit_arr(self):
+        return self._quality_unit_arr
+
+    @property
+    def time_consumed(self):
+        return self._time_consumed
+
+
+class poke_data_quality_unit:
+    def __init__(self, quality, dishes, distribution):
+        self._quality = quality
+        self._dishes = dishes
+        self._distribution = distribution
+
+    @property
+    def quality(self):
+        return self._quality
+
+    @property
+    def dishes(self):
+        return self._dishes
+
+    @property
+    def distribution(self):
+        return self._distribution
+
+class poke_data_poke_distribution:
+    def __init__(self, total, data, pokemon_dict):
+        self._total = total
+        self._data = [poke_data_poke_distribution_data(total, 
+                                                       dt, 
+                                                       pokemon_dict.get_pokemon_by_id(dt[cook_data.POKEMON_ID]).name_zh)
+                     for dt in data]
+
+    @property
+    def total(self):
+        return self._total
+
+    @property
+    def data(self):
+        return self._data
+
+class poke_data_poke_distribution_data:
+    def __init__(self, total, org_dict, pokename_zh):
+        self._pokemon_id = org_dict[cook_data.POKEMON_ID]
+        self._pokename_zh = pokename_zh
+        self._count = org_dict["count"]
+        self._total = total
+
+    @property
+    def pokename_zh(self):
+        return self._pokename_zh
+
+    @property
+    def pokemon_id(self):
+        return self._pokemon_id
+    
+    @property
+    def count(self):
+        return self._count
+    
+    @property
+    def total(self):
+        return self._total
+    
+    @property
+    def dist_percent(self):
+        return self._count / self._total
+    
+    def get_sample_string(self):
+        return "{} / {}".format(self._count, self._total)

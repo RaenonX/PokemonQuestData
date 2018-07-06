@@ -64,4 +64,4 @@ class recipe_dish(dict_like_mapping):
 
     @property
     def items(self):
-        return self[recipe_dish.ITEMS]
+        return [] if recipe_dish.ITEMS not in self else self[recipe_dish.ITEMS]

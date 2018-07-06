@@ -26,7 +26,7 @@ def find_recipe_index():
 
 @frontend.route("/find-recipe/<int:id>")
 def find_recipe(id):
-    return render_template("recipe_result.html", result=cook_data_manager(mongo).get_data_collection_by_pokemon_id(id))
+    return render_template("recipe_result.html", result=cook_data_manager(mongo).get_cook_data_by_pokemon_id(id))
     
 @frontend.route("/find-pokemon")
 def find_pokemon_index():
@@ -34,7 +34,7 @@ def find_pokemon_index():
 
 @frontend.route("/find-pokemon/<int:id>")
 def find_pokemon(id):
-    pass
+    return render_template("poke_result.html", result=cook_data_manager(mongo).get_poke_data_by_recipe_id(id))
 
 @frontend.route("/submit-result", methods=["GET"])
 def submit_result():
@@ -50,5 +50,5 @@ def submit_result_post():
         flash("感謝您協助提供資料！")
         return redirect(url_for(".index"))
     else:
-        flash("資料提交失敗。")
+        flash("資料提交失敗。", category="warning")
         return redirect(url_for(".submit_result"))
