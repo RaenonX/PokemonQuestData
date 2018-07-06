@@ -50,7 +50,7 @@ def submit_result():
 
 @frontend.route("/submit-result", methods=["POST"])
 def submit_result_post():
-    cook_data_manager(mongo).add_record(request.form["recipe"], request.form["quality"], request.form["pokemon"])
+    acknowledged = cook_data_manager(mongo).add_record(request.form["recipe"], request.form["quality"], request.form["pokemon"])
     if acknowledged:
         flash("感謝您協助提供資料！")
         return redirect(url_for(".index"))
