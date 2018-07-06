@@ -44,6 +44,12 @@
                     {% endfor %}
                 </ul>
             </div>
+            <div class="panel panel-primary set-center">
+                <div class="panel-heading"><span class="h3">開鍋總數</span></div>
+                <div class="panel-body">
+                    <span class="h1">{{ count }}</span>
+                </div>
+            </div>
         </div>
         <div class="col-md-6 set-center">
             <div class="well">
@@ -59,14 +65,6 @@
                     {% endfor %}
                 </div>
                 <a class="btn btn-success" href="{{ url_for('.submit_result') }}">我也要登記</a>
-            </div>
-        </div>
-        <div class="col-md-6 set-center">
-            <div class="panel panel-primary">
-                <div class="panel-heading">開鍋總數</div>
-                <div class="panel-body">
-                    <span class="h1">{{ count }}</span>
-                </div>
             </div>
         </div>
     </div>
