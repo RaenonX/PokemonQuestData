@@ -1,11 +1,12 @@
 import os
 
-from flask import Blueprint, render_template, flash, redirect, url_for
+from flask import Blueprint, render_template, flash, redirect, url_for, request
 from flask_bootstrap import __version__ as FLASK_BOOTSTRAP_VERSION
 from markupsafe import escape
 import pymongo
 
 from data import RecipeQuality
+from data.mongo import cook_data_manager, pokemon_collection, recipe_collection
 
 from .nav import nav
 
@@ -19,50 +20,33 @@ def index():
 
 @frontend.route("/find-recipe")
 def find_recipe_index():
-    return render_template("poke_list.html", 
-                           pokedata=mongo.dict.pokemon.find().sort([("id", pymongo.ASCENDING)]))
+    return render_template("poke_list.html", pokedata=mongo.dict.pokemon.find().sort([("id", pymongo.ASCENDING)]))
 
 @frontend.route("/find-recipe/<int:id>")
 def find_recipe(id):
-    col = mongo.data.cook
-    col2 = mongo.dict.recipe
-
-    data_pack = []
-    recipes = {}
-
-    result = col.aggregate([
-        { "$match": { "p": id } },
-        { "$group": { "_id": { "r": "$r", "q": "$q" }, "count": { "$sum": 1 } } }
-        ])
-
-    for r in col.find({"p": id}).distinct("r"):
-        recipes[str(r)] = col2.find({ "id": r }).next()
-
-    for entry in result:
-        recipe_comp = entry["_id"]
-    
-        app = entry["count"]
-        app_all = col.find(recipe_comp).count()
-
-        data_pack.append([recipe_comp["r"],
-                          recipes[str(recipe_comp["r"])]["title_zh"], 
-                          str(RecipeQuality(recipe_comp["q"])), 
-                          app/app_all, 
-                          "{} / {}".format(app, app_all),
-                          recipes[str(recipe_comp["r"])]["recipe"][recipe_comp["q"]]["items"]])
-
-    return render_template("recipe_result.html", result=sorted(data_pack, key=lambda x: x[3], reverse=True))
-
+    return render_template("recipe_result.html", result=cook_data_manager(mongo).get_data_collection_by_pokemon_id(id))
     
 @frontend.route("/find-pokemon")
 def find_pokemon_index():
-    return render_template("recipe_list.html", 
-                           recipedata=mongo.dict.recipe.find().sort([("id", pymongo.ASCENDING)]))
+    return render_template("recipe_list.html", recipedata=mongo.dict.recipe.find().sort([("id", pymongo.ASCENDING)]))
 
 @frontend.route("/find-pokemon/<int:id>")
 def find_pokemon(id):
     pass
 
-@frontend.route("/submit-result", methods=("GET", "POST"))
+@frontend.route("/submit-result", methods=["GET"])
 def submit_result():
-    pass
+    return render_template('submit_result.html', 
+                           poke_choices=pokemon_collection(mongo).get_pokemon_choices(), 
+                           recipe_choices=recipe_collection(mongo).get_recipe_choices(), 
+                           quality_choices=RecipeQuality.get_choices())
+
+@frontend.route("/submit-result", methods=["POST"])
+def submit_result_post():
+    acknowledged = cook_data_manager(mongo).add_record(request.form["recipe"], request.form["quality"], request.form["pokemon"])
+    if acknowledged:
+        flash("感謝您協助提供資料！")
+        return redirect(url_for(".index"))
+    else:
+        flash("資料提交失敗。")
+        return redirect(url_for(".submit_result"))

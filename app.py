@@ -16,7 +16,7 @@ def create_app(configfile=None):
     app.register_blueprint(blueprints.frontend)
 
     app.secret_key = os.urandom(24)
-
+    
     app.config["BOOTSTRAP_SERVE_LOCAL"] = True
 
     blueprints.nav.init_app(app)

@@ -2,7 +2,15 @@
 
 {% block content %}
 <div class="container">
-    
+    <div class="row">
+        <div class="col-sm-2 set-center">
+            <img class="icon-fluid" src="/static/Icon/{{ result.pokemon.id }}.png" />
+        </div>
+        <div class="col-sm-10 set-center">
+            <div class="short-div">#{{ result.pokemon.id }} <span class="pokemon-title">{{ result.pokemon.name_zh }}</span></div>
+            <div class="short-div">英: {{ result.pokemon.name_en }} 日: {{ result.pokemon.name_jp }}<br />屬性: {{ result.pokemon.elements|join("、") }}</div>
+        </div>
+    </div>
     <div class="table-responsive">
         <table class="table">
             <thead>
@@ -13,18 +21,18 @@
                     <th>樣本</th>
                 </tr>
             </thead>
-            {% for entry in result %}
+            {% for entry in result.data %}
             <tr>
-                <td><img class="icon" src="/static/Recipe/{{ entry[0] }}.png" /> {{ entry[1] }}</td>
-                <td>{{ entry[2] }}</td>
-                <td>{{ "{:.2%}".format(entry[3]) }}</td>
-                <td>{{ entry[4] }}</td>
+                <td><img class="icon" src="/static/Recipe/{{ entry.recipe.id }}.png" />&nbsp;{{ entry.recipe.title_zh }}</td>
+                <td>{{ entry.recipe_quality|string() }}</td>
+                <td>{{ "{:.2%}".format(entry.probability) }}</td>
+                <td>{{ entry.get_sample_size_string() }}</td>
             </tr>
             <tr>
                 <td>配方</td>
                 <td colspan="3">
-                    {% for recipe in entry[5] %}
-                    {% for item in recipe %}
+                    {% for comp in entry.recipe_dish.items %}
+                    {% for item in comp %}
                     <img class="icon" src="/static/Item/{{ item }}.png" />
                     {% endfor %}
                     &nbsp;&nbsp;&nbsp;
@@ -34,5 +42,6 @@
             {% endfor %}
         </table>
     </div>
+    <div class="well well-sm foot-info">資料處理花費 {{ "{:.3f}".format(result.time_consumed) }}秒</div>
 </div>
 {%- endblock %}

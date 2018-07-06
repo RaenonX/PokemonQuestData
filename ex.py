@@ -15,8 +15,16 @@ class EnumWithName(IntEnum):
 
     @classmethod
     def str_get_int(cls, txt):
+        return int(EnumWithName.str_get_enum(txt))
+
+    @classmethod
+    def str_get_enum(cls, txt):
         for item in cls:
             if str(item) == txt:
-                return int(item)
+                return item
 
         raise ValueError('Not found. ({})'.format(txt))
+
+    @classmethod
+    def get_choices(cls):
+        return [(int(s), str(s)) for s in cls]

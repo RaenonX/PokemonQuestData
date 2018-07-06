@@ -1,5 +1,51 @@
-import pymongo
+from collections import MutableMapping
 
-class mongo_base(pymongo.collection.Collection):
-    def __init__(self, database, name, create=False, codec_options=None, read_preference=None, write_concern=None, read_concern=None, session = None, **kwargs):
-        super().__init__(database, name, create, codec_options, read_preference, write_concern, read_concern, session, **kwargs)
+from pymongo.collection import Collection
+
+class base_collection(Collection):
+    def __init__(self, mongo_client, db_name, col_name):
+        super().__init__(mongo_client.get_database(db_name), col_name)
+        self._cache = {}
+
+    def init_cache(self, cache_key):
+        self._cache[cache_key] = {}
+
+    def set_cache(self, cache_key, item_key, item):
+        if cache_key not in self._cache:
+            self.init_cache(cache_key)
+
+        self._cache[cache_key][item_key] = item
+
+    def get_cache(self, cache_key, item_key):
+        if cache_key not in self._cache:
+            self.init_cache(cache_key)
+
+        if item_key not in self._cache[cache_key]:
+            self.set_cache(cache_key, item_key, self.find_one({ cache_key: item_key }))
+
+        return self._cache[cache_key][item_key]
+
+class dict_like_mapping(MutableMapping):
+    def __init__(self, org_dict):
+        if org_dict is None:
+            self._dict = {}
+        else:
+            self._dict = dict(org_dict)
+
+    def __getitem__(self, key):
+        return self._dict[key]
+
+    def __setitem__(self, key, value):
+        self._dict[key] = value
+
+    def __delitem__(self, key):
+        del self._dict[key]
+
+    def __iter__(self):
+        return iter(self._dict)
+
+    def __len__(self):
+        return len(self._dict)
+
+    def __repr__(self):
+        return str(self._dict)

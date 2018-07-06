@@ -224,7 +224,7 @@
     <Content Include="templates\recipe_result.html">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="templates\signup.html" />
+    <Content Include="templates\submit_result.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="app.py" />
@@ -233,6 +233,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="data\mongo\base.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="data\mongo\cook_data.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="data\mongo\pokemon.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="data\mongo\recipe.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="data\mongo\__init__.py">
@@ -250,7 +259,6 @@
     <Compile Include="ex.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="blueprints\PRESERVE-forms.py" />
     <Compile Include="blueprints\frontend.py" />
     <Compile Include="blueprints\nav.py" />
     <Compile Include="sandbox.py">
