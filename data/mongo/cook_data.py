@@ -1,4 +1,5 @@
 import time
+from datetime import datetime
 
 from data import RecipeQuality
 
@@ -48,6 +49,9 @@ class cook_data_manager(base_collection):
                                            sorted(data_pack, key=lambda x: x.probability, reverse=True), 
                                            time.time() - _start)
 
+    def get_last_5(self):
+        return [cook_data(d) for d in self.find().sort([("_id", -1)]).limit(5)]
+
     def add_record(self, recipe_id, quality_id, pokemon_id):
         return self.insert_one(cook_data.init_by_field(recipe_id, quality_id, pokemon_id)).acknowledged
 
@@ -67,6 +71,10 @@ class cook_data(dict_like_mapping):
             cook_data.POKEMON_ID: int(pokemon_id)
         }
         return cook_data(init_dict)
+
+    @property
+    def timestamp(self):
+        return datetime.fromordinal(1) if "_id" not in self else self["_id"].generation_time
 
     @property
     def recipe_id(self):

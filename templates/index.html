@@ -10,7 +10,6 @@
         {{ utils.flashed_messages(messages) }}
     </div>
     {%- endif %}
-    
     <div class="row">
         <div class="col-md-12">
             <div class="glyphicon glyphicon-remove-circle alert alert-danger show" role="alert">
@@ -18,7 +17,6 @@
             </div>
         </div>
     </div>
-
     {%- endwith %}
     <div class="col-md-12 jumbotron">
         <h1>歡迎來到Pokemon Quest資訊站！</h1>
@@ -29,6 +27,35 @@
         </div>
         <div class="col-md-6">
             <a class="btn btn-info btn-big" href="{{ url_for('.find_pokemon_index') }}">從食譜查精靈</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="well">
+                <p class="set-center">更新日誌</p>
+                <ul class="list-group">
+                    {% for entry in site_log %}
+                    <li class="list-group-item list-group-item-{{ entry.type }}">
+                        {{ entry.timestamp.strftime('%m-%d %H:%M') }} (UTC): {{ entry.content }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6 set-center">
+            <div class="well">
+                <p class="set-center">最新開鍋</p>
+                <div class="list-group">
+                    {% for entry in recent %}
+                    <a href="{{ url_for('.find_recipe', id=entry.pokemon_id) }}" class="list-group-item">
+                        {{ entry.timestamp.strftime('%m-%d %H:%M') }} (UTC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <img class="icon" src="/static/Icon/{{ entry.pokemon_id }}.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <img class="icon" src="/static/Recipe/{{ entry.recipe_id }}.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        {{ entry.quality|string() }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 </div>

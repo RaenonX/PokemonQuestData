@@ -244,6 +244,9 @@
     <Compile Include="data\mongo\recipe.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="data\mongo\site_log.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="data\mongo\__init__.py">
       <SubType>Code</SubType>
     </Compile>

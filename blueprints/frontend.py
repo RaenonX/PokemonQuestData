@@ -6,7 +6,7 @@ from markupsafe import escape
 import pymongo
 
 from data import RecipeQuality
-from data.mongo import cook_data_manager, pokemon_collection, recipe_collection
+from data.mongo import cook_data_manager, pokemon_collection, recipe_collection, site_log_manager
 
 from .nav import nav
 
@@ -16,7 +16,9 @@ mongo = pymongo.MongoClient(os.environ["MONGO_URI"])
 
 @frontend.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", 
+                           recent=cook_data_manager(mongo).get_last_5(), 
+                           site_log=site_log_manager(mongo).get_last_5())
 
 @frontend.route("/find-recipe")
 def find_recipe_index():

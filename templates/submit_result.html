@@ -1,16 +1,26 @@
 ﻿{%- extends "base.html" %}
 
+{% import "bootstrap/utils.html" as utils %}
+
 {% block content %}
 <div class="container">
+    {%- with messages = get_flashed_messages(with_categories=True) %}
+    {%- if messages %}
+    <div class="row">
+        {{ utils.flashed_messages(messages) }}
+    </div>
+    {%- endif %}
+    {%- endwith %}
     <div class="jumbotron">
-        <h1>感謝您為PKQ資料站提供資料！</h1>
+        <h1>感謝您為Pokemon Quest資料站提供資料！</h1>
     </div>
     <form class="form-horizontal" method="post" action="{{ url_for(".submit_result") }}">
         <div class="form-group">
             <label class="control-label col-sm-2" for="pokemon">寶可夢:</label>
             <div class="col-sm-10">
                 <select class="form-control" name="pokemon">
-                    {% for id, choice in poke_choices %}<option value="{{ id }}">{{ choice }}</option>{% endfor %}
+                    {% for id, choice in poke_choices %}
+                    <option value="{{ id }}">{{ choice }}</option>{% endfor %}
                 </select>
             </div>
         </div>
@@ -18,7 +28,8 @@
             <label class="control-label col-sm-2" for="recipe">食譜:</label>
             <div class="col-sm-10">
                 <select class="form-control" name="recipe">
-                    {% for id, choice in recipe_choices %}<option value="{{ id }}">{{ choice }}</option>{% endfor %}
+                    {% for id, choice in recipe_choices %}
+                    <option value="{{ id }}">{{ choice }}</option>{% endfor %}
                 </select>
             </div>
         </div>
@@ -26,7 +37,8 @@
             <label class="control-label col-sm-2" for="quality">品質:</label>
             <div class="col-sm-10">
                 <select class="form-control" name="quality">
-                    {% for id, choice in quality_choices %}<option value="{{ id }}">{{ choice }}</option>{% endfor %}
+                    {% for id, choice in quality_choices %}
+                    <option value="{{ id }}">{{ choice }}</option>{% endfor %}
                 </select>
             </div>
         </div>
