@@ -1,4 +1,5 @@
-### Improve adding result layout
+### Use elements to get pokes, use keywords to get pokes
+### Add statistics page
 
 import os
 

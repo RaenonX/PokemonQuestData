@@ -54,19 +54,32 @@
         <div class="col-md-6 set-center">
             <div class="well">
                 <p class="set-center h3">最新開鍋</p>
-                <div class="list-group">
-                    {% for entry in recent %}
-                    <a href="{{ url_for('.find_recipe', id=entry.pokemon_id) }}" class="list-group-item">
-                        {{ entry.timestamp.strftime('%m-%d %H:%M') }} (UTC)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <img class="icon" src="/static/Icon/{{ entry.pokemon_id }}.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <img class="icon" src="/static/Recipe/{{ entry.recipe_id }}.png" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        {{ entry.quality|string() }}
-                    </a>
-                    {% endfor %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>時間</th>
+                                <th>精靈</th>
+                                <th>食譜</th>
+                                <th>品質</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in recent %}
+                            <tr>
+                                <td>{{ entry.timestamp.strftime('%m-%d %H:%M') }} (UTC)</td>
+                                <td><a href="{{ url_for('.find_recipe', id=entry.pokemon_id) }}"><img class="icon" src="/static/Icon/{{ entry.pokemon_id }}.png" /></a></td>
+                                <td><a href="{{ url_for('.find_pokemon', id=entry.recipe_id) }}"><img class="icon" src="/static/Recipe/{{ entry.recipe_id }}.png" /></a></td>
+                                <td>{{ entry.quality|string() }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
-                <a class="btn btn-success" href="{{ url_for('.submit_result') }}">我也要登記</a>
+                    
+                    <a class="btn btn-success" href="{{ url_for('.submit_result') }}">我也要登記</a>
+                </div>
             </div>
-        </div>
     </div>
 </div>
 {%- endblock %}

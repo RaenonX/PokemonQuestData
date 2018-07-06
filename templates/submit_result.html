@@ -30,62 +30,82 @@
     </div>
 
     <form class="form-horizontal" method="post" action="{{ url_for(".submit_result") }}" id="resultForm">
-        <div class="form-group selection-panel">
-            <input type="hidden" id="pokeSelected" name="pokemon">
-            <div class="form-group row">
-                <label class="control-label col-md-2">選擇寶可夢:</label>
-                <div class="col-md-10">
-                    <input class="form-control" id="pokeSearch" type="text" placeholder="輸入關鍵字搜尋...">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="hidden" id="pokeSelected" name="pokemon">
+                <div class="panel panel-primary set-center">
+                    <div class="panel-heading">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <input class="form-control" id="pokeSearch" type="text" placeholder="選擇寶可夢，輸入關鍵字搜尋並選取...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body selection-panel">
+                        <div class="form-group row col-md-12 selection-area" id="pokeList">
+                            {% for id, choice in poke_choices %}
+                            <button type="button" class="list-group-item list-group-item-action poke" value="{{ id }}">
+                                <img class="icon" src="/static/Icon/{{ id }}.png" />
+                                {{ choice }}
+                            </button>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group row col-md-12 selection-area" id="pokeList">
-                {% for id, choice in poke_choices %}
-                <button type="button" class="list-group-item list-group-item-action poke" value="{{ id }}">
-                    <img class="icon" src="/static/Icon/{{ id }}.png" />
-                    {{ choice }}
-                </button>
-                {% endfor %}
+            <div class="col-md-6">
+                <input type="hidden" id="rcpSelected" name="recipe">
+                <div class="panel panel-info set-center">
+                    <div class="panel-heading">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <input class="form-control" id="rcpSearch" type="text" placeholder="選擇食譜，輸入關鍵字搜尋並選取...">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body selection-panel">
+                        <div class="form-group row col-md-12 selection-area" id="rcpList">
+                            {% for id, choice in recipe_choices %}
+                            <button type="button" class="list-group-item list-group-item-action rcp" value="{{ id }}">
+                                <img class="icon" src="/static/Recipe/{{ id }}.png" />
+                                {{ choice }}
+                            </button>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="form-group selection-panel">
-            <input type="hidden" id="rcpSelected" name="recipe">
-            <div class="form-group row">
-                <label class="control-label col-md-2">選擇食譜:</label>
-                <div class="col-md-10">
-                    <input class="form-control" id="rcpSearch" type="text" placeholder="輸入關鍵字搜尋...">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="hidden" id="qltSelected" name="quality">
+                <div class="panel panel-info set-center">
+                    <div class="panel-heading">
+                        <span class="set-center h3">食物品質</span>
+                    </div>
+                    <div class="panel-body selection-panel">
+                        <div class="form-group row col-md-12 selection-area" id="qltList">
+                            {% for id, choice in quality_choices %}
+                            <button type="button" class="list-group-item list-group-item-action qlt" value="{{ id }}">{{ choice }}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="form-group row col-md-12 selection-area" id="rcpList">
-                {% for id, choice in recipe_choices %}
-                <button type="button" class="list-group-item list-group-item-action rcp" value="{{ id }}">
-                    <img class="icon" src="/static/Recipe/{{ id }}.png" />
-                    {{ choice }}
-                </button>
-                {% endfor %}
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-default">提交結果</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="form-group selection-panel">
-            <input type="hidden" id="qltSelected" name="quality">
-            <div class="form-group row">
-                <label class="control-label col-md-2">選擇食物品質:</label>
-                <div class="col-md-10">
-                    <input class="form-control" id="qltSearch" type="text" placeholder="輸入關鍵字搜尋...">
-                </div>
-            </div>
-            <div class="form-group row col-md-12 selection-area" id="qltList">
-                {% for id, choice in quality_choices %}
-                <button type="button" class="list-group-item list-group-item-action qlt" value="{{ id }}">{{ choice }}</button>
-                {% endfor %}
-            </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-sm-2">
-                <button type="submit" class="btn btn-default">提交結果</button>
-            </div>
-        </div>
+
+
+
     </form>
 </div>
 {%- endblock %}
