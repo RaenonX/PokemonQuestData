@@ -1,0 +1,9 @@
+{%- extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    {% for entry in recipedata %}
+    <a href="{{ url_for('.find_pokemon', id=entry["id"]) }}"><img class="icon-recipelist" src="/static/Recipe/{{ entry["id"] }}.png"></a>
+    {% endfor %}
+</div>
+{%- endblock %}

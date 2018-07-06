@@ -19,3 +19,23 @@ class PokeType(ex.EnumWithName):
     POISON = 15, "毒"
     ROCK = 16, "岩石"
     WATER = 17, "水"
+
+class RecipeQuality(ex.EnumWithName):
+    NORMAL = 0, "普通"
+    GOOD = 1, "好吃"
+    VERY_GOOD = 2, "超好吃"
+    SPECIAL = 3, "好吃到不行"
+
+class RecipeItem(ex.EnumWithName):
+    SMALL_RED = 1, "小紅"
+    SMALL_BLUE = 2, "小藍"
+    SMALL_YELLOW = 3, "小黃"
+    SMALL_GRAY = 4, "小灰"
+    SMALL_ALL = 5, "小(隨意)"
+    LARGE_RED = 11, "大紅"
+    LARGE_BLUE = 12, "大藍"
+    LARGE_YELLOW = 13, "大黃"
+    LARGE_GRAY = 14, "大灰"
+    LARGE_ALL = 15, "大(隨意)"
+    RAINBOW = 21, "彩石"
+    SHELL = 22, "貝殼"

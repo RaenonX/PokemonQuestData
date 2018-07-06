@@ -1,0 +1,38 @@
+﻿{%- extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>食譜</th>
+                    <th>品質</th>
+                    <th>機率</th>
+                    <th>樣本</th>
+                </tr>
+            </thead>
+            {% for entry in result %}
+            <tr>
+                <td><img class="icon" src="/static/Recipe/{{ entry[0] }}.png" /> {{ entry[1] }}</td>
+                <td>{{ entry[2] }}</td>
+                <td>{{ "{:.2%}".format(entry[3]) }}</td>
+                <td>{{ entry[4] }}</td>
+            </tr>
+            <tr>
+                <td>配方</td>
+                <td colspan="3">
+                    {% for recipe in entry[5] %}
+                    {% for item in recipe %}
+                    <img class="icon" src="/static/Item/{{ item }}.png" />
+                    {% endfor %}
+                    &nbsp;&nbsp;&nbsp;
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{%- endblock %}

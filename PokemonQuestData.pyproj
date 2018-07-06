@@ -173,21 +173,41 @@
     <Content Include="static\Icon\97.png" />
     <Content Include="static\Icon\98.png" />
     <Content Include="static\Icon\99.png" />
-    <Content Include="static\Item\B1.png" />
-    <Content Include="static\Item\B2.png" />
-    <Content Include="static\Item\G1.png" />
-    <Content Include="static\Item\G2.png" />
-    <Content Include="static\Item\Mystic.png" />
-    <Content Include="static\Item\R1.png" />
-    <Content Include="static\Item\R2.png" />
-    <Content Include="static\Item\Rainbow.png" />
-    <Content Include="static\Item\Y1.png" />
-    <Content Include="static\Item\Y2.png" />
+    <Content Include="static\Item\1.png" />
+    <Content Include="static\Item\11.png" />
+    <Content Include="static\Item\12.png" />
+    <Content Include="static\Item\13.png" />
+    <Content Include="static\Item\14.png" />
+    <Content Include="static\Item\15.png" />
+    <Content Include="static\Item\2.png" />
+    <Content Include="static\Item\21.png" />
+    <Content Include="static\Item\22.png" />
+    <Content Include="static\Item\3.png" />
+    <Content Include="static\Item\4.png" />
+    <Content Include="static\Item\5.png" />
     <Content Include="static\less.min.js" />
     <Content Include="static\Pot\1.png" />
     <Content Include="static\Pot\2.png" />
     <Content Include="static\Pot\3.png" />
     <Content Include="static\Pot\4.png" />
+    <Content Include="static\Recipe\0.png" />
+    <Content Include="static\Recipe\1.png" />
+    <Content Include="static\Recipe\2.png" />
+    <Content Include="static\Recipe\3.png" />
+    <Content Include="static\Recipe\4.png" />
+    <Content Include="static\Recipe\5.png" />
+    <Content Include="static\Recipe\6.png" />
+    <Content Include="static\Recipe\7.png" />
+    <Content Include="static\Recipe\8.png" />
+    <Content Include="static\Recipe\9.png" />
+    <Content Include="static\Recipe\10.png" />
+    <Content Include="static\Recipe\11.png" />
+    <Content Include="static\Recipe\12.png" />
+    <Content Include="static\Recipe\13.png" />
+    <Content Include="static\Recipe\14.png" />
+    <Content Include="static\Recipe\15.png" />
+    <Content Include="static\Recipe\16.png" />
+    <Content Include="static\Recipe\17.png" />
     <Content Include="static\respond.min.js" />
     <Content Include="static\main.less" />
     <Content Include="templates\base.html" />
@@ -195,7 +215,13 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="templates\index.html" />
-    <Content Include="templates\pokelist.html">
+    <Content Include="templates\poke_list.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="templates\recipe_list.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="templates\recipe_result.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="templates\signup.html" />
@@ -204,6 +230,12 @@
     <Compile Include="app.py" />
     <Compile Include="app_local.py" />
     <Compile Include="blueprints\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="data\mongo\base.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="data\mongo\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="data\references.py">
@@ -228,10 +260,12 @@
   <ItemGroup>
     <Folder Include="data\" />
     <Folder Include="blueprints\" />
+    <Folder Include="data\mongo\" />
     <Folder Include="static" />
     <Folder Include="static\Icon" />
     <Folder Include="static\Item" />
     <Folder Include="static\Pot" />
+    <Folder Include="static\Recipe\" />
     <Folder Include="templates" />
     <Folder Include="templates\error\" />
   </ItemGroup>
