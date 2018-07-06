@@ -12,8 +12,11 @@
     {%- endif %}
     <div class="row">
         <div class="col-md-12">
-            <div class="glyphicon glyphicon-remove-circle alert alert-danger show" role="alert">
-                目前網頁尚未完全建置完畢，發生錯誤還請見諒。
+            <div class="glyphicon glyphicon-ok alert alert-info show" role="alert">
+                目前網頁基本功能建置完成，使用時若有任何問題的話，請聯絡<a href="mailto:maplestory0710@gmail.com">點此</a>回報，謝謝。
+            </div>
+            <div class="glyphicon glyphicon-info-sign alert alert-warning show" role="alert">
+                因為伺服器在連續30分鐘沒有活動時會將程式轉入休眠模式，故進入休眠模式後，第一個連入的使用者會比平常慢一點載入完成。
             </div>
         </div>
     </div>
@@ -44,7 +47,7 @@
         </div>
         <div class="col-md-6 set-center">
             <div class="well">
-                <p class="set-center">最新開鍋</p>
+                <p class="set-center h5">最新開鍋</p>
                 <div class="list-group">
                     {% for entry in recent %}
                     <a href="{{ url_for('.find_recipe', id=entry.pokemon_id) }}" class="list-group-item">
@@ -55,6 +58,7 @@
                     </a>
                     {% endfor %}
                 </div>
+                <a class="btn btn-success" href="{{ url_for('.submit_result') }}">我也要登記</a>
             </div>
         </div>
     </div>

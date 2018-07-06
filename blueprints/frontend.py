@@ -1,3 +1,5 @@
+### https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_filters_list&stacked=h Improved Search List
+
 import os
 
 from flask import Blueprint, render_template, flash, redirect, url_for, request
@@ -52,3 +54,7 @@ def submit_result_post():
     else:
         flash("資料提交失敗。", category="warning")
         return redirect(url_for(".submit_result"))
+
+@frontend.route("/about")
+def about():
+    return render_template("about.html")

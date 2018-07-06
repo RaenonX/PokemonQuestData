@@ -8,4 +8,5 @@ nav.register_element("main", Navbar(
     View("首頁", ".index"),
     View("從精靈查食譜", ".find_recipe_index"),
     View("從食譜查精靈", ".find_pokemon_index"),
-    View("提交結果", ".submit_result")))
+    View("提交結果", ".submit_result"),
+    View("關於", ".about")))

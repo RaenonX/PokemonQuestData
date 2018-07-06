@@ -210,6 +210,9 @@
     <Content Include="static\Recipe\17.png" />
     <Content Include="static\respond.min.js" />
     <Content Include="static\main.less" />
+    <Content Include="templates\about.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="templates\base.html" />
     <Content Include="templates\error\404.html">
       <SubType>Code</SubType>
