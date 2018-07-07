@@ -260,6 +260,12 @@
     <Compile Include="data\references.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="data\thirdparty\ganalytics.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="data\thirdparty\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="data\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -279,6 +285,7 @@
     <Folder Include="data\" />
     <Folder Include="blueprints\" />
     <Folder Include="data\mongo\" />
+    <Folder Include="data\thirdparty\" />
     <Folder Include="static" />
     <Folder Include="static\Icon" />
     <Folder Include="static\Item" />

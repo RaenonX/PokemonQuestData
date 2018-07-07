@@ -18,24 +18,45 @@
             <div class="glyphicon glyphicon-info-sign alert alert-warning show" role="alert">
                 因為伺服器在連續30分鐘沒有活動時會將程式轉入休眠模式，故進入休眠模式後，第一個連入的使用者會比平常慢一點載入完成。
             </div>
+            <div class="glyphicon glyphicon-info-sign alert alert-success show" role="alert">
+                (測試) {{ site_root }}
+            </div>
         </div>
     </div>
     {%- endwith %}
-    <div class="col-md-12 jumbotron">
-        <h1>歡迎來到Pokemon Quest資訊站！</h1>
+    <div class="row">
+        <div class="col-md-12 set-center" style="margin-bottom: initial">
+            <div class="well h1-nbs">歡迎來到Pokemon Quest資訊站！</div>
+        </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
-            <a class="btn btn-primary btn-big" href="{{ url_for('.find_recipe_index') }}">從精靈查食譜</a>
+        <div class="col-md-6 set-center">
+            <a class="btn btn-primary btn-big btn-func" href="{{ url_for('.find_recipe_index') }}">從精靈查食譜</a>
         </div>
-        <div class="col-md-6">
-            <a class="btn btn-info btn-big" href="{{ url_for('.find_pokemon_index') }}">從食譜查精靈</a>
+        <div class="col-md-6 set-center">
+            <a class="btn btn-info btn-big btn-func" href="{{ url_for('.find_pokemon_index') }}">從食譜查精靈</a>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <div class="well">
-                <p class="set-center h3">更新日誌</p>
+                <p class="set-center h3-nbs">熱門頁面</p>
+                <ul class="list-group">
+                    {% for path, pageview in hotpages %}
+                    <li class="list-group-item">
+                        (未開放)
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="panel panel-primary set-center" style="margin-top: 10px;">
+                <div class="panel-heading"><span class="h3-nbs">開鍋總數</span></div>
+                <div class="panel-body">
+                    <span class="h1">{{ count }}</span>
+                </div>
+            </div>
+            <div class="well">
+                <p class="set-center h3-nbs">網站更新日誌</p>
                 <ul class="list-group">
                     {% for entry in site_log %}
                     <li class="list-group-item list-group-item-{{ entry.type }}">
@@ -44,24 +65,19 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="panel panel-primary set-center">
-                <div class="panel-heading"><span class="h3">開鍋總數</span></div>
-                <div class="panel-body">
-                    <span class="h1">{{ count }}</span>
-                </div>
-            </div>
+            <!--hotpages-->
         </div>
         <div class="col-md-6 set-center">
             <div class="well">
-                <p class="set-center h3">最新開鍋</p>
+                <p class="set-center h3-nbs">最新開鍋</p>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>時間</th>
-                                <th>精靈</th>
-                                <th>食譜</th>
-                                <th>品質</th>
+                                <th class="set-center">時間</th>
+                                <th class="set-center">精靈</th>
+                                <th class="set-center">食譜</th>
+                                <th class="set-center">品質</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -76,10 +92,10 @@
                         </tbody>
                     </table>
                 </div>
-                    
-                    <a class="btn btn-success" href="{{ url_for('.submit_result') }}">我也要登記</a>
-                </div>
+
+                <a class="btn btn-success" href="{{ url_for('.submit_result') }}">我也要登記</a>
             </div>
+        </div>
     </div>
 </div>
 {%- endblock %}

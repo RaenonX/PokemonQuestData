@@ -1,10 +1,41 @@
-{%- extends "base.html" %}
+﻿{%- extends "base.html" %}
 
 {% block content %}
 <div class="container">
+    <div class="row">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <input class="form-control" id="pokeSearch" type="text" placeholder="輸入關鍵字搜尋...">
+            </div>
+        </div>
+    </div>
     {% for entry in pokedata %}
-    <a href="{{ url_for('.find_recipe', id=entry["id"]) }}"><img class="icon-pokelist" src="/static/Icon/{{ entry["id"] }}.png"></a>
+    <a class="poke"
+       href="{{ url_for('.find_recipe', id=entry["id"]) }}"
+       poke_id="{{ entry["id"] }}"
+       zh="{{ entry["name_zh"] }}"
+       jp="{{ entry["name_jp"] }}"
+       en="{{ entry["name_en"] }}">
+        <img class="icon-pokelist" src="/static/Icon/{{ entry["id"] }}.png">
+    </a>
     {% endfor %}
 </div>
 {%- endblock %}
 
+
+{% block scripts %}
+<script>
+    $(document).ready(
+        search_list_events(".poke", "#pokeSelected", "#pokeSearch", "#pokeList button")
+    );
+
+    function search_list_events(btn_id, indicator_id, query_id, list_id) {
+        $("#pokeSearch").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $(".poke").filter(function () {
+                $(this).toggle($(this).attr("zh").toLowerCase().indexOf(value) > -1 || $(this).attr("jp").toLowerCase().indexOf(value) > -1 || $(this).attr("en").toLowerCase().indexOf(value) > -1 || $(this).attr("poke_id").toLowerCase().indexOf(value) > -1)
+            });
+        });
+    };
+</script>
+{%- endblock %}

@@ -19,21 +19,19 @@ body {
     width: 100%;
     font-size: 36px;
     text-align: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-.selection-panel {
-    height: 270px;
-    display: flex;
-    flex-direction: column;
+.h1-nbs {
+    font-size: 36px;
 }
 
-.selection-area {
-    overflow-y: auto;
-    position: relative;
-    flex: 1;
+.h3-nbs {
+    font-size: 24px;
 }
+
+/* PAGE SPECIFIED */
 
 @media (max-width: 767px) {
     .icon-pokelist {
@@ -59,6 +57,14 @@ body {
     }
 }
 
+// Index page
+
+.btn-func {
+    height: 150px;
+    line-height: 150px;
+    padding: initial;
+}
+
 // Recipe Result Page
 .icon-fluid {
     width: 100%
@@ -69,15 +75,14 @@ body {
 }
 
 .set-center {
+    min-height: 1px;
     text-align: center;
-    vertical-align: central;
 }
 
 // Pokemon Result Page
 .recipe-title {
     font-size: 60px;
     text-align: center;
-    vertical-align: central;
 }
 
 .icon-title {
@@ -86,4 +91,26 @@ body {
 
 .icon-dish {
     margin: 5px 5px 5px 5px;
+}
+
+// Submit Result Page
+.selection-panel {
+    height: 270px;
+    display: flex;
+    flex-direction: column;
+}
+
+.selection-area {
+    overflow-y: auto;
+    position: relative;
+    flex: 1;
+}
+
+.selection-title {
+    height: 55px;
+}
+
+/* OVERRIDES */
+.well {
+    margin-bottom: initial;
 }

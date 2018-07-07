@@ -1,15 +1,20 @@
-### Use elements to get pokes, use keywords to get pokes
+### Use elements to get pokes
+### Handle case of evolved poke
 ### Add statistics page
 
 import os
 
-from flask import Blueprint, render_template, flash, redirect, url_for, request
+from flask import (
+    Blueprint, 
+    render_template, flash, redirect, url_for, request, current_app
+)
 from flask_bootstrap import __version__ as FLASK_BOOTSTRAP_VERSION
 from markupsafe import escape
 import pymongo
 
 from data import RecipeQuality
 from data.mongo import cook_data_manager, pokemon_collection, recipe_collection, site_log_manager
+from data.thirdparty import google_analytics
 
 from .nav import nav
 
@@ -21,10 +26,13 @@ mongo = pymongo.MongoClient(os.environ["MONGO_URI"])
 def index():
     cdm = cook_data_manager(mongo)
     slm = site_log_manager(mongo)
+
     return render_template("index.html", 
                            recent=cdm.get_last(10), 
                            count=cdm.get_count(),
-                           site_log=slm.get_last(7))
+                           site_log=slm.get_last(7),
+                           hotpages=google_analytics().get_top_unique_pageviews_by_path(),
+                           site_root=current_app.config["SERVER_NAME"])
 
 @frontend.route("/find-recipe")
 def find_recipe_index():
