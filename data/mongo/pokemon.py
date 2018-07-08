@@ -22,6 +22,9 @@ class pokemon_collection(base_collection):
 
         return ret
 
+    def get_all_pokemons(self):
+        return [pokemon(entry) for entry in self.find()]
+
     def get_count_of_pokemons(self):
         return self.find().count()
 
@@ -31,6 +34,8 @@ class pokemon(dict_like_mapping):
     NAME_JP = "name_jp"
     NAME_EN = "name_en"
     ELEMENTS = "elem"
+    EVOLVE_INFOS = "evolve_info"
+    IS_BASE_POKE = "is_base"
 
     def __init__(self, org_dict):
         super().__init__(org_dict)
@@ -51,7 +56,34 @@ class pokemon(dict_like_mapping):
     @property
     def name_en(self):
         return self[pokemon.NAME_EN]
-    
+
     @property
     def elements(self):
         return self[pokemon.ELEMENTS]
+
+    @property
+    def evolve_info(self):
+        return self.get([poke_evolve_info(e) for e in self[EVOLVE_TO_IDS]], [])
+
+    @property
+    def is_base_pokemon(self):
+        return self.get(pokemon.IS_BASE_POKE, True)
+
+    @property
+    def elements_id(self):
+        return [int(e) for e in self.elements]
+
+class poke_evolve_info(dict_like_mapping):
+    REQ_LV = "req_lv"
+    NEXT_ID = "nxt"
+
+    def __init__(self, org_dict):
+        super().__init__(org_dict)
+        
+    @property
+    def require_lv(self):
+        return self[pokemon.REQ_LV]
+
+    @property
+    def next_id(self):
+        return self[pokemon.NEXT_ID]

@@ -1,24 +1,52 @@
 ﻿{%- extends "base.html" %}
 
+{% block styles %}
+{{ super() }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" />
+{% endblock %}
+
 {% block titleex -%} 從精靈查食譜 {%- endblock %}
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="form-group row">
-            <div class="col-md-12">
-                <input class="form-control" id="pokeSearch" type="text" placeholder="輸入關鍵字搜尋...">
+    <div class="row form-group">
+        <input type="hidden" id="elemClicked" value="-1">
+        {% for type in poketype %}
+        <div class="col-md-2 col-sm-3 col-xs-4">
+            <button type="button" class="btn poke-button poke-{{ type.name.lower() }}" value="{{ type|int }}">{{ type|string() }}</button>
+        </div>
+        {% endfor %}
+        <div class="col-md-2 col-sm-3 col-xs-4">
+            <button type="button" class="btn poke-button poke-no poke-button-activated" value="-1">(不選擇屬性)</button>
+        </div>
+        <div class="col-md-2 col-sm-3 col-xs-4">
+            點擊滑鼠右鍵可取消選取屬性。
+        </div>
+        <div class="col-md-2 col-sm-3 col-xs-4">
+            <div class="pretty p-icon p-round p-pulse">
+                <input type="checkbox" id="displayAll" />
+                <div class="state p-success">
+                    <i class="icon mdi mdi-check"></i>
+                    <label>顯示全部精靈</label>
+                </div>
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="form-group col-md-12">
+            <input class="form-control" id="pokeSearch" type="text" placeholder="輸入關鍵字搜尋..." value="">
+        </div>
+    </div>
     {% for entry in pokedata %}
-    <a class="poke"
-       href="{{ url_for('.find_recipe', id=entry["id"]) }}"
-       poke_id="{{ entry["id"] }}"
-       zh="{{ entry["name_zh"] }}"
-       jp="{{ entry["name_jp"] }}"
-       en="{{ entry["name_en"] }}">
-        <img class="icon-pokelist" src="/static/Icon/{{ entry["id"] }}.png">
+    <a class="col-md-1 col-sm-2 col-xs-3 icon-pokelist-wrapper poke {{ '' if entry.is_base_pokemon else 'pokemon-evolved' }}"
+       href="{{ url_for('.find_recipe', id=entry.id) }}"
+       poke_id="{{ entry.id }}"
+       zh="{{ entry.name_zh }}"
+       jp="{{ entry.name_jp }}"
+       en="{{ entry.name_en }}"
+       elem="{{ entry.elements_id|join(" ") }}"
+       style="display: {{ 'inherit' if entry.is_base_pokemon else 'none' }}">
+        <img class="icon-pokelist" src="/static/Icon/{{ entry.id }}.png">
     </a>
     {% endfor %}
 </div>
@@ -27,17 +55,105 @@
 
 {% block scripts %}
 <script>
-    $(document).ready(
-        search_list_events(".poke", "#pokeSelected", "#pokeSearch", "#pokeList button")
-    );
+    (function ($) {
+        var darken_diff = 50;
 
-    function search_list_events(btn_id, indicator_id, query_id, list_id) {
-        $("#pokeSearch").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $(".poke").filter(function () {
-                $(this).toggle($(this).attr("zh").toLowerCase().indexOf(value) > -1 || $(this).attr("jp").toLowerCase().indexOf(value) > -1 || $(this).attr("en").toLowerCase().indexOf(value) > -1 || $(this).attr("poke_id").toLowerCase().indexOf(value) > -1)
-            });
+        $.fn.darken = function (diff = darken_diff) {
+            rgb_str = this.css("background-color");
+
+            try {
+                rgb = rgb_str.match(/\d+/g);
+                var r = Math.max(parseInt(rgb[0]) - diff, 0);
+                var g = Math.max(parseInt(rgb[1]) - diff, 0);
+                var b = Math.max(parseInt(rgb[2]) - diff, 0);
+
+                $(this).css("background-color", "rgb(" + r + ", " + g + ", " + b + ")");
+                if (diff > 0) {
+                    this.addClass("darkened");
+                }
+            } catch (TypeError) {
+            }
+
+            return this;
+        };
+
+        $.fn.recoverDarken = function () {
+            this.each(function () {
+                if ($(this).hasClass("darkened")) {
+                    $(this).darken(-darken_diff);
+                    $(this).removeClass("darkened");
+                }
+            })
+            return this;
+        };
+    }(jQuery));
+
+    $(document).ready(
+        function () {
+            $("#pokeSearch").on("keyup", handle_filter),
+            $(".poke-button").hover(
+                function () {
+                    temp = $(this).css("background-color");
+                    $(this).darken();
+                },
+                function () {
+                    $(this).recoverDarken();
+                }
+            ).click(
+                function () {
+                    $("#elemClicked").val($(this).val());
+                    $(".poke-button-activated").removeClass("poke-button-activated");
+                    $(this).addClass("poke-button-activated");
+                    handle_filter();
+                }
+            ),
+            $(document).mousedown(
+                function (e) {
+                    if (e.which === 3) {
+                        $("#elemClicked").val(-1);
+                        $(".poke-button-activated").removeClass("poke-button-activated");
+                        $(".poke-no").addClass("poke-button-activated");
+                        handle_filter();
+                    }
+                }
+            ),
+            $('#displayAll').click(
+                function () {
+                    $(".pokemon-evolved").toggle(this.checked);
+                }
+            )
+        }
+    ).contextmenu(function () { return false; });
+
+    function handle_filter() {
+        $(".poke").filter(function () {
+            var value = $("#pokeSearch").val().toLowerCase();
+            var elem = $("#elemClicked").val()
+
+            var word = (value == "") || (
+                $(this).attr("zh").toLowerCase().indexOf(value) > -1 ||
+                $(this).attr("jp").toLowerCase().indexOf(value) > -1 ||
+                $(this).attr("en").toLowerCase().indexOf(value) > -1 ||
+                $(this).attr("poke_id").indexOf(value) > -1)
+            var element = (elem == -1) || ($(this).attr("elem").split(" ").includes(elem))
+
+            if (word && element) {
+                $(this).removeClass("hide");
+            } else {
+                $(this).addClass("hide");
+            }
         });
-    };
+    }
+
+    function get_darken_rgb_str(rgb_str) {
+        var DIFF = 50;
+
+        rgb = rgb_str.match(/\d+/g);
+        var r = Math.max(parseInt(rgb[0]) - DIFF, 0);
+        var g = Math.max(parseInt(rgb[1]) - DIFF, 0);
+        var b = Math.max(parseInt(rgb[2]) - DIFF, 0);
+
+        return "rgb(" + r + ", " + g + ", " + b + ")";
+    }
 </script>
 {%- endblock %}

@@ -187,6 +187,9 @@
     <Content Include="static\Item\5.png" />
     <Content Include="static\jquery.min.js" />
     <Content Include="static\less.min.js" />
+    <Content Include="static\pokemon.less">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\Pot\1.png" />
     <Content Include="static\Pot\2.png" />
     <Content Include="static\Pot\3.png" />

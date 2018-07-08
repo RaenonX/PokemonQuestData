@@ -12,7 +12,7 @@ from flask_bootstrap import __version__ as FLASK_BOOTSTRAP_VERSION
 from markupsafe import escape
 import pymongo
 
-from data import RecipeQuality
+from data import RecipeQuality, PokeType
 from data.mongo import cook_data_manager, pokemon_collection, recipe_collection, site_log_manager
 from data.thirdparty import google_analytics
 
@@ -36,7 +36,9 @@ def index():
 
 @frontend.route("/find-recipe")
 def find_recipe_index():
-    return render_template("poke_list.html", pokedata=mongo.dict.pokemon.find().sort([("id", pymongo.ASCENDING)]))
+    return render_template("poke_list.html", 
+                           pokedata=pokemon_collection(mongo).get_all_pokemons(),
+                           poketype=PokeType)
 
 @frontend.route("/find-recipe/<int:id>")
 def find_recipe(id):
