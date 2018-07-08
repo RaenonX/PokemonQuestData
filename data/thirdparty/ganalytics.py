@@ -58,6 +58,12 @@ class google_analytics:
                                 "not": True,
                                 "expressions": ["/", "/prevent-sleep"],
                                 "operator": "EXACT"
+                            },
+                            {
+                                "dimensionName": "ga:pageTitle",
+                                "not": True,
+                                "expressions": ["Pokemon Quest 資料站"],
+                                "operator": "EXACT"
                             }
                         ]
                     }]
@@ -72,7 +78,7 @@ class google_analytics:
             except Exception as e:
                 print(e)
                 print(json.dumps(response, indent=4, sort_keys=True))
-                self._data.set_data(google_analytics.DATA_KEY_1, [])
+                self._data.set_data(google_analytics.DATA_KEY_1)
                 return
         else:
             self._data.set_data(google_analytics.DATA_KEY_1, [])
@@ -89,7 +95,7 @@ class google_analytics:
         if not self._disabled:
             data = self._data.get_data(google_analytics.DATA_KEY_1)
 
-            if (datetime.utcnow() - data.updated_time).total_seconds() > google_analytics.UPDATE_FREQ_SECS:
+            if (datetime.utcnow() - data.updated_time).total_seconds() > google_analytics.UPDATE_FREQ_SECS or data.data is None:
                 self._cache_1()
 
             return self._data.get_data(google_analytics.DATA_KEY_1)
