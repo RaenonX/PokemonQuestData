@@ -54,15 +54,15 @@ class google_analytics:
                     "dimensionFilterClauses": [{
                         "filters": [
                             {
-                                "dimensionName": "ga:pagePath",
-                                "not": True,
-                                "expressions": ["/", "/prevent-sleep"],
-                                "operator": "EXACT"
-                            },
-                            {
                                 "dimensionName": "ga:pageTitle",
                                 "not": True,
                                 "expressions": ["Pokemon Quest 資料站"],
+                                "operator": "EXACT"
+                            },
+                            {
+                                "dimensionName": "ga:pagePath",
+                                "not": True,
+                                "expressions": ["/", "/prevent-sleep"],
                                 "operator": "EXACT"
                             }
                         ]
