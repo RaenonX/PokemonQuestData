@@ -2,6 +2,8 @@
 
 {% import "bootstrap/utils.html" as utils %}
 
+{% block title -%} {{ super() }} | 首頁 {%- endblock %}
+
 {% block content %}
 <div class="container">
     {%- with messages = get_flashed_messages(with_categories=True) %}
@@ -10,23 +12,15 @@
         {{ utils.flashed_messages(messages) }}
     </div>
     {%- endif %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="glyphicon glyphicon-ok alert alert-info show" role="alert">
-                目前網頁基本功能建置完成，使用時若有任何問題的話，請聯絡<a href="mailto:maplestory0710@gmail.com">點此</a>回報，謝謝。
-            </div>
-            <div class="glyphicon glyphicon-info-sign alert alert-warning show" role="alert">
-                因為伺服器在連續30分鐘沒有活動時會將程式轉入休眠模式，故進入休眠模式後，第一個連入的使用者會比平常慢一點載入完成。
-            </div>
-            <div class="glyphicon glyphicon-info-sign alert alert-success show" role="alert">
-                (測試) {{ site_root }}
-            </div>
-        </div>
-    </div>
     {%- endwith %}
     <div class="row">
         <div class="col-md-12 set-center" style="margin-bottom: initial">
-            <div class="well h1-nbs">歡迎來到Pokemon Quest資訊站！</div>
+            <div class="well">
+                <p class="h1-nbs">歡迎來到Pokemon Quest資訊站！</p>
+                <div class="glyphicon glyphicon-ok">
+                    目前網頁基本功能建置完成，使用時若有任何問題，請聯絡<a href="mailto:maplestory0710@gmail.com">點此</a>回報，謝謝。
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -41,13 +35,16 @@
         <div class="col-md-6">
             <div class="well">
                 <p class="set-center h3-nbs">熱門頁面</p>
-                <ul class="list-group">
-                    {% for path, pageview in hotpages %}
-                    <li class="list-group-item">
-                        (未開放)
-                    </li>
+                <div class="list-group">
+                    {% for path, title, pageview in hotpages.data %}
+                    <a href="{{ site_root }}{{ path }}" class="list-group-item list-group-item-action set-center">
+                        {{ title }}
+                    </a>
                     {% endfor %}
-                </ul>
+                </div>
+                <div class="foot-info">
+                    最後更新 (UTC): {{ hotpages.updated_time.strftime('%m/%d %T.%f')[:-3] }}
+                </div>
             </div>
             <div class="panel panel-primary set-center" style="margin-top: 10px;">
                 <div class="panel-heading"><span class="h3-nbs">開鍋總數</span></div>
@@ -60,12 +57,11 @@
                 <ul class="list-group">
                     {% for entry in site_log %}
                     <li class="list-group-item list-group-item-{{ entry.type }}">
-                        {{ entry.timestamp.strftime('%m-%d %H:%M') }} (UTC): {{ entry.content }}
+                        {{ entry.timestamp.strftime('%m/%d %T') }} (UTC): {{ entry.content }}
                     </li>
                     {% endfor %}
                 </ul>
             </div>
-            <!--hotpages-->
         </div>
         <div class="col-md-6 set-center">
             <div class="well">

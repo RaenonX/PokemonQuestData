@@ -32,7 +32,7 @@ def index():
                            count=cdm.get_count(),
                            site_log=slm.get_last(7),
                            hotpages=google_analytics().get_top_unique_pageviews_by_path(),
-                           site_root=current_app.config["SERVER_NAME"])
+                           site_root=os.environ["APP_ROOT_URL"])
 
 @frontend.route("/find-recipe")
 def find_recipe_index():

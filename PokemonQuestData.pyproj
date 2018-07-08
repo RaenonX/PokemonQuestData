@@ -236,6 +236,9 @@
   <ItemGroup>
     <Compile Include="app.py" />
     <Compile Include="app_local.py" />
+    <Compile Include="blueprints\dummy.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="blueprints\__init__.py">
       <SubType>Code</SubType>
     </Compile>

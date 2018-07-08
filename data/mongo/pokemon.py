@@ -22,6 +22,9 @@ class pokemon_collection(base_collection):
 
         return ret
 
+    def get_count_of_pokemons(self):
+        return self.find().count()
+
 class pokemon(dict_like_mapping):
     ID = "id"
     NAME_ZH = "name_zh"

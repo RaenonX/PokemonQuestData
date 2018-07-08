@@ -2,6 +2,8 @@
 
 {% import "bootstrap/utils.html" as utils %}
 
+{% block titleex -%} 提交開鍋結果 {%- endblock %}
+
 {% block content %}
 <div class="container">
     {%- with messages = get_flashed_messages(with_categories=True) %}
@@ -37,7 +39,7 @@
                     <div class="panel-heading selection-title">
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <input class="form-control" id="rcpSearch" type="text" placeholder="選擇食譜，輸入關鍵字搜尋並選取...">
+                                <input class="form-control" id="rcpSearch" type="text" placeholder="選擇食譜，輸入關鍵字搜尋並選取..." tabindex="1">
                             </div>
                         </div>
                     </div>
@@ -62,7 +64,8 @@
                     <div class="panel-body selection-panel">
                         <div class="form-group row col-md-12 selection-area" id="qltList">
                             {% for id, choice in quality_choices %}
-                            <button type="button" class="list-group-item list-group-item-action qlt" value="{{ id }}">{{ choice }}</button>
+                            {% set tabindex = loop.index + 1 %}
+                            <button tabindex="{{ tabindex }}" type="button" class="list-group-item list-group-item-action qlt" value="{{ id }}">{{ choice }}</button>
                             {% endfor %}
                         </div>
                     </div>
@@ -77,7 +80,7 @@
                     <div class="panel-heading selection-title">
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <input class="form-control" id="pokeSearch" type="text" placeholder="選擇寶可夢，輸入關鍵字搜尋並選取...">
+                                <input tabindex="6" class="form-control" id="pokeSearch" type="text" placeholder="選擇寶可夢，輸入關鍵字搜尋並選取...">
                             </div>
                         </div>
                     </div>
