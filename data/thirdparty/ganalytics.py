@@ -52,6 +52,7 @@ class google_analytics:
                         "sortOrder": "DESCENDING"
                     }],
                     "dimensionFilterClauses": [{
+                        "operator": "OR",
                         "filters": [
                             {
                                 "dimensionName": "ga:pageTitle",
