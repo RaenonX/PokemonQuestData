@@ -84,11 +84,20 @@ class cook_data_manager(base_collection):
 
         return poke_data_result(rcp, quality_unit_arr, time.time() - _start)
 
+    def get_entries_by_adder_uid(self, adder_uid, start=0, count=100):
+        return [cook_data(d) for d in self._find_data_section({ cook_data.ADDER: adder_uid }, start, count)]
+
     def get_last(self, start=0, count=100):
-        return [cook_data(d) for d in self.find().sort([("_id", -1)]).skip(start).limit(count)]
+        return [cook_data(d) for d in self._find_data_section({}, start, count)]
+
+    def _find_data_section(self, query, start, count):
+        return self.find(query).sort([("_id", -1)]).skip(start).limit(count)
 
     def get_count(self):
         return self.find().count()
+
+    def get_adder_count(self):
+        return len(self.distinct(cook_data.ADDER))
 
     def add_record(self, recipe_id, quality_id, pokemon_id, adder):
         return self.insert_one(cook_data.init_by_field(recipe_id, quality_id, pokemon_id, adder)).acknowledged

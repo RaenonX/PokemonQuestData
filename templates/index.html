@@ -12,6 +12,7 @@
         {{ utils.flashed_messages(messages) }}
     </div>
     {%- endif %}
+    {%- endwith %}
     <div class="row">
         <div class="col-md-12">
             <div class="glyphicon glyphicon-info-sign alert alert-info show">
@@ -19,7 +20,6 @@
             </div>
         </div>
     </div>
-    {%- endwith %}
     <div class="row">
         <div class="col-md-12 set-center" style="margin-bottom: initial">
             <div class="well">

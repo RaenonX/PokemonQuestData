@@ -222,6 +222,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="templates\error\500.html" />
+    <Content Include="templates\recent_data_user.html" />
     <Content Include="templates\index.html" />
     <Content Include="templates\user_verify.html">
       <SubType>Code</SubType>

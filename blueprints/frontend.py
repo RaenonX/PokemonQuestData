@@ -48,6 +48,24 @@ def recent_new_data():
                            data=cdm.get_last(start=start, count=result_count),
                            start=start,
                            result_count=result_count)
+
+@frontend.route("/recent-user/<uid>")
+@frontend.route("/recent-user/")
+def recent_new_data_by_user(uid=""):
+    if uid is None or uid == "":
+        uid = session.get(identity_entry_uid_key, "")
+
+    if uid is None or uid == "":
+        flash("無法獲取使用者ID，改為顯示最新開鍋紀錄。")
+        return redirect(url_for(".recent_new_data"))
+    else:
+        start = int(request.args.get('start', 0))
+        result_count = 100
+
+        return render_template("recent_data_user.html", 
+                               data=cdm.get_entries_by_adder_uid(uid, start, result_count),
+                               start=start,
+                               result_count=result_count)
     
 @frontend.route("/find-recipe")
 def find_recipe_index():
