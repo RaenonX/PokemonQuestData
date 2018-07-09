@@ -1,0 +1,48 @@
+﻿{%- extends "base.html" %}
+
+{% block titleex -%} 最新開鍋 {%- endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 set-center">
+            <div class="well">
+                <p class="set-center h3-nbs">最新開鍋</p>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th class="set-center">時間</th>
+                                <th class="set-center">提交者ID</th>
+                                <th class="set-center">精靈</th>
+                                <th class="set-center">食譜</th>
+                                <th class="set-center">品質</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in data %}
+                            <tr>
+                                <td>{{ entry.timestamp.strftime('%Y-%m-%d %T') }} (UTC)</td>
+                                <td><a href="{{ url_for('.find_recipe', id=entry.pokemon_id) }}"><img class="icon" src="/static/Icon/{{ entry.pokemon_id }}.png" /></a></td>
+                                <td>{{ entry.adder_uid }}</td>
+                                <td><a href="{{ url_for('.find_pokemon', id=entry.recipe_id) }}"><img class="icon" src="/static/Recipe/{{ entry.recipe_id }}.png" /></a></td>
+                                <td>{{ entry.quality|string() }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% if (start - result_count) >= 0 %}
+                <a class="btn btn-danger" href="{{ url_for('.recent_new_data', start=start-result_count) }}">後{{ result_count }}條結果</a>
+                {% endif %}
+                <a class="btn btn-success" href="{{ url_for('.recent_new_data', start=start+result_count) }}">
+                    前{{
+ result_count
+                    }}條結果
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{%- endblock %}

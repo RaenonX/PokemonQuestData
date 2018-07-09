@@ -5,8 +5,7 @@ class recipe_collection(base_collection):
     COL_NAME = "recipe"
 
     def __init__(self, mongo_client):
-        super().__init__(mongo_client, recipe_collection.DB_NAME, recipe_collection.COL_NAME)
-        self.init_cache(recipe.ID)
+        super().__init__(mongo_client, recipe_collection.DB_NAME, recipe_collection.COL_NAME, cache_keys=[recipe.ID])
 
     def get_recipe_choices(self):
         ret = []

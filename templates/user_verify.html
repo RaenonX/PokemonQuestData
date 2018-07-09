@@ -1,0 +1,60 @@
+﻿{%- extends "base.html" %}
+
+{% block titleex -%} 身分驗證 {%- endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="glyphicon glyphicon-remove-circle alert alert-danger hide" id="msg"></div>
+        </div>
+        <div class="col-md-12 jumbotron">
+            <p class="h1-nbs">為了避免垃圾資料，登記開鍋紀錄時，我們將會以您的Google帳號作為使用者的身分登記資料。</p>
+            我們能獲取的只有您的基本個人資料(使用者ID、姓名、使用者圖像及信箱)，會使用並記錄的資料為「信箱」以及「ID」。ID將會在您登記資料時，於資料中附上登記者是您；信箱則是填塞垃圾資料時才會發信警告使用者。
+        </div>
+        <div class="login-btn-div set-center">
+            <div class="g-signin2" data-onsuccess="onSignIn" data-longtitle="true"></div>
+        </div>
+        <input type="hidden" value="{{ prev }}" id="prevSite" />
+    </div>
+</div>
+{%- endblock %}
+
+
+{% block scripts %}
+<script>
+    function getUrlVars() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+
+    function getUrlParam(parameter, defaultvalue) {
+        var urlparameter = defaultvalue;
+        if (window.location.href.indexOf(parameter) > -1) {
+            urlparameter = getUrlVars()[parameter];
+        }
+        return urlparameter;
+    }
+
+    function onSignIn(googleUser) {
+        var id_token = googleUser.getAuthResponse().id_token;
+        var email = googleUser.getBasicProfile().getEmail();
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', Flask.url_for('frontend.user_verify_post'));
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('token=' + id_token + '&email=' + email);
+        xhr.onload = function () {
+            if (xhr.responseText === "PASS") {
+                window.location.replace(getUrlParam('prev', '').replace('%2F', ''));
+            } else {
+                $("#msg").removeClass("hide").text(xhr.responseText);
+            }
+        }
+    }
+</script>
+{%- endblock %}
+

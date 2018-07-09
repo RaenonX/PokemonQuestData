@@ -6,6 +6,7 @@ import requests
 from flask import Flask
 from flask_appconfig import HerokuConfig
 from flask_bootstrap import Bootstrap
+from flask_jsglue import JSGlue
 
 import blueprints
 
@@ -13,8 +14,9 @@ sleep_preventer = ThreadPool()
 
 def create_app(configfile=None):
     app = Flask(__name__)
-    Bootstrap(app)
 
+    Bootstrap(app)
+    JSGlue(app)
     HerokuConfig(app, configfile)
     
     app.register_blueprint(blueprints.err)
@@ -23,7 +25,7 @@ def create_app(configfile=None):
     
     app.jinja_env.cache = {}
 
-    app.secret_key = os.urandom(24)
+    app.secret_key = bytes(os.environ.get("SECRET_KEY"), encoding='utf-8')
     
     app.config["BOOTSTRAP_SERVE_LOCAL"] = True
 

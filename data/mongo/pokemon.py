@@ -7,8 +7,7 @@ class pokemon_collection(base_collection):
     COL_NAME = "pokemon"
 
     def __init__(self, mongo_client):
-        super().__init__(mongo_client, pokemon_collection.DB_NAME, pokemon_collection.COL_NAME)
-        self.init_cache(pokemon.ID)
+        super().__init__(mongo_client, pokemon_collection.DB_NAME, pokemon_collection.COL_NAME, cache_keys=[pokemon.ID])
 
     def get_pokemon_by_id(self, id):
         return pokemon(self.get_cache(pokemon.ID, id))

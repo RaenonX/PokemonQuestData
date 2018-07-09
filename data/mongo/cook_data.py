@@ -84,29 +84,31 @@ class cook_data_manager(base_collection):
 
         return poke_data_result(rcp, quality_unit_arr, time.time() - _start)
 
-    def get_last(self, count):
-        return [cook_data(d) for d in self.find().sort([("_id", -1)]).limit(count)]
+    def get_last(self, start=0, count=100):
+        return [cook_data(d) for d in self.find().sort([("_id", -1)]).skip(start).limit(count)]
 
     def get_count(self):
         return self.find().count()
 
-    def add_record(self, recipe_id, quality_id, pokemon_id):
-        return self.insert_one(cook_data.init_by_field(recipe_id, quality_id, pokemon_id)).acknowledged
+    def add_record(self, recipe_id, quality_id, pokemon_id, adder):
+        return self.insert_one(cook_data.init_by_field(recipe_id, quality_id, pokemon_id, adder)).acknowledged
 
 class cook_data(dict_like_mapping):
     RECIPE = "r"
     QUALITY = "q"
     POKEMON_ID = "p"
+    ADDER = "a"
 
     def __init__(self, org_dict):
         super().__init__(org_dict)
 
     @staticmethod
-    def init_by_field(recipe_id, quality_id, pokemon_id):
+    def init_by_field(recipe_id, quality_id, pokemon_id, adder):
         init_dict = {
             cook_data.RECIPE: int(recipe_id),
             cook_data.QUALITY: int(quality_id),
-            cook_data.POKEMON_ID: int(pokemon_id)
+            cook_data.POKEMON_ID: int(pokemon_id),
+            cook_data.ADDER: adder
         }
         return cook_data(init_dict)
 
@@ -125,6 +127,10 @@ class cook_data(dict_like_mapping):
     @property
     def pokemon_id(self):
         return self[cook_data.POKEMON_ID]
+
+    @property
+    def adder_uid(self):
+        return self[cook_data.ADDER]
 
     def get_recipe_comp_dict(self):
         return { cook_data.RECIPE: self.recipe_id, cook_data.QUALITY: int(self.quality) }

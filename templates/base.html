@@ -5,19 +5,18 @@
 {% import "bootstrap/fixes.html" as fixes %}
 {% import "bootstrap/google.html" as google %}
 
+{% block metas %}
+<meta name="google-signin-client_id" content="431200420774-gomqlh7uqa9a5m5fjfrqlnvn07ofdp4o.apps.googleusercontent.com">
+{%- endblock %}
+
 {% block head %}
 {{ super() }}
 {{ fixes.ie8() }}
+{{ JSGlue.include() }}
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <script src={{ url_for('static', filename='less.min.js') }} type="text/javascript"></script>
 <script src={{ url_for('static', filename='jquery.min.js') }} type="text/javascript"></script>
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-    (adsbygoogle = window.adsbygoogle || []).push({
-        google_ad_client: "ca-pub-4979513067268897",
-        enable_page_level_ads: true
-    });
-</script>
+<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 {%- endblock %}
 
 {% block scripts %}

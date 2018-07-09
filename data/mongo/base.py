@@ -3,9 +3,11 @@ from collections import MutableMapping
 from pymongo.collection import Collection
 
 class base_collection(Collection):
-    def __init__(self, mongo_client, db_name, col_name):
+    def __init__(self, mongo_client, db_name, col_name, cache_keys=[]):
         super().__init__(mongo_client.get_database(db_name), col_name)
         self._cache = {}
+        for k in cache_keys:
+            self.init_cache(k)
 
     def init_cache(self, cache_key):
         self._cache[cache_key] = {}
