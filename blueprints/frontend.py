@@ -71,7 +71,7 @@ def recent_new_data_by_user(uid=""):
 @frontend.route("/find-recipe")
 def find_recipe_index():
     return render_template("poke_list.html", 
-                           pokedata=pkc.get_all_pokemons(),
+                           pokedata=pkc.get_all_pokemons(False),
                            poketype=PokeType)
 
 @frontend.route("/find-recipe/<int:id>")
@@ -90,7 +90,7 @@ def find_pokemon(id):
 def submit_result():
     if gi.user_exists(session=session):
         return render_template('submit_result.html', 
-                           poke_choices=pkc.get_pokemon_choices(), 
+                           poke_choices=pkc.get_pokemon_choices(False), 
                            recipe_choices=rcc.get_recipe_choices(), 
                            quality_choices=RecipeQuality.get_choices())
     else:

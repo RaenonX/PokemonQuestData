@@ -12,17 +12,20 @@ class pokemon_collection(base_collection):
     def get_pokemon_by_id(self, id):
         return pokemon(self.get_cache(pokemon.ID, id))
 
-    def get_pokemon_choices(self):
+    def get_pokemon_choices(self, including_evolved=True):
         ret = []
 
-        for entry in self.find().sort([(pokemon.ID, 1)]):
-            entry = pokemon(entry)
+        for entry in self.get_all_pokemons(including_evolved):
             ret.append((entry.id, "#{:03d} {} (英: {}、日: {})".format(entry.id, entry.name_zh, entry.name_en, entry.name_jp)))
 
         return ret
 
-    def get_all_pokemons(self):
-        return [pokemon(entry) for entry in self.find()]
+    def get_all_pokemons(self, including_evolved=True):
+        filter = {}
+        if not including_evolved:
+            filter[pokemon.IS_BASE_POKE] = True
+
+        return [pokemon(entry) for entry in self.find(filter).sort([(pokemon.ID, 1)])]
 
     def get_count_of_pokemons(self):
         return self.find().count()
