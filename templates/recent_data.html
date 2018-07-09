@@ -46,9 +46,7 @@
                 <a class="btn btn-danger" href="{{ url_for('.recent_new_data', start=start-result_count) }}">後{{ result_count }}條結果</a>
                 {% endif %}
                 <a class="btn btn-success" href="{{ url_for('.recent_new_data', start=start+result_count) }}">
-                    前{{
- result_count
-                    }}條結果
+                    前{{ result_count }}條結果
                 </a>
             </div>
         </div>

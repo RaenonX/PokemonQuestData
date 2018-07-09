@@ -68,6 +68,9 @@ class google_identity(base_collection):
         except ValueError:
             return None
 
+    def get_count(self):
+        return self.find().count()
+
 class g_user_instance(dict_like_mapping):
     EMAIL = "email"
     ID = "uid"

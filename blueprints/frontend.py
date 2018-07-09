@@ -35,6 +35,7 @@ def index():
     return render_template("index.html", 
                            recent=cdm.get_last(count=10), 
                            count=cdm.get_count(),
+                           identity_count=gi.get_count(),
                            site_log=slm.get_last(7),
                            hotpages=ga.get_top_unique_pageviews_by_path(),
                            site_root=os.environ["APP_ROOT_URL"])
@@ -56,7 +57,7 @@ def recent_new_data_by_user(uid=""):
         uid = session.get(identity_entry_uid_key, "")
 
     if uid is None or uid == "":
-        flash("無法獲取使用者ID，改為顯示最新開鍋紀錄。")
+        flash("使用者ID獲取失敗，改為顯示最新開鍋紀錄。登記至少一筆開鍋紀錄即可查看自己的開鍋結果。")
         return redirect(url_for(".recent_new_data"))
     else:
         start = int(request.args.get('start', 0))

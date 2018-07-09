@@ -39,3 +39,8 @@ class RecipeItem(ex.EnumWithName):
     LARGE_ALL = 15, "大(隨意)"
     RAINBOW = 21, "彩石"
     SHELL = 22, "貝殼"
+
+class BattleType(ex.EnumWithName):
+    MELEE = 0, "近距離"
+    RANGE = 1, "遠距離"
+    DUAL = 2, "兩者皆可"

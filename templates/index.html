@@ -53,10 +53,22 @@
                     最後更新 (UTC): {{ hotpages.updated_time.strftime('%m/%d %T.%f')[:-3] }}
                 </div>
             </div>
-            <div class="panel panel-primary set-center" style="margin-top: 10px;">
-                <div class="panel-heading"><span class="h3-nbs">開鍋總數</span></div>
-                <div class="panel-body">
-                    <span class="h1">{{ count }}</span>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-primary set-center" style="margin-top: 10px;">
+                        <div class="panel-heading"><span class="h3-nbs">開鍋總數</span></div>
+                        <div class="panel-body">
+                            <span class="h1">{{ count }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="panel panel-primary set-center" style="margin-top: 10px;">
+                        <div class="panel-heading"><span class="h3-nbs">登記身分人數</span></div>
+                        <div class="panel-body">
+                            <span class="h1">{{ identity_count }}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="well">

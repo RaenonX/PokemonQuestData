@@ -13,4 +13,4 @@ nav.register_element("main", Navbar(
     View("從食譜查精靈", ".find_pokemon_index"),
     View("提交結果", ".submit_result"),
     View("關於", ".about"),
-    View("開鍋紀錄", ".recent_new_data_by_user", uid="")))
+    View("我的開鍋紀錄", ".recent_new_data_by_user", uid="")))
