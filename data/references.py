@@ -43,4 +43,11 @@ class RecipeItem(ex.EnumWithName):
 class BattleType(ex.EnumWithName):
     MELEE = 0, "近距離"
     RANGE = 1, "遠距離"
-    DUAL = 2, "兩者皆可"
+
+class SkillStone(ex.EnumWithName):
+    STONE_CD = 0, "快快石"
+    STONE_ADD = 1, "多多石"
+    STONE_RANGE = 2, "展展石"
+    STONE_MULTI = 3, "連連石"
+    STONE_BUFF = 4, "團團石"
+    STONE_TIME = 5, "恒恒石"

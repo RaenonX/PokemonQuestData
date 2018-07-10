@@ -1,10 +1,5 @@
 ﻿{%- extends "base.html" %}
 
-{% block styles %}
-{{ super() }}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" />
-{% endblock %}
-
 {% block titleex -%} 從精靈查食譜 {%- endblock %}
 
 {% block content %}
@@ -32,13 +27,12 @@
     </div>
     {% for entry in pokedata %}
     <a class="col-md-1 col-sm-2 col-xs-3 icon-pokelist-wrapper poke"
-       href="{{ url_for('.find_recipe', id=entry.id) }}"
+       href="{{ url_for(next_endpoint, id=entry.id) }}"
        poke_id="{{ entry.id }}"
        zh="{{ entry.name_zh }}"
        jp="{{ entry.name_jp }}"
        en="{{ entry.name_en }}"
-       elem="{{ entry.elements_id|join(" ") }}"
-       style="display: {{ 'inherit' if entry.is_base_pokemon else 'none' }}">
+       elem="{{ entry.elements_id|join(" ") }}">
         <img class="icon-pokelist" src="/static/Icon/{{ entry.id }}.png">
     </a>
     {% endfor %}
@@ -84,32 +78,32 @@
     $(document).ready(
         function () {
             $("#pokeSearch").on("keyup", handle_filter),
-            $(".poke-button").hover(
-                function () {
-                    temp = $(this).css("background-color");
-                    $(this).darken();
-                },
-                function () {
-                    $(this).recoverDarken();
-                }
-            ).click(
-                function () {
-                    $("#elemClicked").val($(this).val());
-                    $(".poke-button-activated").removeClass("poke-button-activated");
-                    $(this).addClass("poke-button-activated");
-                    handle_filter();
-                }
-            ),
-            $(document).mousedown(
-                function (e) {
-                    if (e.which === 3) {
-                        $("#elemClicked").val(-1);
+                $(".poke-button").hover(
+                    function () {
+                        temp = $(this).css("background-color");
+                        $(this).darken();
+                    },
+                    function () {
+                        $(this).recoverDarken();
+                    }
+                ).click(
+                    function () {
+                        $("#elemClicked").val($(this).val());
                         $(".poke-button-activated").removeClass("poke-button-activated");
-                        $(".poke-no").addClass("poke-button-activated");
+                        $(this).addClass("poke-button-activated");
                         handle_filter();
                     }
-                }
-            )
+                ),
+                $(document).mousedown(
+                    function (e) {
+                        if (e.which === 3) {
+                            $("#elemClicked").val(-1);
+                            $(".poke-button-activated").removeClass("poke-button-activated");
+                            $(".poke-no").addClass("poke-button-activated");
+                            handle_filter();
+                        }
+                    }
+                )
         }
     ).contextmenu(function () { return false; });
 

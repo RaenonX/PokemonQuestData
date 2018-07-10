@@ -99,8 +99,8 @@
                             {% for entry in recent %}
                             <tr>
                                 <td>{{ entry.timestamp.strftime('%m-%d %H:%M') }} (UTC)</td>
-                                <td><a href="{{ url_for('.find_recipe', id=entry.pokemon_id) }}"><img class="icon" src="/static/Icon/{{ entry.pokemon_id }}.png" /></a></td>
-                                <td><a href="{{ url_for('.find_pokemon', id=entry.recipe_id) }}"><img class="icon" src="/static/Recipe/{{ entry.recipe_id }}.png" /></a></td>
+                                <td><a href="{{ url_for('.find_recipe_result', id=entry.pokemon_id) }}"><img class="icon" src="/static/Icon/{{ entry.pokemon_id }}.png" /></a></td>
+                                <td><a href="{{ url_for('.find_pokemon_result', id=entry.recipe_id) }}"><img class="icon" src="/static/Recipe/{{ entry.recipe_id }}.png" /></a></td>
                                 <td>{{ entry.quality|string() }}</td>
                             </tr>
                             {% endfor %}

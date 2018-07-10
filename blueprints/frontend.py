@@ -1,4 +1,4 @@
-### Use elements to get pokes
+### Report garbage data (XHR)
 ### Handle case of evolved poke
 ### Add statistics page
 
@@ -13,7 +13,7 @@ from markupsafe import escape
 import pymongo
 
 from data import RecipeQuality, PokeType
-from data.mongo import cook_data_manager, pokemon_collection, recipe_collection, site_log_manager
+from data.mongo import cook_data_manager, pokemon_collection, pokemon_skill_collection, recipe_collection, site_log_manager, pokemon_integrator
 from data.thirdparty import google_analytics, google_identity, identity_entry_uid_key
 
 from .nav import nav
@@ -25,6 +25,9 @@ mongo = pymongo.MongoClient(os.environ["MONGO_URI"])
 cdm = cook_data_manager(mongo)
 pkc = pokemon_collection(mongo)
 rcc = recipe_collection(mongo)
+skc = pokemon_skill_collection(mongo)
+
+pi = pokemon_integrator(pkc, skc)
 
 slm = site_log_manager(mongo)
 ga = google_analytics()
@@ -68,14 +71,26 @@ def recent_new_data_by_user(uid=""):
                                start=start,
                                result_count=result_count)
     
+@frontend.route("/poke-profile")
+def pokemon_profile_index():
+    return render_template("poke_list.html", 
+                           pokedata=pkc.get_all_pokemons(),
+                           poketype=PokeType,
+                           next_endpoint=".pokemon_profile_result")
+
+@frontend.route("/poke-profile/<int:id>")
+def pokemon_profile_result(id):
+    return render_template("poke_profile.html", profile=pi.get_pokemon_profile(id))
+    
 @frontend.route("/find-recipe")
 def find_recipe_index():
     return render_template("poke_list.html", 
                            pokedata=pkc.get_all_pokemons(False),
-                           poketype=PokeType)
+                           poketype=PokeType,
+                           next_endpoint=".find_recipe_result")
 
 @frontend.route("/find-recipe/<int:id>")
-def find_recipe(id):
+def find_recipe_result(id):
     return render_template("recipe_result.html", result=cdm.get_cook_data_by_pokemon_id(id))
     
 @frontend.route("/find-pokemon")
@@ -83,7 +98,7 @@ def find_pokemon_index():
     return render_template("recipe_list.html", recipedata=mongo.dict.recipe.find().sort([("id", pymongo.ASCENDING)]))
 
 @frontend.route("/find-pokemon/<int:id>")
-def find_pokemon(id):
+def find_pokemon_result(id):
     return render_template("poke_result.html", result=cdm.get_poke_data_by_recipe_id(id))
 
 @frontend.route("/submit-result", methods=["GET"])

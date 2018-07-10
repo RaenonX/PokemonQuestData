@@ -1,0 +1,73 @@
+﻿{%- extends "base.html" %}
+
+{% block titleex -%} 精靈資料 ({{ profile.name_zh }}) {%- endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-4 set-center">
+            <div class="icon-pokelist-wrapper">
+                <img class="icon-pokelist" src="/static/Icon/{{ profile.id }}.png">
+            </div>
+        </div>
+        <div class="col-xs-8 set-center">
+            <span class="h1-nbs">#{{ profile.id }} {{ profile.name_zh }}</span><span class="h3-nbs"> (英: {{ profile.name_en }}、日: {{ profile.name_jp }})</span>
+            <div class="panel panel-default">
+                <div class="panel-heading">屬性</div>
+                <div class="panel-body">
+                    <div class="row">
+                        {% for elem in profile.elements %}
+                        <div class="col-xs-{{ (12 / profile.elements|length)|int }} poke-{{ elem.name.lower() }}" style="color: white;">
+                            <div class="poke-div h3-nbs">{{ elem|string() }}</div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="set-center">
+                <p class="h3-nbs">進化型態</p>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6 set-center">
+            <p class="h3-nbs">技能</p>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="set-center">圖標</th>
+                            <th class="set-center">屬性</th>
+                            <th class="set-center">技能名稱</th>
+                            <th class="set-center">威力</th>
+                            <th class="set-center">CD</th>
+                            <th class="set-center">石槽</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for skill in profile.skills %}
+                        <tr>
+                            <td><img class="skill-icon" src="/static/Skill/{{ skill.icon }}.png" /></td>
+                            <td>{{ skill.element|string() }}</td>
+                            <td>{{ skill.name_zh }}</td>
+                            <td>{{ skill.power }}</td>
+                            <td>{{ skill.cd }}</td>
+                            <td>
+                                {% for sstone in skill.slots %}
+                                <img class="skill-icon" src="/static/SStone/{{ sstone|int }}.png" />
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6 set-center">
+            <p class="h3-nbs">賓果</p>
+        </div>
+    </div>
+</div>
+{%- endblock %}
