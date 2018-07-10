@@ -1,5 +1,6 @@
-### Report garbage data (XHR)
-### Handle case of evolved poke
+### Complete profile page - Skill Description, Bingo including what will happen after evolving
+### Report garbage data (XHR), delete own uploaded data
+### IV Calculator, pokemon quality determination system
 ### Add statistics page
 
 import os

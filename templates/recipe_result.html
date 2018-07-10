@@ -9,7 +9,7 @@
             <img class="icon-fluid" src="/static/Icon/{{ result.pokemon.id }}.png" />
         </div>
         <div class="col-sm-10 set-center">
-            <div class="short-div">#{{ result.pokemon.id }} <span class="pokemon-title">{{ result.pokemon.name_zh }}</span></div>
+            <div class="short-div"><a href="{{ url_for('.pokemon_profile_result', id=result.pokemon.id) }}">#{{ result.pokemon.id }} <span class="pokemon-title">{{ result.pokemon.name_zh }}</span></a></div>
             <div class="short-div">英: {{ result.pokemon.name_en }} 日: {{ result.pokemon.name_jp }}<br />屬性: {{ result.pokemon.elements|join("、") }}</div>
         </div>
     </div>
