@@ -60,6 +60,7 @@
                             <th class="set-center">威力</th>
                             <th class="set-center">CD</th>
                             <th class="set-center">石槽</th>
+                            <th class="set-center">說明</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,7 +68,7 @@
                         <tr>
                             <td><img class="skill-icon" src="/static/Skill/{{ skill.icon }}.png" /></td>
                             <td>{{ skill.element|string() }}</td>
-                            <td><p data-toggle="tooltip" data-placement="bottom" title="{{ skill.description }}">{{ skill.name_zh }}</p></td>
+                            <td>{{ skill.name_zh }}</td>
                             <td>{{ skill.power }}</td>
                             <td>{{ skill.cd }}</td>
                             <td>
@@ -75,6 +76,7 @@
                                 <img class="skill-icon" src="/static/SStone/{{ sstone|int }}.png" />
                                 {% endfor %}
                             </td>
+                            <td>{{ skill.description }}</td>
                         </tr>
                         {% endfor %}
                         {% if profile.skills_dlc|length > 0 %}
@@ -128,12 +130,4 @@
         </div>
     </div>
 </div>
-{%- endblock %}
-
-{% block scripts %}
-<script>
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
 {%- endblock %}
