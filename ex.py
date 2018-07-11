@@ -18,6 +18,12 @@ class EnumWithName(IntEnum):
         return int(EnumWithName.str_get_enum(txt))
 
     @classmethod
+    def int_get_str(cls, num):
+        for item in cls:
+            if int(item) == num:
+                return str(item)
+
+    @classmethod
     def str_get_enum(cls, txt):
         for item in cls:
             if str(item) == txt:

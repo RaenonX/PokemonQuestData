@@ -21,10 +21,10 @@
   <ItemGroup>
     <Content Include="requirements.txt" />
     <Content Include="runtime.txt" />
-    <Content Include="static\BattleType\Nmelee.png" />
-    <Content Include="static\BattleType\Nrange.png" />
-    <Content Include="static\BattleType\Tmelee.png" />
-    <Content Include="static\BattleType\Trange.png" />
+    <Content Include="static\BattleType\N0.png" />
+    <Content Include="static\BattleType\N1.png" />
+    <Content Include="static\BattleType\T0.png" />
+    <Content Include="static\BattleType\T1.png" />
     <Content Include="static\html5shiv.min.js" />
     <Content Include="static\Icon\1.png" />
     <Content Include="static\Icon\10.png" />
@@ -190,6 +190,9 @@
     <Content Include="static\Item\4.png" />
     <Content Include="static\Item\5.png" />
     <Content Include="static\jquery.min.js" />
+    <Content Include="static\layouts\poke_list.less">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\less.min.js" />
     <Content Include="static\pokemon.less">
       <SubType>Code</SubType>
@@ -490,6 +493,7 @@
     <Folder Include="static\BattleType\" />
     <Folder Include="static\Icon" />
     <Folder Include="static\Item" />
+    <Folder Include="static\layouts\" />
     <Folder Include="static\Pot" />
     <Folder Include="static\Recipe\" />
     <Folder Include="static\Skill\" />

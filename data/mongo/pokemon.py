@@ -45,6 +45,28 @@ class pokemon_skill_collection(base_collection):
     def get_all_skills(self):
         return [poke_skill(entry) for entry in self.find().sort([(poke_skill.ID, 1)])]
 
+class pokemon_bingo_collection(base_collection):
+    DB_NAME = "dict"
+    COL_NAME = "bingo"
+
+    SPEC_HANDLE = {
+        6: 0,
+        7: 0,
+        8: 0,
+        9: 0
+    }
+
+    def __init__(self, mongo_client, pkm_col):
+        super().__init__(mongo_client, pokemon_bingo_collection.DB_NAME, pokemon_bingo_collection.COL_NAME, cache_keys=[bingo_entry.TYPE_ID])
+        self._pkm_col = pkm_col
+
+    def get_bingo_description(self, poke_bingo):
+        if poke_bingo.type_id in pokemon_bingo_collection.SPEC_HANDLE:
+            ix = pokemon_bingo_collection.SPEC_HANDLE[poke_bingo.type_id]
+            poke_bingo.parameters[ix] = PokeType.int_get_str(poke_bingo.parameters[ix])
+
+        return bingo_entry(self.get_cache(bingo_entry.TYPE_ID, poke_bingo.type_id)).get_description(poke_bingo.parameters)
+
 class pokemon(dict_like_mapping):
     ID = "id"
     NAME_ZH = "name_zh"
@@ -56,6 +78,7 @@ class pokemon(dict_like_mapping):
     SKILLS = "skill"
     SKILLS_DLC = "skill_dlc"
     BATTLE_TYPE = "btl_type"
+    BINGO = "bgo"
 
     def __init__(self, org_dict):
         super().__init__(org_dict)
@@ -82,8 +105,8 @@ class pokemon(dict_like_mapping):
         return self[pokemon.ELEMENTS]
 
     @property
-    def evolve_info(self):
-        return self.get([poke_evolve_info(e) for e in self[EVOLVE_TO_IDS]], [])
+    def evolve_infos(self):
+        return [poke_evolve_info(e) for e in self[pokemon.EVOLVE_INFOS]]
 
     @property
     def is_base_pokemon(self):
@@ -99,11 +122,28 @@ class pokemon(dict_like_mapping):
 
     @property
     def skill_ids_dlc(self):
-        return self[pokemon.SKILLS_DLC]
+        result = self[pokemon.SKILLS_DLC]
+        return [] if result is None else result
 
     @property
     def battle_type(self):
         return BattleType(self[pokemon.BATTLE_TYPE])
+
+    @property
+    def bingos(self):
+        return [poke_bingo(b) for b in self[pokemon.BINGO]]
+
+    def get_all_including_evolved_bingos(self, pkm_col):
+        """
+        Return:
+            [(<POKEMON_ID>, <POKEMON_BINGOS>), (<POKEMON_ID>, <POKEMON_BINGOS>)...]
+        """
+        ret = [(self.id, self.bingos)]
+
+        for evolve_info in self.evolve_infos:
+            ret.extend(pkm_col.get_pokemon_by_id(evolve_info.next_id).get_all_including_evolved_bingos(pkm_col))
+
+        return ret
 
 class poke_evolve_info(dict_like_mapping):
     REQ_LV = "req_lv"
@@ -114,11 +154,11 @@ class poke_evolve_info(dict_like_mapping):
         
     @property
     def require_lv(self):
-        return self[pokemon.REQ_LV]
+        return self[poke_evolve_info.REQ_LV]
 
     @property
     def next_id(self):
-        return self[pokemon.NEXT_ID]
+        return self[poke_evolve_info.NEXT_ID]
 
 class poke_skill(dict_like_mapping):
     ID = "id"
@@ -127,6 +167,7 @@ class poke_skill(dict_like_mapping):
     POWER = "pwr"
     CD = "cd"
     SLOTS = "slots"
+    DESCRIPTION = "desc"
 
     def __init__(self, org_dict):
         super().__init__(org_dict)
@@ -154,7 +195,44 @@ class poke_skill(dict_like_mapping):
     @property
     def slots(self):
         return [SkillStone(s) for s in self[poke_skill.SLOTS]]
+
+    @property
+    def description(self):
+        return self.get(poke_skill.DESCRIPTION, "(無資料)")
     
     @property
     def element(self):
         return PokeType(math.floor(self[poke_skill.ID] / 100))
+
+class poke_bingo(dict_like_mapping):
+    TYPE_ID = "type"
+    PARAMETER = "param"
+
+    def __init__(self, org_dict):
+        super().__init__(org_dict)
+
+    @property
+    def type_id(self):
+        return self[poke_bingo.TYPE_ID]
+
+    @property
+    def parameters(self):
+        return self[poke_bingo.PARAMETER]
+
+class bingo_entry(dict_like_mapping):
+    TYPE_ID = "id"
+    PATTERN = "pattern"
+
+    def __init__(self, org_dict):
+        super().__init__(org_dict)
+
+    @property
+    def type_id(self):
+        return self[bingo_entry.TYPE_ID]
+
+    @property
+    def pattern(self):
+        return self[bingo_entry.PATTERN]
+
+    def get_description(self, params):
+        return self.pattern.format(*params)

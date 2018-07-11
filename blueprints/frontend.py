@@ -1,6 +1,8 @@
-### Complete profile page - Skill Description, Bingo including what will happen after evolving
+### Complete profile page - Skill Description
+### Modulize less(s)
 ### Report garbage data (XHR), delete own uploaded data
 ### IV Calculator, pokemon quality determination system
+### Search by skill, by bingo
 ### Add statistics page
 
 import os
@@ -14,7 +16,11 @@ from markupsafe import escape
 import pymongo
 
 from data import RecipeQuality, PokeType
-from data.mongo import cook_data_manager, pokemon_collection, pokemon_skill_collection, recipe_collection, site_log_manager, pokemon_integrator
+from data.mongo import (
+    cook_data_manager, 
+    pokemon_collection, pokemon_skill_collection, pokemon_bingo_collection, recipe_collection, 
+    site_log_manager, pokemon_integrator
+)
 from data.thirdparty import google_analytics, google_identity, identity_entry_uid_key
 
 from .nav import nav
@@ -27,8 +33,9 @@ cdm = cook_data_manager(mongo)
 pkc = pokemon_collection(mongo)
 rcc = recipe_collection(mongo)
 skc = pokemon_skill_collection(mongo)
+bgc = pokemon_bingo_collection(mongo, pkc)
 
-pi = pokemon_integrator(pkc, skc)
+pi = pokemon_integrator(pkc, skc, bgc)
 
 slm = site_log_manager(mongo)
 ga = google_analytics()
