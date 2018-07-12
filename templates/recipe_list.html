@@ -2,6 +2,8 @@
 
 {% block titleex -%} 從食譜查精靈 {%- endblock %}
 
+{% block layout %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layouts/recipe_list.css') }}">{% endblock %}
+
 {% block content %}
 <div class="container">
     {% for entry in recipedata %}

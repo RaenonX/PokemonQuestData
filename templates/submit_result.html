@@ -2,6 +2,8 @@
 
 {% import "bootstrap/utils.html" as utils %}
 
+{% block layout %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layouts/submit_result.css') }}">{% endblock %}
+
 {% block titleex -%} 提交開鍋結果 {%- endblock %}
 
 {% block content %}
@@ -108,7 +110,7 @@
 </div>
 {%- endblock %}
 
-{% block scripts %}
+{% block scriptsex %}
 <script>
     $(document).keypress(function (e) {
         if (e.which == 13) {

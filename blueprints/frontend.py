@@ -1,9 +1,8 @@
-### Complete profile page - Skill Description
-### Modulize less(s)
-### Report garbage data (XHR), delete own uploaded data
 ### IV Calculator, pokemon quality determination system
+### Report garbage data (XHR), delete own uploaded data
 ### Search by skill, by bingo
 ### Add statistics page
+### Recipe Simulator
 
 import os
 
@@ -84,7 +83,8 @@ def pokemon_profile_index():
     return render_template("poke_list.html", 
                            pokedata=pkc.get_all_pokemons(),
                            poketype=PokeType,
-                           next_endpoint=".pokemon_profile_result")
+                           next_endpoint=".pokemon_profile_result",
+                           title="從精靈查精靈資料")
 
 @frontend.route("/poke-profile/<int:id>")
 def pokemon_profile_result(id):
@@ -95,7 +95,8 @@ def find_recipe_index():
     return render_template("poke_list.html", 
                            pokedata=pkc.get_all_pokemons(False),
                            poketype=PokeType,
-                           next_endpoint=".find_recipe_result")
+                           next_endpoint=".find_recipe_result",
+                           title="從精靈查食譜")
 
 @frontend.route("/find-recipe/<int:id>")
 def find_recipe_result(id):

@@ -1,0 +1,32 @@
+.skill-icon {
+    height: 30px;
+    width: 30px;
+}
+
+.profile-icon-wrapper {
+    padding: 5px;
+}
+
+.profile-text-skill {
+    line-height: 30px
+}
+
+.bingo-icon {
+    height: 20px;
+    width: 20px;
+}
+
+.evolve-icon {
+    height: 120px;
+    width: 120px;
+    margin: 10px;
+}
+
+.type-icon, .profile-icon {
+    width: 100%;
+}
+
+.description {
+    max-width: 200px;
+    text-align: left;
+}

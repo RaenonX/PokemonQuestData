@@ -1,0 +1,15 @@
+.selection-panel {
+    height: 270px;
+    display: flex;
+    flex-direction: column;
+}
+
+.selection-area {
+    overflow-y: auto;
+    position: relative;
+    flex: 1;
+}
+
+.selection-title {
+    height: 55px;
+}

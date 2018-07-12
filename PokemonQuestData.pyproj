@@ -190,11 +190,29 @@
     <Content Include="static\Item\4.png" />
     <Content Include="static\Item\5.png" />
     <Content Include="static\jquery.min.js" />
-    <Content Include="static\layouts\poke_list.less">
+    <Content Include="static\layouts\index.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="static\layouts\poke_list.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="static\layouts\poke_profile.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="static\layouts\poke_result.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="static\layouts\recipe_list.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="static\layouts\recipe_result.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="static\layouts\submit_result.css">
       <SubType>Code</SubType>
     </Content>
     <Content Include="static\less.min.js" />
-    <Content Include="static\pokemon.less">
+    <Content Include="static\pokemon.css">
       <SubType>Code</SubType>
     </Content>
     <Content Include="static\Pot\1.png" />
@@ -220,7 +238,7 @@
     <Content Include="static\Recipe\16.png" />
     <Content Include="static\Recipe\17.png" />
     <Content Include="static\respond.min.js" />
-    <Content Include="static\main.less" />
+    <Content Include="static\main.css" />
     <Content Include="static\Skill\button_skill_aku_huiuti.png" />
     <Content Include="static\Skill\button_skill_aku_kamikudaku.png" />
     <Content Include="static\Skill\button_skill_aku_odateru.png" />

@@ -1,0 +1,42 @@
+body {
+    font-family: 'Microsoft JhengHei';
+}
+
+.icon {
+    width: 25px;
+    height: 25px;
+}
+
+.foot-info {
+    text-align: right;
+}
+
+.fit-container {
+    width: 100%;
+}
+
+.btn-big {
+    width: 100%;
+    font-size: 36px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.h1-nbs {
+    font-size: 36px;
+}
+
+.h3-nbs {
+    font-size: 24px;
+}
+
+.set-center {
+    min-height: 1px;
+    text-align: center;
+}
+
+/* OVERRIDES */
+.well {
+    margin-bottom: initial;
+}

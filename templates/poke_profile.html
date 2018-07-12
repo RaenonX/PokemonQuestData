@@ -2,6 +2,8 @@
 
 {% block titleex -%} 精靈資料 ({{ profile.name_zh }}) {%- endblock %}
 
+{% block layout %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layouts/poke_profile.css') }}">{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row">
@@ -115,7 +117,6 @@
                     <div class="row">
                         {% for bingo_comp in profile.get_bingos(i) %}
                         <div class="col-xs-4">
-                            desc
                             <div class="list-group">
                                 {% for id, bingo in bingo_comp %}
                                 <a class="list-group-item list-group-action" href="{{ url_for(".pokemon_profile_result", id=id) }}"><img class="bingo-icon" src="/static/Icon/{{ id }}.png" />&nbsp;{{ bingo }}</a>

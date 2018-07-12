@@ -38,7 +38,7 @@ class google_analytics:
     def _init_data(self):
         self._cache_1()
 
-    def _cache_1(self):
+    def _cache_1(self, limit=10):
         if not self._disabled:
             response = self._get_report({
                 'reportRequests': [{
@@ -46,7 +46,7 @@ class google_analytics:
                     'dateRanges': [{'startDate': '7daysAgo', 'endDate': 'today'}],
                     'metrics': [{'expression': 'ga:uniquePageviews'}],
                     'dimensions': [{'name': 'ga:pagePath'}, {'name': 'ga:pageTitle'}],
-                    "pageSize": 10,
+                    "pageSize": limit,
                     "orderBys": [{
                         "fieldName": "ga:uniquePageviews",
                         "sortOrder": "DESCENDING"
@@ -63,7 +63,7 @@ class google_analytics:
                             {
                                 "dimensionName": "ga:pagePath",
                                 "not": True,
-                                "expressions": ["/", "/prevent-sleep"],
+                                "expressions": ["/", "/prevent-sleep", "/submit-result", "/user-verify"],
                                 "operator": "EXACT"
                             }
                         ]
@@ -97,11 +97,11 @@ class google_analytics:
             data = self._data.get_data(google_analytics.DATA_KEY_1)
 
             if (datetime.utcnow() - data.updated_time).total_seconds() > google_analytics.UPDATE_FREQ_SECS or data.data is None:
-                self._cache_1()
+                self._cache_1(limit)
 
             return self._data.get_data(google_analytics.DATA_KEY_1)
         else:
-            return []
+            return google_analytics_cache_item()
 
 class google_analytics_cache:
     def __init__(self, init_field_keys=[]):
@@ -122,8 +122,8 @@ class google_analytics_cache:
         return self._data[key]
 
 class google_analytics_cache_item:
-    def __init__(self):
-        self.data = None
+    def __init__(self, init_data=None):
+        self.data = init_data
 
     @property
     def data(self):

@@ -2,6 +2,8 @@
 
 {% import "bootstrap/utils.html" as utils %}
 
+{% block layout %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layouts/index.css') }}">{% endblock %}
+
 {% block titleex -%} 首頁 {%- endblock %}
 
 {% block content %}
@@ -24,11 +26,14 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6 set-center">
+        <div class="col-md-4 set-center">
             <a class="btn btn-primary btn-big btn-func" href="{{ url_for('.find_recipe_index') }}">從精靈查食譜</a>
         </div>
-        <div class="col-md-6 set-center">
+        <div class="col-md-4 set-center">
             <a class="btn btn-info btn-big btn-func" href="{{ url_for('.find_pokemon_index') }}">從食譜查精靈</a>
+        </div>
+        <div class="col-md-4 set-center">
+            <a class="btn btn-success btn-big btn-func" href="{{ url_for('.find_pokemon_index') }}">查詢精靈資料</a>
         </div>
     </div>
     <div class="row">

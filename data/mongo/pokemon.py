@@ -52,8 +52,7 @@ class pokemon_bingo_collection(base_collection):
     SPEC_HANDLE = {
         6: 0,
         7: 0,
-        8: 0,
-        9: 0
+        8: 0
     }
 
     def __init__(self, mongo_client, pkm_col):
@@ -235,4 +234,7 @@ class bingo_entry(dict_like_mapping):
         return self[bingo_entry.PATTERN]
 
     def get_description(self, params):
+        print(params)
+        print(self.pattern)
+        print("")
         return self.pattern.format(*params)
