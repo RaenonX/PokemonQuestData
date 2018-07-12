@@ -256,5 +256,6 @@ class bingo_entry(dict_like_mapping):
     def get_description(self, params):
         print(params)
         print(self.pattern)
+        print(self.pattern.format(*params))
         print("")
         return self.pattern.format(*params)
