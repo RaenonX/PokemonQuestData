@@ -3,6 +3,7 @@
 ### Search by skill, by bingo
 ### Add statistics page
 ### Recipe Simulator
+### Dark Zone - Change Ticket, Boost
 
 import os
 

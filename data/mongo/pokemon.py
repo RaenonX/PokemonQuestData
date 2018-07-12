@@ -62,7 +62,10 @@ class pokemon_bingo_collection(base_collection):
     def get_bingo_description(self, poke_bingo):
         if poke_bingo.type_id in pokemon_bingo_collection.SPEC_HANDLE:
             ix = pokemon_bingo_collection.SPEC_HANDLE[poke_bingo.type_id]
-            poke_bingo.parameters[ix] = PokeType.int_get_str(poke_bingo.parameters[ix])
+            item = poke_bingo.parameters[ix]
+
+            # TODO: investigate why different poke_bingo but parameter is changed
+            poke_bingo.parameters[ix] = item if type(item) is str else PokeType.int_get_str(item)
 
         return bingo_entry(self.get_cache(bingo_entry.TYPE_ID, poke_bingo.type_id)).get_description(poke_bingo.parameters)
 
@@ -254,8 +257,4 @@ class bingo_entry(dict_like_mapping):
         return self[bingo_entry.PATTERN]
 
     def get_description(self, params):
-        print(params)
-        print(self.pattern)
-        print(self.pattern.format(*params))
-        print("")
         return self.pattern.format(*params)
