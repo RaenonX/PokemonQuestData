@@ -1,4 +1,3 @@
-### IV Calculator, pokemon quality determination system
 ### Report garbage data (XHR), delete own uploaded data
 ### Search by skill, by bingo
 ### Add statistics page
@@ -17,7 +16,7 @@ import pymongo
 
 from data import RecipeQuality, PokeType
 from data.mongo import (
-    cook_data_manager, 
+    cook_data_manager,
     pokemon_collection, pokemon_skill_collection, pokemon_bingo_collection, recipe_collection, 
     site_log_manager, pokemon_integrator
 )
@@ -30,6 +29,7 @@ frontend = Blueprint("frontend", __name__)
 mongo = pymongo.MongoClient(os.environ["MONGO_URI"])
 
 cdm = cook_data_manager(mongo)
+
 pkc = pokemon_collection(mongo)
 rcc = recipe_collection(mongo)
 skc = pokemon_skill_collection(mongo)
@@ -85,11 +85,12 @@ def pokemon_profile_index():
                            pokedata=pkc.get_all_pokemons(),
                            poketype=PokeType,
                            next_endpoint=".pokemon_profile_result",
-                           title="從精靈查精靈資料")
+                           title="查詢精靈資料")
 
 @frontend.route("/poke-profile/<int:id>")
 def pokemon_profile_result(id):
-    return render_template("poke_profile.html", profile=pi.get_pokemon_profile(id))
+    return render_template("poke_profile.html", 
+                           profile=pi.get_pokemon_profile(id))
     
 @frontend.route("/find-recipe")
 def find_recipe_index():

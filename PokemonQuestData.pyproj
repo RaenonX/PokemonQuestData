@@ -215,10 +215,10 @@
     <Content Include="static\pokemon.css">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="static\Pot\0.png" />
     <Content Include="static\Pot\1.png" />
     <Content Include="static\Pot\2.png" />
     <Content Include="static\Pot\3.png" />
-    <Content Include="static\Pot\4.png" />
     <Content Include="static\Recipe\0.png" />
     <Content Include="static\Recipe\1.png" />
     <Content Include="static\Recipe\2.png" />
@@ -239,6 +239,12 @@
     <Content Include="static\Recipe\17.png" />
     <Content Include="static\respond.min.js" />
     <Content Include="static\main.css" />
+    <Content Include="static\scripts\poke_list.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="static\scripts\poke_profile.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\Skill\button_skill_aku_huiuti.png" />
     <Content Include="static\Skill\button_skill_aku_kamikudaku.png" />
     <Content Include="static\Skill\button_skill_aku_odateru.png" />
@@ -501,6 +507,12 @@
     <Compile Include="sandbox.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="static\scripts\submit_result.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="static\scripts\user_verify.js">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
@@ -512,6 +524,7 @@
     <Folder Include="static\Icon" />
     <Folder Include="static\Item" />
     <Folder Include="static\layouts\" />
+    <Folder Include="static\scripts\" />
     <Folder Include="static\Pot" />
     <Folder Include="static\Recipe\" />
     <Folder Include="static\Skill\" />
