@@ -78,6 +78,7 @@ class pokemon(dict_like_mapping):
     SKILLS_DLC = "skill_dlc"
     BATTLE_TYPE = "btl_type"
     BINGO = "bgo"
+    BASE_VALUES = "val"
 
     def __init__(self, org_dict):
         super().__init__(org_dict)
@@ -127,6 +128,10 @@ class pokemon(dict_like_mapping):
     @property
     def battle_type(self):
         return BattleType(self[pokemon.BATTLE_TYPE])
+
+    @property
+    def base_values(self):
+        return poke_base_val(self[pokemon.BASE_VALUES])
 
     @property
     def bingos(self):
@@ -217,6 +222,21 @@ class poke_bingo(dict_like_mapping):
     @property
     def parameters(self):
         return self[poke_bingo.PARAMETER]
+
+class poke_base_val(dict_like_mapping):
+    HP = "hp"
+    ATK = "atk"
+
+    def __init__(self, org_dict):
+        super().__init__(org_dict)
+
+    @property
+    def hp(self):
+        return self[poke_base_val.HP]
+
+    @property
+    def atk(self):
+        return self[poke_base_val.ATK]
 
 class bingo_entry(dict_like_mapping):
     TYPE_ID = "id"

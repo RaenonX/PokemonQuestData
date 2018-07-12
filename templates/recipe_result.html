@@ -16,10 +16,10 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>食譜</th>
-                            <th>品質</th>
-                            <th>機率</th>
-                            <th>樣本</th>
+                            <th class="set-center">食譜</th>
+                            <th class="set-center">品質</th>
+                            <th class="set-center">機率</th>
+                            <th class="set-center">樣本</th>
                         </tr>
                     </thead>
                     {% for entry in result.data %}
@@ -33,9 +33,11 @@
                         <td>配方</td>
                         <td colspan="3">
                             {% for comp in entry.recipe_dish.items %}
-                            {% for item in comp %}
-                            <img class="icon" src="/static/Item/{{ item }}.png" />
-                            {% endfor %}
+                            <div class="comp-block">
+                                {% for item in comp %}
+                                <img class="icon" src="/static/Item/{{ item }}.png" />
+                                {% endfor %}
+                            </div>
                             &nbsp;&nbsp;&nbsp;
                             {% endfor %}
                         </td>

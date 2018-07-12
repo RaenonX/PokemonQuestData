@@ -5,3 +5,7 @@
 .pokemon-title {
     font-size: 36px;
 }
+
+.comp-block {
+    display: inline-block;
+}
