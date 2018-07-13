@@ -1,16 +1,18 @@
-### Report garbage data (XHR), delete own uploaded data
+### delete own uploaded data
 ### Search by skill, by bingo
 ### Add statistics page
 ### Recipe Simulator
 ### Dark Zone - Change Ticket, Boost
 
 import os
+from datetime import datetime, timedelta
 
 from flask import (
     Blueprint, 
     render_template, flash, redirect, url_for, request, current_app, session
 )
 from flask_bootstrap import __version__ as FLASK_BOOTSTRAP_VERSION
+from flask_mail import Message
 from markupsafe import escape
 import pymongo
 
@@ -120,17 +122,7 @@ def submit_result():
                            recipe_choices=rcc.get_recipe_choices(), 
                            quality_choices=RecipeQuality.get_choices())
     else:
-        return redirect(url_for(".user_verify", prev=url_for(".submit_result")))
-    
-@frontend.route("/user-verify", methods=["GET"])
-def user_verify():
-    return render_template("user_verify.html", prev=request.args.get('prev'))
-
-@frontend.route("/user-verify", methods=["POST"])
-def user_verify_post():
-    registration_succeed = gi.register_user(request.form["email"], request.form["token"], session)
-    
-    return "PASS" if registration_succeed else "註冊失敗。"
+        return redirect(url_for("frontend_user.user_verify", prev=url_for(".submit_result")))
 
 @frontend.route("/submit-result", methods=["POST"])
 def submit_result_post():
@@ -143,7 +135,25 @@ def submit_result_post():
             flash("資料提交失敗。", category="warning")
             return redirect(url_for(".submit_result"))
     else:
-        return redirect(url_for(".user_verify", prev=url_for(".submit_result")))
+        return redirect(url_for("frontend_user.user_verify", prev=url_for(".submit_result")))
+
+@frontend.route("/report", methods=["POST"])
+def report_suspicious():
+    if gi.user_exists(session=session):
+        data_id = request.form["dataId"]
+        report_result = cdm.report_suspicious(data_id)
+
+        if report_result:
+            flash("資料舉報成功！")
+            msg = Message("Suspicious Data Report", recipients=["maplestory0710@gmail.com"])
+            msg.body = "An entry of data has been reported suspicious. {} Recommended to review before {}".format(data_id, datetime.utcnow() + timedelta(days))
+            current_app.config["MAIL_INSTANCE"].send(msg)
+            return "PASS"
+        else:
+            flash("資料舉報失敗。(資料ID: {})".format(data_id))
+            return "FAIL"
+    else:
+        return "請先登記身分再提報可疑資料。"
 
 @frontend.route("/about")
 def about():

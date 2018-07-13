@@ -4,6 +4,10 @@
 
 {% block layout %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layouts/index.css') }}">{% endblock %}
 
+{% block scriptsex %}
+<script src={{ url_for('static', filename='scripts/index.js') }} type="text/javascript"></script>
+{%- endblock %}
+
 {% block titleex -%} 首頁 {%- endblock %}
 
 {% block content %}
@@ -14,6 +18,11 @@
         {{ utils.flashed_messages(messages) }}
     </div>
     {%- endif %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="glyphicon glyphicon-remove-circle alert alert-danger hide" id="msg"></div>
+        </div>
+    </div>
     {%- endwith %}
     <div class="row">
         <div class="col-md-12 set-center" style="margin-bottom: initial">
@@ -91,15 +100,21 @@
                                 <th class="set-center">精靈</th>
                                 <th class="set-center">食譜</th>
                                 <th class="set-center">品質</th>
+                                <th class="set-center">舉報</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for entry in recent %}
-                            <tr>
+                            <tr class="{{ "suspicious" if entry.suspicious else "" }}">
                                 <td>{{ entry.timestamp.strftime('%m-%d %H:%M') }} (UTC)</td>
                                 <td><a href="{{ url_for('.pokemon_profile_result', id=entry.pokemon_id) }}"><img class="icon" src="/static/Icon/{{ entry.pokemon_id }}.png" /></a></td>
                                 <td><a href="{{ url_for('.find_pokemon_result', id=entry.recipe_id) }}"><img class="icon" src="/static/Recipe/{{ entry.recipe_id }}.png" /></a></td>
                                 <td>{{ entry.quality|string() }}</td>
+                                <td>
+                                    {% if entry.reportable %}
+                                    <a data-id="{{ entry.id }}" class="glyphicon glyphicon-remove-circle report"></a>
+                                    {% endif %}
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -107,6 +122,10 @@
                 </div>
 
                 <a class="btn btn-success" href="{{ url_for('.submit_result') }}">我也要登記</a>
+            </div>
+            <div class="well">
+                <p class="set-center h3-nbs">捐款支持</p>
+                <a class="btn btn-warning" href="paypal.me/RxALPHA">Paypal</a>
             </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
 body {
     font-family: 'Microsoft JhengHei';
+    background-color: rgb(230, 230, 230);
 }
 
 .icon {
@@ -39,4 +40,8 @@ body {
 /* OVERRIDES */
 .well {
     margin-bottom: initial;
+}
+
+.alert {
+    display: block;
 }

@@ -1,8 +1,8 @@
 flask-appconfig
 Flask-Bootstrap
 flask-nav
-Flask-WTF
 Flask-JSGlue
+Flask-Mail
 Flask
 pymongo
 dnspython

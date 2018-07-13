@@ -1,3 +1,4 @@
+from bson import ObjectId
 import time, json
 from datetime import datetime
 
@@ -102,11 +103,16 @@ class cook_data_manager(base_collection):
     def add_record(self, recipe_id, quality_id, pokemon_id, adder):
         return self.insert_one(cook_data.init_by_field(recipe_id, quality_id, pokemon_id, adder)).acknowledged
 
+    def report_suspicious(self, oid_str, reporter_id):
+        return self.update_one({ cook_data.OBJECT_ID: ObjectId(oid_str) }, { "$set": { cook_data.SUSPICIOUS: reporter_id } }).acknowledged
+
 class cook_data(dict_like_mapping):
+    OBJECT_ID = "_id"
     RECIPE = "r"
     QUALITY = "q"
     POKEMON_ID = "p"
     ADDER = "a"
+    SUSPICIOUS = "s"
 
     def __init__(self, org_dict):
         super().__init__(org_dict)
@@ -143,6 +149,18 @@ class cook_data(dict_like_mapping):
 
     def get_recipe_comp_dict(self):
         return { cook_data.RECIPE: self.recipe_id, cook_data.QUALITY: int(self.quality) }
+
+    @property
+    def reportable(self):
+        return cook_data.SUSPICIOUS not in self
+
+    @property
+    def suspicious(self):
+        return False if cook_data.SUSPICIOUS not in self else (self[cook_data.SUSPICIOUS] != "")
+
+    @property
+    def id(self):
+        return str(self[cook_data.OBJECT_ID])
 
 ##### Result Classes #####
 

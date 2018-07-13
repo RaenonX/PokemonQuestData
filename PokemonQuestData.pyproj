@@ -202,6 +202,9 @@
     <Content Include="static\layouts\poke_result.css">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="static\layouts\recent_data.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\layouts\recipe_list.css">
       <SubType>Code</SubType>
     </Content>
@@ -239,10 +242,16 @@
     <Content Include="static\Recipe\17.png" />
     <Content Include="static\respond.min.js" />
     <Content Include="static\main.css" />
+    <Content Include="static\scripts\index.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\scripts\poke_list.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="static\scripts\poke_profile.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="static\scripts\recent_data.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="static\Skill\button_skill_aku_huiuti.png" />
@@ -455,6 +464,9 @@
     <Compile Include="app.py" />
     <Compile Include="app_local.py" />
     <Compile Include="blueprints\dummy.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="blueprints\frontend_user.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="blueprints\__init__.py">

@@ -21,7 +21,7 @@ function onSignIn(googleUser) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', Flask.url_for('frontend.user_verify_post'));
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send('token=' + id_token + '&email=' + email);
+    xhr.send('id=' + id_token + '&email=' + email);
     xhr.onload = function () {
         if (xhr.responseText === "PASS") {
             window.location.replace(getUrlParam('prev', '').replace('%2F', ''));

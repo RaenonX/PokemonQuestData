@@ -4,6 +4,12 @@
 
 {% import "bootstrap/utils.html" as utils %}
 
+{% block layout %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layouts/recent_data.css') }}">{% endblock %}
+
+{% block scriptsex %}
+<script src={{ url_for('static', filename='scripts/recent_data.js') }} type="text/javascript"></script>
+{%- endblock %}
+
 {% block content %}
 <div class="container">
     {%- with messages = get_flashed_messages(with_categories=True) %}
@@ -12,6 +18,11 @@
         {{ utils.flashed_messages(messages) }}
     </div>
     {%- endif %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="glyphicon glyphicon-remove-circle alert alert-danger hide" id="msg"></div>
+        </div>
+    </div>
     {%- endwith %}
     <div class="row">
         <div class="col-md-12 set-center">
@@ -26,16 +37,22 @@
                                 <th class="set-center">食譜</th>
                                 <th class="set-center">品質</th>
                                 <th class="set-center">提交者ID</th>
+                                <th class="set-center">舉報</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for entry in data %}
-                            <tr>
+                            <tr class="{{ "suspicious" if entry.suspicious else "" }}">
                                 <td>{{ entry.timestamp.strftime('%Y-%m-%d %T') }} (UTC)</td>
                                 <td><a href="{{ url_for('.find_recipe_result', id=entry.pokemon_id) }}"><img class="icon" src="/static/Icon/{{ entry.pokemon_id }}.png" /></a></td>
                                 <td><a href="{{ url_for('.find_pokemon_result', id=entry.recipe_id) }}"><img class="icon" src="/static/Recipe/{{ entry.recipe_id }}.png" /></a></td>
                                 <td>{{ entry.quality|string() }}</td>
                                 <td><a href="{{ url_for('.recent_new_data_by_user', uid=entry.adder_uid) }}">{{ entry.adder_uid }}</a></td>
+                                <td>
+                                    {% if entry.reportable %}
+                                    <a data-id="{{ entry.id }}" class="glyphicon glyphicon-remove-circle report"></a>
+                                    {% endif %}
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>

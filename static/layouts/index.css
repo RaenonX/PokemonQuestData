@@ -3,3 +3,18 @@
     line-height: 150px;
     padding: initial;
 }
+
+.suspicious {
+    background-color: rgb(255, 230, 230) !important;
+}
+
+.report {
+    cursor: pointer;
+    text-decoration: none;
+    color: dodgerblue;
+}
+
+.report:hover {
+    color: orangered;
+    text-decoration: none;
+}
