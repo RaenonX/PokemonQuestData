@@ -7,21 +7,17 @@
 
 $(document).ready(
     initialize,
-    $("#lvSlider").on("input", update_min_max),
     immUpdateVal("#hpValue", "#hpSlider"),
     immUpdateVal("#atkValue", "#atkSlider"),
     immUpdateVal("#lvValue", "#lvSlider"),
     $(".pot-btn").click(function () {
         let ix = $(this).val();
         $("#potId").attr("data-value", ix).text(pot_data[ix].name);
-        update_min_max();
         update_ui();
     })
 )
 
 function initialize() {
-    console.log("init");
-    update_min_max();
     update_ui();
 }
 
@@ -33,7 +29,7 @@ function immUpdateVal(valId, sliderId) {
     })
 }
 
-function update_min_max() {
+function update_ui() {
     let current_pot = pot_data[$("#potId").attr("data-value")]
 
     let lv = parseInt($("#lvValue").text())
@@ -51,13 +47,9 @@ function update_min_max() {
     $("#atkMin").text(atkMin)
     $("#atkMax").text(atkMax)
     $("#atkValue").text($("#atkSlider").attr("min", atkMin).attr("max", atkMax).val())
-}
 
-function update_ui() {
-    let current_pot = pot_data[$("#potId").attr("data-value")]
     let hp = parseInt($("#hpValue").text())
     let atk = parseInt($("#atkValue").text())
-
     $("#hpPct").text(((hp - parseInt($("#hpMin").text())) / current_pot.iv * 100).toFixed())
     $("#atkPct").text(((atk - parseInt($("#atkMin").text())) / current_pot.iv * 100).toFixed())
 }
