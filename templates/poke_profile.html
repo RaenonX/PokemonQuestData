@@ -46,87 +46,90 @@
         <div class="col-xs-8">
             <p class="h3-nbs">進化型態</p>
             {% if profile.evolve_infos|length > 0 %}
-                {% for evolve_info in profile.evolve_infos %}
-                <div class="evolve-info-block">
-                    <p>{{ evolve_info.require_lv }}級時進化</p>
-                    <a href="{{ url_for(".pokemon_profile_result", id=evolve_info.next_id) }}">
-                        <img class="evolve-icon" src="/static/Icon/{{ evolve_info.next_id }}.png" />
-                    </a>
-                </div>
-                {% endfor %}
+            {% for evolve_info in profile.evolve_infos %}
+            <div class="evolve-info-block">
+                <p>{{ evolve_info.require_lv }}級時進化</p>
+                <a href="{{ url_for(".pokemon_profile_result", id=evolve_info.next_id) }}">
+                    <img class="evolve-icon" src="/static/Icon/{{ evolve_info.next_id }}.png" />
+                </a>
+            </div>
+            {% endfor %}
             {% else %}
-                <p class="h1-nbs">(無進階型態)</p>
+            <p class="h1-nbs">(無進階型態)</p>
             {% endif %}
         </div>
     </div>
     <hr />
     <div class="row set-center">
+        <div class="col-xs-3"><span class="h3-nbs">Lv:</span> <span class="h1-nbs" id="lvValue">1</span></div>
+        <div class="col-xs-3"><span class="h3-nbs">HP:</span> <span class="h1-nbs" id="hpValue"></span></div>
+        <div class="col-xs-3"><span class="h3-nbs">ATK:</span> <span class="h1-nbs" id="atkValue"></span></div>
+        <div class="col-xs-3"><span class="h1-nbs" id="potId" data-value="0">鐵鍋</span></div>
+    </div>
+
+    <input type="hidden" id="baseHp" value="{{ profile.base_values.hp }}" />
+    <input type="hidden" id="baseAtk" value="{{ profile.base_values.atk }}" />
+    <input type="hidden" id="bonusParam" value="0" />
+    <input type="hidden" id="ivVar" value="10" />
+
+    <div class="row slider-row">
+        <div class="slider-element col-xs-1 set-center slider-element-title">Lv</div>
+        <div class="slider-element col-xs-1 set-center">1</div>
+        <div class="slider-element col-xs-9 set-center">
+            <input type="range" min="1" max="100" value="1" class="slider form-control-range" id="lvSlider">
+        </div>
+        <div class="slider-element col-xs-1 set-center">100</div>
+    </div>
+
+    <div class="row slider-row">
+        <div class="slider-element col-xs-1 set-center slider-element-title">HP</div>
+        <div class="slider-element col-xs-1 set-center" id="hpMin"></div>
+        <div class="slider-element col-xs-9 set-center">
+            <input type="range" class="slider form-control-range" id="hpSlider">
+        </div>
+        <div class="slider-element col-xs-1 set-center" id="hpMax"></div>
+    </div>
+
+    <div class="row slider-row">
+        <div class="slider-element col-xs-1 set-center slider-element-title">ATK</div>
+        <div class="slider-element col-xs-1 set-center" id="atkMin"></div>
+        <div class="slider-element col-xs-9">
+            <input type="range" class="slider form-control-range" id="atkSlider">
+        </div>
+        <div class="slider-element col-xs-1 set-center" id="atkMax"></div>
+    </div>
+
+    <div class="row">
+        {% for i in range(4) %}
+        <div class="col-xs-3 set-center">
+            <button class="btn pot-btn" value="{{ i }}"><img class="pot-icon" src="/static/Pot/{{ i }}.png" /></button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <div class="col-xs-6">
+            <div class="panel panel-primary set-center" style="margin-top: 10px;">
+                <div class="panel-heading">HP %</div>
+                <div class="panel-body">
+                    <span class="h1" id="hpPct"></span>%
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <div class="panel panel-primary set-center" style="margin-top: 10px;">
+                <div class="panel-heading">ATK %</div>
+                <div class="panel-body">
+                    <span class="h1" id="atkPct"></span>%
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
         <div class="col-xs-12">
-            <div class="row set-center">
-                <div class="col-xs-3"><span class="h3-nbs">Lv:</span> <span class="h1-nbs" id="lvValue">1</span></div>
-                <div class="col-xs-3"><span class="h3-nbs">HP:</span> <span class="h1-nbs" id="hpValue"></span></div>
-                <div class="col-xs-3"><span class="h3-nbs">ATK:</span> <span class="h1-nbs" id="atkValue"></span></div>
-                <div class="col-xs-3"><span class="h1-nbs" id="potId" data-value="0">鐵鍋</span><br />DLC、拜訪的寶可夢基礎視同鐵鍋。</div>
-            </div>
-
-            <input type="hidden" id="baseHp" value="{{ profile.base_values.hp }}" />
-            <input type="hidden" id="baseAtk" value="{{ profile.base_values.atk }}" />
-            <input type="hidden" id="bonusParam" value="0" />
-            <input type="hidden" id="ivVar" value="10" />
-
-            <div class="row slider-row">
-                <div class="slider-element col-xs-1 set-center slider-element-title">Lv</div>
-                <div class="slider-element col-xs-1 set-center">1</div>
-                <div class="slider-element col-xs-9 set-center">
-                    <input type="range" min="1" max="100" value="1" class="slider form-control-range" id="lvSlider">
-                </div>
-                <div class="slider-element col-xs-1 set-center">100</div>
-            </div>
-
-            <div class="row slider-row">
-                <div class="slider-element col-xs-1 set-center slider-element-title">HP</div>
-                <div class="slider-element col-xs-1 set-center" id="hpMin"></div>
-                <div class="slider-element col-xs-9 set-center">
-                    <input type="range" class="slider form-control-range" id="hpSlider">
-                </div>
-                <div class="slider-element col-xs-1 set-center" id="hpMax"></div>
-            </div>
-
-            <div class="row slider-row">
-                <div class="slider-element col-xs-1 set-center slider-element-title">ATK</div>
-                <div class="slider-element col-xs-1 set-center" id="atkMin"></div>
-                <div class="slider-element col-xs-9">
-                    <input type="range" class="slider form-control-range" id="atkSlider">
-                </div>
-                <div class="slider-element col-xs-1 set-center" id="atkMax"></div>
-            </div>
-
-            <div class="row slider-row">
-                {% for i in range(4) %}
-                <div class="col-xs-3">
-                    <button class="btn pot-btn" value="{{ i }}"><img class="pot-icon" src="/static/Pot/{{ i }}.png" /></button>
-                </div>
-                {% endfor %}
-            </div>
-
-            <div class="row slider-row">
-                <div class="col-xs-6">
-                    <div class="panel panel-primary set-center" style="margin-top: 10px;">
-                        <div class="panel-heading">HP %</div>
-                        <div class="panel-body">
-                            <span class="h1" id="hpPct"></span>%
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-6">
-                    <div class="panel panel-primary set-center" style="margin-top: 10px;">
-                        <div class="panel-heading">ATK %</div>
-                        <div class="panel-body">
-                            <span class="h1" id="atkPct"></span>%
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="glyphicon glyphicon-pencil alert alert-info"> 遊戲開始時、每22小時拜訪及商店贈送的精靈的參數都沒有加成(視為鐵鍋)，IV可浮動。</div>
         </div>
     </div>
     <hr />

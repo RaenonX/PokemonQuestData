@@ -44,6 +44,9 @@ class google_identity(base_collection):
 
         uid = self.get_user_id_from_token(token)
 
+        if uid is None:
+            return False
+
         self.find_one_and_update({ g_user_instance.ID: uid }, g_user_instance.new_dict_for_update(email, uid), upsert=True)
         session[g_user_instance.ID] = uid
 
@@ -65,7 +68,8 @@ class google_identity(base_collection):
                 raise ValueError('Wrong issuer.')
         
             return idinfo['sub']
-        except ValueError:
+        except ValueError as e:
+            print(e)
             return None
 
     def get_count(self):

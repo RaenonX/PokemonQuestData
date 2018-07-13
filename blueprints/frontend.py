@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 
 from flask import (
     Blueprint, 
-    render_template, flash, redirect, url_for, request, current_app, session
+    flash, redirect, url_for, request, current_app, session
 )
 from flask_bootstrap import __version__ as FLASK_BOOTSTRAP_VERSION
 from flask_mail import Message
@@ -24,7 +24,8 @@ from data.mongo import (
 )
 from data.thirdparty import google_analytics, google_identity, identity_entry_uid_key
 
-from .nav import nav
+from .nav import nav, render_template
+from .frontend_user import require_login
 
 frontend = Blueprint("frontend", __name__)
 
@@ -115,27 +116,23 @@ def find_pokemon_result(id):
     return render_template("poke_result.html", result=cdm.get_poke_data_by_recipe_id(id))
 
 @frontend.route("/submit-result", methods=["GET"])
+@require_login(".submit_result")
 def submit_result():
-    if gi.user_exists(session=session):
-        return render_template('submit_result.html', 
+    return render_template('submit_result.html', 
                            poke_choices=pkc.get_pokemon_choices(False), 
                            recipe_choices=rcc.get_recipe_choices(), 
                            quality_choices=RecipeQuality.get_choices())
-    else:
-        return redirect(url_for("frontend_user.user_verify", prev=url_for(".submit_result")))
 
 @frontend.route("/submit-result", methods=["POST"])
+@require_login(".submit_result")
 def submit_result_post():
-    if identity_entry_uid_key in session:
-        acknowledged = cdm.add_record(request.form["recipe"], request.form["quality"], request.form["pokemon"], session [identity_entry_uid_key])
-        if acknowledged:
-            flash("感謝您協助提供資料！")
-            return redirect(url_for(".index"))
-        else:
-            flash("資料提交失敗。", category="warning")
-            return redirect(url_for(".submit_result"))
+    acknowledged = cdm.add_record(request.form["recipe"], request.form["quality"], request.form["pokemon"], session [identity_entry_uid_key])
+    if acknowledged:
+        flash("感謝您協助提供資料！")
+        return redirect(url_for(".index"))
     else:
-        return redirect(url_for("frontend_user.user_verify", prev=url_for(".submit_result")))
+        flash("資料提交失敗。", category="warning")
+        return redirect(url_for(".submit_result"))
 
 @frontend.route("/report", methods=["POST"])
 def report_suspicious():

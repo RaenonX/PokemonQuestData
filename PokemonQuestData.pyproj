@@ -242,16 +242,13 @@
     <Content Include="static\Recipe\17.png" />
     <Content Include="static\respond.min.js" />
     <Content Include="static\main.css" />
-    <Content Include="static\scripts\index.js">
+    <Content Include="static\scripts\others\report.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="static\scripts\poke_list.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="static\scripts\poke_profile.js">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="static\scripts\recent_data.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="static\Skill\button_skill_aku_huiuti.png" />
@@ -539,6 +536,7 @@
     <Folder Include="static\scripts\" />
     <Folder Include="static\Pot" />
     <Folder Include="static\Recipe\" />
+    <Folder Include="static\scripts\others\" />
     <Folder Include="static\Skill\" />
     <Folder Include="static\SStone\" />
     <Folder Include="templates" />

@@ -1,3 +1,25 @@
+function onSignInHandle(googleUser, token, email, post_url, redir_url) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', post_url);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send('token=' + token + '&email=' + email);
+    xhr.onload = function () {
+        if (xhr.responseText === "PASS") {
+            window.location.replace(redir_url);
+        } else {
+            $("#msg").removeClass("hide").text(" " + xhr.responseText);
+        }
+    }
+}
+
+function getUrlRedirect(default_url) {
+    let url = getUrlParam('prev', '');
+    if (url == "") {
+        url = default_url;
+    }
+    return url
+}
+
 function getUrlVars() {
     var vars = {};
     var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
@@ -12,21 +34,4 @@ function getUrlParam(parameter, defaultvalue) {
         urlparameter = getUrlVars()[parameter];
     }
     return urlparameter;
-}
-
-function onSignIn(googleUser) {
-    var id_token = googleUser.getAuthResponse().id_token;
-    var email = googleUser.getBasicProfile().getEmail();
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', Flask.url_for('frontend.user_verify_post'));
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send('id=' + id_token + '&email=' + email);
-    xhr.onload = function () {
-        if (xhr.responseText === "PASS") {
-            window.location.replace(getUrlParam('prev', '').replace('%2F', ''));
-        } else {
-            $("#msg").removeClass("hide").text(xhr.responseText);
-        }
-    }
 }
