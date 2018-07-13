@@ -9,9 +9,12 @@ nav = Nav()
 nav_items = [
     View("Pokemon Quest資訊站", "frontend.index"),
     View("首頁", "frontend.index"),
-    View("從精靈查食譜", "frontend.find_recipe_index"),
-    View("從食譜查精靈", "frontend.find_pokemon_index"),
-    View("查詢精靈資料", "frontend.pokemon_profile_index"),
+    Subgroup("資料查詢",
+             View("查詢精靈資料", "frontend.pokemon_profile_index"),
+             Separator(),
+             View("從精靈查食譜", "frontend.find_recipe_index"),
+             View("從食譜查精靈", "frontend.find_pokemon_index"),
+             View("從技能查精靈", "frontend.poke_skill_index")),
     View("提交結果", "frontend.submit_result"),
     View("關於", "frontend.about")
 ]

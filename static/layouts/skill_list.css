@@ -1,0 +1,44 @@
+.btn-section {
+    color: white;
+    margin: 5px;
+    border: 1px solid #AAAAAA;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.btn-section:hover {
+    background-color: white;
+    color: #222222;
+}
+
+.skill-icon {
+    height: 60px;
+    width: 60px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+.skill-intro {
+    height: 70px;
+}
+
+.skill-info {
+    line-height: 30px;
+}
+
+/* OVERRIDE */
+.h3-nbs {
+    line-height: 40px;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+}
+
+a:hover {
+    color: black;
+    text-decoration: none;
+}

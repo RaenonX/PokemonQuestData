@@ -89,3 +89,14 @@
     background: #4CAF50;
     cursor: pointer;
 }
+
+/* Slider End */
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}

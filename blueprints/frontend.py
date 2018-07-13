@@ -95,6 +95,16 @@ def pokemon_profile_result(id):
     return render_template("poke_profile.html", 
                            profile=pi.get_pokemon_profile(id))
 
+@frontend.route("/poke-skill")
+def poke_skill_index():
+    return render_template("skill_list.html", skill_data=skc.get_all_skills())
+
+@frontend.route("/poke-skill/<int:id>")
+def poke_skill_result(id):
+    return render_template("skill_result.html", 
+                           pokes=pkc.get_pokemons_by_skill_owned(id),
+                           skill=skc.get_skill_data(id))
+
 @frontend.route("/find-recipe")
 def find_recipe_index():
     return render_template("poke_list.html", 
@@ -109,7 +119,7 @@ def find_recipe_result(id):
     
 @frontend.route("/find-pokemon")
 def find_pokemon_index():
-    return render_template("recipe_list.html", recipedata=mongo.dict.recipe.find().sort([("id", pymongo.ASCENDING)]))
+    return render_template("recipe_list.html", recipedata=rcc.get_all_recipes())
 
 @frontend.route("/find-pokemon/<int:id>")
 def find_pokemon_result(id):

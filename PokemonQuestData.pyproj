@@ -211,6 +211,12 @@
     <Content Include="static\layouts\recipe_result.css">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="static\layouts\skill_list.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="static\layouts\skill_result.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\layouts\submit_result.css">
       <SubType>Code</SubType>
     </Content>
@@ -437,6 +443,9 @@
     </Content>
     <Content Include="templates\recent_data_user.html" />
     <Content Include="templates\index.html" />
+    <Content Include="templates\skill_result.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="templates\user_verify.html">
       <SubType>Code</SubType>
     </Content>
@@ -520,6 +529,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="static\scripts\user_verify.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="templates\skill_list.html">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

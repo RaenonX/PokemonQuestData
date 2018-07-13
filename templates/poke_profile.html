@@ -154,7 +154,7 @@
                         <tr>
                             <td><img class="skill-icon" src="/static/Skill/{{ skill.icon }}.png" /></td>
                             <td>{{ skill.element|string() }}</td>
-                            <td>{{ skill.name_zh }}</td>
+                            <td><a href="{{ url_for(".poke_skill_result", id=skill.id) }}">{{ skill.name_zh }}</a></td>
                             <td>{{ skill.power }}</td>
                             <td>{{ skill.cd }}</td>
                             <td>

@@ -1,0 +1,36 @@
+﻿{%- extends "base.html" %}
+
+{% block titleex -%} 技能查詢 ({{ skill.name_zh }}) {%- endblock %}
+
+{% block layout %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layouts/skill_result.css') }}">{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row title poke-{{ skill.element.name.lower() }}">
+        <div class="col-xs-2 set-center">
+            <img class="icon-skill" src="/static/Skill/{{ skill.icon }}.png">
+        </div>
+        <div class="col-xs-6 set-center">
+            <p class="h3-nbs">({{ skill.element|string() }}) <span class="h1-nbs">{{ skill.name_zh }}</span> - 威力: {{ skill.power }} / CD: {{ skill.cd }} 秒</p>
+            <p class="h5">{{ skill.description }}</p>
+        </div>
+        <div class="col-xs-4 set-center">
+            {% for slot in skill.slots %}
+            <img class="icon-sstone" src="/static/SStone/{{ slot|int }}.png">
+            {% endfor %}
+        </div>
+    </div>
+    <hr />
+    <div class="row set-center">
+        <p class="h3-nbs">擁有該技能的精靈</p>
+    </div>
+    <div class="row">
+        {% for entry in pokes %}
+        <a class="col-md-1 col-sm-2 col-xs-3 icon-poke-wrapper" href="{{ url_for(".pokemon_profile_result", id=entry.id) }}">
+            <img class="icon-poke" src="/static/Icon/{{ entry.id }}.png">
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{%- endblock %}
+

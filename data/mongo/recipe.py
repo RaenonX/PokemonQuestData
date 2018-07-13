@@ -19,6 +19,9 @@ class recipe_collection(base_collection):
     def get_recipe_by_id(self, id):
         return recipe(self.get_cache(recipe.ID, id))
 
+    def get_all_recipes(self):
+        return [recipe(r) for r in self.find().sort([("id", 1)])]
+
 class recipe(dict_like_mapping):
     ID = "id"
     TITLE_ZH = "title_zh"

@@ -1,0 +1,23 @@
+.icon-skill {
+    height: 100px;
+    margin: 5px;
+}
+
+.icon-poke-wrapper {
+    padding: 5px;
+}
+
+.icon-poke {
+    width: 100%
+}
+
+.title {
+    color: white;
+    border-radius: 10px;
+}
+
+.icon-sstone {
+    height: 50px;
+    display: inline-block;
+    margin: 5px 3px;
+}

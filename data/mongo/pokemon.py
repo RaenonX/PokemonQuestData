@@ -4,6 +4,8 @@ from data import PokeType, SkillStone, BattleType
 
 from .base import dict_like_mapping, base_collection
 
+# Collection
+
 class pokemon_collection(base_collection):
     DB_NAME = "dict"
     COL_NAME = "pokemon"
@@ -31,6 +33,9 @@ class pokemon_collection(base_collection):
 
     def get_count_of_pokemons(self):
         return self.find().count()
+
+    def get_pokemons_by_skill_owned(self, skill_id):
+        return [pokemon(p) for p in self.find({ pokemon.SKILLS: { "$elemMatch": { "$eq": skill_id } } }).sort([(pokemon.ID, 1)])]
 
 class pokemon_skill_collection(base_collection):
     DB_NAME = "dict"
@@ -68,6 +73,8 @@ class pokemon_bingo_collection(base_collection):
             poke_bingo.parameters[ix] = item if type(item) is str else PokeType.int_get_str(item)
 
         return bingo_entry(self.get_cache(bingo_entry.TYPE_ID, poke_bingo.type_id)).get_description(poke_bingo.parameters)
+
+# Data
 
 class pokemon(dict_like_mapping):
     ID = "id"

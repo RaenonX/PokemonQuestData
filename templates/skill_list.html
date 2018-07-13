@@ -1,0 +1,30 @@
+{%- extends "base.html" %}
+
+{% block titleex -%} 技能列表 {%- endblock %}
+
+{% block layout %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layouts/skill_list.css') }}">{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% for entry in skill_data %}
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="btn-section poke-{{ entry.element.name.lower() }}">
+            <a href="{{ url_for('.poke_skill_result', id=entry.id) }}">
+                <div class="row set-center">
+                    <div class="col-xs-2">
+                        <img class="skill-icon" src="/static/Skill/{{ entry.icon }}.png">
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="skill-intro">
+                            <span class="h3-nbs">{{ entry.name_zh }}</span>
+                            <br />
+                            <span class="skill-info">威力: {{ entry.power }} / CD: {{ entry.cd }}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{%- endblock %}
