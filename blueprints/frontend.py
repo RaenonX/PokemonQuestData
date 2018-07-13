@@ -92,6 +92,10 @@ def pokemon_profile_result(id):
     return render_template("poke_profile.html", 
                            profile=pi.get_pokemon_profile(id))
     
+@frontend.route("/loaderio-6e56b5c46483f95c7d93170bfb11c854")
+def s():
+    return "loaderio-6e56b5c46483f95c7d93170bfb11c854"
+
 @frontend.route("/find-recipe")
 def find_recipe_index():
     return render_template("poke_list.html", 
