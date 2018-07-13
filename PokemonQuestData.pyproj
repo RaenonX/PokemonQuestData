@@ -19,7 +19,6 @@
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="loaderio-6e56b5c46483f95c7d93170bfb11c854.txt" />
     <Content Include="requirements.txt" />
     <Content Include="runtime.txt" />
     <Content Include="static\BattleType\N0.png" />
