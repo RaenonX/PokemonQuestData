@@ -1,8 +1,8 @@
-### delete own uploaded data
-### Search by skill, by bingo
+### Search by bingo
 ### Add statistics page
 ### Recipe Simulator
 ### Dark Zone - Change Ticket, Boost
+### Multilingual
 
 import os
 from datetime import datetime, timedelta
