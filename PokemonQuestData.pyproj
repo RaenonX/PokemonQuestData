@@ -248,6 +248,9 @@
     <Content Include="static\Recipe\17.png" />
     <Content Include="static\respond.min.js" />
     <Content Include="static\main.css" />
+    <Content Include="static\scripts\others\delete.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\scripts\others\report.js">
       <SubType>Code</SubType>
     </Content>

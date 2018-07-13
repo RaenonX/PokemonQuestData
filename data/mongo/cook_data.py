@@ -106,6 +106,9 @@ class cook_data_manager(base_collection):
     def report_suspicious(self, oid_str, reporter_id):
         return self.update_one({ cook_data.OBJECT_ID: ObjectId(oid_str) }, { "$set": { cook_data.SUSPICIOUS: reporter_id } }).acknowledged
 
+    def del_record(self, id):
+        return self.delete_one({ cook_data.OBJECT_ID: ObjectId(id) }).deleted_count > 0
+
 class cook_data(dict_like_mapping):
     OBJECT_ID = "_id"
     RECIPE = "r"

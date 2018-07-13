@@ -39,6 +39,17 @@ def require_login(prev, **kwargs_url):
         return func_wrapper
     return func_decorator
 
+def require_login_return_msg(err_msg, **kwargs_url):
+    def func_decorator(func):
+        @wraps(func)
+        def func_wrapper(*args):
+            if gi.user_exists(session=session):
+                return func(*args)
+            else:
+                return err_msg
+        return func_wrapper
+    return func_decorator
+
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
     test_url = urlparse(urljoin(request.host_url, target))

@@ -1,10 +1,10 @@
-.report {
+.report, .del-icon {
     cursor: pointer;
     text-decoration: none;
     color: dodgerblue;
 }
 
-.report:hover {
+.report:hover, .del-icon:hover {
     color: orangered;
     text-decoration: none;
 }

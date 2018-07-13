@@ -25,7 +25,7 @@ from data.mongo import (
 from data.thirdparty import google_analytics, google_identity, identity_entry_uid_key
 
 from .nav import nav, render_template
-from .frontend_user import require_login
+from .frontend_user import require_login, require_login_return_msg
 
 frontend = Blueprint("frontend", __name__)
 
@@ -80,7 +80,21 @@ def recent_new_data_by_user(uid=""):
         return render_template("recent_data_user.html", 
                                data=cdm.get_entries_by_adder_uid(uid, start, result_count),
                                start=start,
-                               result_count=result_count)
+                               result_count=result_count,
+                               user_owned=(uid == session.get(identity_entry_uid_key, "")))
+    
+@frontend.route("/del-record", methods=["POST"])
+@require_login_return_msg("登記身分並記錄開鍋結果才可以使用此功能。")
+def delete_record_user():
+    data_id = request.form["dataId"]
+    deletion_succeed = cdm.del_record(data_id)
+
+    if deletion_succeed:
+        flash("資料刪除成功！", category='success')
+        return "PASS"
+    else:
+        flash("資料刪除失敗。(資料ID: {})".format(data_id), category='danger')
+        return "FAIL"
     
 @frontend.route("/poke-profile")
 def pokemon_profile_index():
@@ -145,22 +159,20 @@ def submit_result_post():
         return redirect(url_for(".submit_result"))
 
 @frontend.route("/report", methods=["POST"])
+@require_login_return_msg("請先登記身分再提報可疑資料。")
 def report_suspicious():
-    if gi.user_exists(session=session):
-        data_id = request.form["dataId"]
-        report_result = cdm.report_suspicious(data_id)
+    data_id = request.form["dataId"]
+    report_result = cdm.report_suspicious(data_id)
 
-        if report_result:
-            flash("資料舉報成功！")
-            msg = Message("Suspicious Data Report", recipients=["maplestory0710@gmail.com"])
-            msg.body = "An entry of data has been reported suspicious. {} Recommended to review before {}".format(data_id, datetime.utcnow() + timedelta(days))
-            current_app.config["MAIL_INSTANCE"].send(msg)
-            return "PASS"
-        else:
-            flash("資料舉報失敗。(資料ID: {})".format(data_id))
-            return "FAIL"
+    if report_result:
+        flash("資料舉報成功！")
+        msg = Message("Suspicious Data Report", recipients=["maplestory0710@gmail.com"])
+        msg.body = "An entry of data has been reported suspicious. {} Recommended to review before {}".format(data_id, datetime.utcnow() + timedelta(days))
+        current_app.config["MAIL_INSTANCE"].send(msg)
+        return "PASS"
     else:
-        return "請先登記身分再提報可疑資料。"
+        flash("資料舉報失敗。(資料ID: {})".format(data_id))
+        return "FAIL"
 
 @frontend.route("/about")
 def about():
