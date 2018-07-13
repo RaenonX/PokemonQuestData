@@ -38,14 +38,14 @@ function update_min_max() {
 
     let lv = parseInt($("#lvValue").text())
 
-    let hpMin = parseInt($("#baseHp").val()) + lv
+    let hpMin = parseInt($("#baseHp").val()) + lv + current_pot.bonus
     let hpMax = hpMin + current_pot.iv
 
     $("#hpMin").text(hpMin)
     $("#hpMax").text(hpMax)
     $("#hpValue").text($("#hpSlider").attr("min", hpMin).attr("max", hpMax).val())
 
-    let atkMin = parseInt($("#baseAtk").val()) + lv
+    let atkMin = parseInt($("#baseAtk").val()) + lv + current_pot.bonus
     let atkMax = atkMin + current_pot.iv
 
     $("#atkMin").text(atkMin)
