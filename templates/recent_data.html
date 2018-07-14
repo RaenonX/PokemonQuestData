@@ -25,7 +25,51 @@
     </div>
     {%- endwith %}
     <div class="row">
-        <div class="col-md-12 set-center">
+        <div class="col-md-3 set-center">
+            <div>
+                <p class="set-center h3-nbs">近7日開鍋數</p>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th class="set-center">日期</th>
+                                <th class="set-center">鍋數</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in recent_cook %}
+                            <tr>
+                                <td>{{ entry["_id"] }}</td>
+                                <td>{{ entry["sum"] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <p class="set-center h3-nbs">前20名開鍋登記數</p>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th class="set-center">使用者ID</th>
+                                <th class="set-center">鍋數</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in most_add %}
+                            <tr>
+                                <td><a href="{{ url_for(".recent_new_data_by_user", uid=entry["_id"]) }}">{{ entry["_id"] }}</a></td>
+                                <td>{{ entry["sum"] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 set-center">
             <div class="well">
                 <p class="set-center h3-nbs">最新開鍋</p>
                 <div class="table-responsive">

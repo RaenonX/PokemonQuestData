@@ -61,7 +61,9 @@ def recent_new_data():
     return render_template("recent_data.html", 
                            data=cdm.get_last(start=start, count=result_count),
                            start=start,
-                           result_count=result_count)
+                           result_count=result_count,
+                           recent_cook=cdm.get_count_last_7_days(),
+                           most_add=cdm.get_top_20_provider_ids())
 
 @frontend.route("/recent-user/<uid>")
 @frontend.route("/recent-user/")

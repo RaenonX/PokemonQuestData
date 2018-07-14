@@ -109,6 +109,29 @@ class cook_data_manager(base_collection):
     def del_record(self, id):
         return self.delete_one({ cook_data.OBJECT_ID: ObjectId(id) }).deleted_count > 0
 
+    def get_count_last_7_days(self):
+        return self.aggregate([
+            { "$group": {  
+                "_id": {    
+                    "date": { "$dateToString": { "format": "%Y-%m-%d", "date": "$_id" }}
+                },  
+                "sum": { "$sum": 1 }} }, 
+            { "$project": {  
+                "_id": "$_id.date",  
+                "sum": "$sum" } }, 
+            { "$sort": { 
+               "_id": -1
+            } }, 
+            { "$limit": 7 }
+        ])
+
+    def get_top_20_provider_ids(self):
+        return self.aggregate([
+            { "$match": { cook_data.ADDER: { "$ne": "100000000000000000000" }} }, 
+            { "$group": { "_id": "$" + cook_data.ADDER, "sum": { "$sum": 1 }} }, 
+            { "$sort": { "sum": -1} }, 
+            { "$limit": 20 }])
+
 class cook_data(dict_like_mapping):
     OBJECT_ID = "_id"
     RECIPE = "r"
