@@ -1,4 +1,3 @@
-### Search by bingo
 ### Add statistics page
 ### Recipe Simulator
 ### Dark Zone - Change Ticket, Boost
