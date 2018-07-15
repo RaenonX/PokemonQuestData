@@ -25,9 +25,11 @@ class official_probability(base_collection):
         key = "{}.{}.{}".format(pokemon_id, recipe_id, quality_id)
 
         if key not in self._cache_exists:
-            filter = { probability_entry.POKEMON_ID: pokemon_id, 
-                      probability_entry.RECIPE_ID: recipe_id, 
-                      probability_entry.QUALITY_ID: quality_id }
+            filter = { probability_entry.POKEMON_ID: int(pokemon_id), 
+                      probability_entry.RECIPE_ID: int(recipe_id), 
+                      probability_entry.QUALITY_ID: int(quality_id) }
+            print(filter)
+            print(self.find_one(filter))
             self._cache_exists[key] = self.find_one(filter) is not None
        
         return self._cache_exists[key]
