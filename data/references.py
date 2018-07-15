@@ -20,6 +20,14 @@ class PokeType(ex.EnumWithName):
     ROCK = 16, "岩石"
     WATER = 17, "水"
 
+class Debuff(ex.EnumWithName):
+    POISON = 0, "毒"
+    BURN = 1, "灼傷"
+    PARALYZE = 2, "麻痺"
+    CONFUSION = 3, "混亂"
+    FREEZE = 4, "冰"
+    SLEEP = 5, "睡眠"
+
 class RecipeQuality(ex.EnumWithName):
     NORMAL = 0, "普通"
     GOOD = 1, "好吃"

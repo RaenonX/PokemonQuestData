@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{8bd65e2f-3acc-4771-8da5-03bf7fb0791c}</ProjectGuid>
     <ProjectHome />
-    <StartupFile>app_local.py</StartupFile>
+    <StartupFile>sandbox.py</StartupFile>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>

@@ -1,6 +1,6 @@
 import math
 
-from data import PokeType, SkillStone, BattleType
+from data import PokeType, SkillStone, BattleType, Debuff
 
 from .base import dict_like_mapping, base_collection
 
@@ -55,10 +55,10 @@ class pokemon_bingo_collection(base_collection):
     COL_NAME = "bingo"
 
     SPEC_HANDLE = {
-        6: 0,
-        7: 0,
-        8: 0,
-        9: 0
+        6: [(0, PokeType.int_get_str)],
+        7: [(0, PokeType.int_get_str)],
+        8: [(0, PokeType.int_get_str)],
+        9: [(0, Debuff.int_get_str)]
     }
 
     def __init__(self, mongo_client, pkm_col):
@@ -67,11 +67,11 @@ class pokemon_bingo_collection(base_collection):
 
     def get_bingo_description(self, poke_bingo):
         if poke_bingo.type_id in pokemon_bingo_collection.SPEC_HANDLE:
-            ix = pokemon_bingo_collection.SPEC_HANDLE[poke_bingo.type_id]
-            item = poke_bingo.parameters[ix]
+            for ix, trans_method in pokemon_bingo_collection.SPEC_HANDLE[poke_bingo.type_id]:
+                item = poke_bingo.parameters[ix]
 
-            # TODO: investigate why different poke_bingo but parameter is changed
-            poke_bingo.parameters[ix] = item if type(item) is str else PokeType.int_get_str(item)
+                # TODO: investigate why different poke_bingo but parameter is changed
+                poke_bingo.parameters[ix] = item if type(item) is str else trans_method(item)
 
         return bingo_entry(self.get_cache(bingo_entry.TYPE_ID, poke_bingo.type_id)).get_description(poke_bingo.parameters)
 
@@ -296,7 +296,8 @@ class poke_base_val(dict_like_mapping):
 
 class bingo_entry(dict_like_mapping):
     TYPE_ID = "id"
-    PATTERN = "pattern"
+    PATTERN_ZH = "pattern_zh"
+    PATTERN_EN = "pattern_en"
 
     def __init__(self, org_dict):
         super().__init__(org_dict)
@@ -306,8 +307,12 @@ class bingo_entry(dict_like_mapping):
         return self[bingo_entry.TYPE_ID]
 
     @property
-    def pattern(self):
-        return self[bingo_entry.PATTERN]
+    def pattern_zh(self):
+        return self[bingo_entry.PATTERN_ZH]
+
+    @property
+    def pattern_en(self):
+        return self[bingo_entry.PATTERN_EN]
 
     def get_description(self, params):
-        return self.pattern.format(*params)
+        return self.pattern_zh.format(*params)
