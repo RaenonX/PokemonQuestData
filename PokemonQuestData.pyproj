@@ -190,6 +190,9 @@
     <Content Include="static\Item\4.png" />
     <Content Include="static\Item\5.png" />
     <Content Include="static\jquery.min.js" />
+    <Content Include="static\layouts\dz.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\layouts\index.css">
       <SubType>Code</SubType>
     </Content>
@@ -437,6 +440,9 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="templates\base.html" />
+    <Content Include="templates\dz.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="templates\error\404.html">
       <SubType>Code</SubType>
     </Content>
@@ -488,6 +494,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="data\mongo\pokemon_intgr.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="data\mongo\prob.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="data\thirdparty\gidentity.py">

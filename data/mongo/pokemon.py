@@ -89,6 +89,8 @@ class pokemon(dict_like_mapping):
     BATTLE_TYPE = "btl_type"
     BINGO = "bgo"
     BASE_VALUES = "val"
+    APPEAR_RATE = "ar"
+    SLOT_PCT = "slt_pct"
 
     def __init__(self, org_dict):
         super().__init__(org_dict)
@@ -158,6 +160,14 @@ class pokemon(dict_like_mapping):
             ret.extend(pkm_col.get_pokemon_by_id(evolve_info.next_id).get_all_including_evolved_bingos(pkm_col))
 
         return ret
+    
+    @property
+    def appear_rate(self):
+        return self[pokemon.APPEAR_RATE]
+
+    @property
+    def slot_percentage(self):
+        return poke_slot_pct(self[pokemon.SLOT_PCT])
 
 class poke_evolve_info(dict_like_mapping):
     REQ_LV = "req_lv"
@@ -173,6 +183,41 @@ class poke_evolve_info(dict_like_mapping):
     @property
     def next_id(self):
         return self[poke_evolve_info.NEXT_ID]
+
+class poke_slot_pct(dict_like_mapping):
+    HP = "hp"
+    ATK = "atk"
+    MULTI_x1 = "m1"
+    MULTI_x15 = "m15"
+    MULTI_x2 = "m2"
+    MULTI_x3 = "m3"
+
+    def __init__(self, org_dict):
+        super().__init__(org_dict)
+        
+    @property
+    def hp(self):
+        return self[poke_slot_pct.HP]
+
+    @property
+    def atk(self):
+        return self[poke_slot_pct.ATK]
+
+    @property
+    def multi_x1(self):
+        return self[poke_slot_pct.MULTI_x1]
+
+    @property
+    def multi_x15(self):
+        return self[poke_slot_pct.MULTI_x15]
+
+    @property
+    def multi_x2(self):
+        return self[poke_slot_pct.MULTI_x2]
+
+    @property
+    def multi_x3(self):
+        return self[poke_slot_pct.MULTI_x3]
 
 class poke_skill(dict_like_mapping):
     ID = "id"

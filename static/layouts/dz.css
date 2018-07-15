@@ -1,0 +1,39 @@
+body {
+    background-color: #333333 !important;
+    color: #EEEEEE !important;
+}
+
+p {
+    color: #EEEEEE !important;
+}
+
+.list-group-item-normal {
+    background-color: #666666;
+    color: #EEEEEE;
+}
+
+.list-group-item-success {
+    background-color: #3c763d;
+    color: #dff0d8;
+}
+
+.list-group-item-danger {
+    background-color: #a94442;
+    color: #f2dede;
+}
+
+.jumbotron {
+    background-color: #444444 !important;
+    color: #EEEEEE !important;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+    color: rgb(200, 200, 255);
+}
+
+a:hover {
+    color: rgb(255, 200, 200);
+    text-decoration: none;
+}

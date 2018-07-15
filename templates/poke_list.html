@@ -12,9 +12,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 set-center">
-            <span class="h2">{{ title }}</span><span class="h4"> - 點擊滑鼠右鍵可取消選取屬性。</span>
+            <p><span class="h2">{{ title }}</span><span class="h4"> - 點擊滑鼠右鍵可取消選取屬性。</span></p>
         </div>
     </div>
+    {% if mesasage is defined %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-info">{{ mesasage }}</div>
+        </div>
+    </div>
+    {% endif %}
     <div class="row form-group">
         <input type="hidden" id="elemClicked" value="-1">
         {% for type in poketype %}

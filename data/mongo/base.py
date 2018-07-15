@@ -18,12 +18,15 @@ class base_collection(Collection):
 
         self._cache[cache_key][item_key] = item
 
-    def get_cache(self, cache_key, item_key):
+    def get_cache(self, cache_key, item_key, result_acquire_method=None):
+        if result_acquire_method is None:
+            result_acquire_method = self.find_one
+
         if cache_key not in self._cache:
             self.init_cache(cache_key)
 
         if item_key not in self._cache[cache_key]:
-            self.set_cache(cache_key, item_key, self.find_one({ cache_key: item_key }))
+            self.set_cache(cache_key, item_key, result_acquire_method({ cache_key: item_key }))
 
         return self._cache[cache_key][item_key]
 

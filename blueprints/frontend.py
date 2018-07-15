@@ -19,7 +19,8 @@ from data import RecipeQuality, PokeType
 from data.mongo import (
     cook_data_manager,
     pokemon_collection, pokemon_skill_collection, pokemon_bingo_collection, recipe_collection, 
-    site_log_manager, pokemon_integrator
+    site_log_manager, pokemon_integrator,
+    official_probability
 )
 from data.thirdparty import google_analytics, google_identity, identity_entry_uid_key
 
@@ -38,6 +39,8 @@ skc = pokemon_skill_collection(mongo)
 bgc = pokemon_bingo_collection(mongo, pkc)
 
 pi = pokemon_integrator(pkc, skc, bgc)
+
+op = official_probability(mongo)
 
 slm = site_log_manager(mongo)
 ga = google_analytics()
@@ -126,11 +129,14 @@ def find_recipe_index():
                            pokedata=pkc.get_all_pokemons(False),
                            poketype=PokeType,
                            next_endpoint=".find_recipe_result",
-                           title="從精靈查食譜")
+                           title="從精靈查食譜",
+                           mesasage="煮鍋時，只能做出第一型態的精靈。所有進化過的精靈都無法藉由煮鍋獲得。")
 
 @frontend.route("/find-recipe/<int:id>")
 def find_recipe_result(id):
-    return render_template("recipe_result.html", result=cdm.get_cook_data_by_pokemon_id(id))
+    return render_template("recipe_result.html", 
+                           result=cdm.get_cook_data_by_pokemon_id(id),
+                           off_prob=op.get_data_by_pokemon_id(id))
     
 @frontend.route("/find-pokemon")
 def find_pokemon_index():
@@ -178,3 +184,7 @@ def report_suspicious():
 @frontend.route("/about")
 def about():
     return render_template("about.html")
+
+@frontend.route("/dz")
+def dark_zone():
+    return render_template("dz.html")

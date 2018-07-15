@@ -16,6 +16,7 @@ nav_items = [
              View("從食譜查精靈", "frontend.find_pokemon_index"),
              View("從技能查精靈", "frontend.poke_skill_index")),
     View("提交結果", "frontend.submit_result"),
+    View("暗區", "frontend.dark_zone"),
     View("關於", "frontend.about")
 ]
 

@@ -19,19 +19,22 @@
                             <th class="set-center">食譜</th>
                             <th class="set-center">品質</th>
                             <th class="set-center">機率</th>
+                            <th class="set-center">官方機率</th>
                             <th class="set-center">樣本</th>
                         </tr>
                     </thead>
                     {% for entry in result.data %}
+                    {% set o_prob = off_prob.get_data(entry.recipe.id, entry.recipe_quality|int) %}
                     <tr>
                         <td><a href="{{ url_for('.find_pokemon_result', id=entry.recipe.id) }}"><img class="icon" src="/static/Recipe/{{ entry.recipe.id }}.png" />&nbsp;{{ entry.recipe.title_zh }}</a></td>
                         <td>{{ entry.recipe_quality|string() }}</td>
+                        <td>{{ "(無資料)" if o_prob is none else "{:.2%}".format(o_prob) }}</td>
                         <td>{{ "{:.2%}".format(entry.probability) }}</td>
                         <td>{{ entry.get_sample_size_string() }}</td>
                     </tr>
                     <tr>
                         <td>配方</td>
-                        <td colspan="3">
+                        <td colspan="4">
                             {% for comp in entry.recipe_dish.items %}
                             <div class="comp-block">
                                 {% for item in comp %}
