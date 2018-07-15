@@ -57,7 +57,8 @@ class pokemon_bingo_collection(base_collection):
     SPEC_HANDLE = {
         6: 0,
         7: 0,
-        8: 0
+        8: 0,
+        9: 0
     }
 
     def __init__(self, mongo_client, pkm_col):
