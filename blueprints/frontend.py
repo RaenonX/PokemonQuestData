@@ -159,12 +159,12 @@ def submit_result():
 @frontend.route("/submit-result", methods=["POST"])
 @require_login(".submit_result")
 def submit_result_post():
-    acknowledged = cdm.add_record(request.form["recipe"], request.form["quality"], request.form["pokemon"], session [identity_entry_uid_key])
+    acknowledged = cdm.add_record(request.form["pokemon"], request.form["recipe"], request.form["quality"], session[identity_entry_uid_key])
     if acknowledged:
         flash("感謝您協助提供資料！")
         return redirect(url_for(".index"))
     else:
-        flash("資料提交失敗。", category="warning")
+        flash("資料提交失敗。請檢查提交的資料是否正確。", category="warning")
         return redirect(url_for(".submit_result"))
 
 @frontend.route("/report", methods=["POST"])

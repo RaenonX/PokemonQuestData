@@ -7,6 +7,7 @@ from data import RecipeQuality
 from .base import base_collection, dict_like_mapping
 from .pokemon import pokemon_collection
 from .recipe import recipe_collection
+from .prob import official_probability
 
 class cook_data_manager(base_collection):
     DB_NAME = "data"
@@ -16,6 +17,7 @@ class cook_data_manager(base_collection):
         super().__init__(mongo_client, cook_data_manager.DB_NAME, cook_data_manager.COL_NAME)
         self._pokemon_col = pokemon_collection(mongo_client)
         self._recipe_col = recipe_collection(mongo_client)
+        self._prob = official_probability(mongo_client)
 
     def get_cook_data_by_pokemon_id(self, id):
         _start = time.time()
@@ -100,8 +102,14 @@ class cook_data_manager(base_collection):
     def get_adder_count(self):
         return len(self.distinct(cook_data.ADDER))
 
-    def add_record(self, recipe_id, quality_id, pokemon_id, adder):
-        return self.insert_one(cook_data.init_by_field(recipe_id, quality_id, pokemon_id, adder)).acknowledged
+    def add_record(self, pokemon_id, recipe_id, quality_id, adder):
+        if not self._is_valid(pokemon_id, recipe_id, quality_id):
+            return False
+
+        return self.insert_one(cook_data.init_by_field(pokemon_id, recipe_id, quality_id, adder)).acknowledged
+
+    def _is_valid(self, pokemon_id, recipe_id, quality_id):
+        return self._prob.data_exists(pokemon_id, recipe_id, quality_id)
 
     def report_suspicious(self, oid_str, reporter_id):
         return self.update_one({ cook_data.OBJECT_ID: ObjectId(oid_str) }, { "$set": { cook_data.SUSPICIOUS: reporter_id } }).acknowledged
@@ -144,7 +152,7 @@ class cook_data(dict_like_mapping):
         super().__init__(org_dict)
 
     @staticmethod
-    def init_by_field(recipe_id, quality_id, pokemon_id, adder):
+    def init_by_field(pokemon_id, recipe_id, quality_id, adder):
         init_dict = {
             cook_data.RECIPE: int(recipe_id),
             cook_data.QUALITY: int(quality_id),

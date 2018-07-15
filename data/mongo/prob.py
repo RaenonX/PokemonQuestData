@@ -6,6 +6,7 @@ class official_probability(base_collection):
 
     def __init__(self, mongo_client):
         super().__init__(mongo_client, official_probability.DATABASE_NAME, official_probability.COLLECTION_NAME, [probability_entry.POKEMON_ID, probability_entry.RECIPE_ID])
+        self._cache_exists = {}
 
     def get_data_by_pokemon_id(self, poke_id):
         return probability_result(
@@ -16,6 +17,20 @@ class official_probability(base_collection):
         return probability_result(
             [probability_entry(e) for e in self.get_cache(probability_entry.RECIPE_ID, recipe_id, self.find)],
             probability_entry.POKEMON_ID, probability_entry.QUALITY_ID)
+
+    def data_exists(self, pokemon_id, recipe_id, quality_id):
+        return self._get_cache_exists(pokemon_id, recipe_id, quality_id)
+
+    def _get_cache_exists(self, pokemon_id, recipe_id, quality_id):
+        key = "{}.{}.{}".format(pokemon_id, recipe_id, quality_id)
+
+        if key not in self._cache_exists:
+            filter = { probability_entry.POKEMON_ID: pokemon_id, 
+                      probability_entry.RECIPE_ID: recipe_id, 
+                      probability_entry.QUALITY_ID: quality_id }
+            self._cache_exists[key] = self.find_one(filter) is not None
+       
+        return self._cache_exists[key]
 
 class probability_entry(dict_like_mapping):
     POKEMON_ID = "i"
