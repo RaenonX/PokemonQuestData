@@ -5,59 +5,59 @@
 {% block titleex -%} 暗區 {%- endblock %}
 
 {% block content %}
-                  <div class="container">
-                      <div class="row set-center">
-                          <div class="col-md-12 jumbotron">
-                              <p class="h1">適度修改遊戲或許可以延長對遊戲的熱誠，過度修改遊戲將會讓你對遊戲失去興趣！</p>
-                              <p class="h4">修改過程中若有任何問題，歡迎到<a href="{{ url_for(".about") }}">關於頁面</a>尋找聯絡方式，聯絡網站開發者。</p>
-                              <p class="h4">本教學針對<strong>Android</strong>，恕<strong>無法提供iOS修改</strong>教學。</p>
-                          </div>
-                      </div>
-                      <hr />
-                      <div class="row">
-                          <div class="col-md-12">
-                              <p class="h3">前置任務</p>
-                              <ul class="list-group">
-                                  <li class="list-group-item list-group-item-normal">一台已經有Root權限的Android裝置</li>
-                                  <li class="list-group-item list-group-item-normal">
-                                      下載Game Guardian<br />
-                                      <ul class="list-group">
-                                          <li class="list-group-item list-group-item-normal"><a href="https://gameguardian.cn.uptodown.com/android">進入此網頁下載</a>。</li>
-                                          <li class="list-group-item list-group-item-normal">安裝下載後的APK。</li>
-                                          <li class="list-group-item list-group-item-normal">按照步驟執行安裝，Game Guardian會為了躲避遊戲追查而自體重新安裝，並以隨機產生的字串作為自己的名字。</li>
-                                      </ul>
-                                  </li>
-                              </ul>
-                          </div>
-                      </div>
-                      <hr />
-                      <div class="row">
-                          <div class="col-md-6">
-                              <p class="h3">改票、改素材(此處以改票示範，改素材同理)</p>
-                              <ul class="list-group">
-                                  <li class="list-group-item list-group-item-normal">開啟Game Guardian。若Game Guardian開啟一個應用程式選單，請選擇Pokemon Quest。</li>
-                                  <li class="list-group-item list-group-item-normal">點選第二個頁籤(放大鏡圖標)。</li>
-                                  <li class="list-group-item list-group-item-normal">點選稍下方一排小圖示中的放大鏡圖標。</li>
-                                  <li class="list-group-item list-group-item-normal list-group-item-success">輸入目前你所擁有的票數。</li>
-                                  <li class="list-group-item list-group-item-normal">點選搜尋。</li>
-                                  <li class="list-group-item list-group-item-normal">搜尋完畢後，將Game Guardian縮小，回到遊戲畫面中，用任何手段改變票的數值。</li>
-                                  <li class="list-group-item list-group-item-normal">點選Game Guardian的小圖示，重新輸入現在票的數量。</li>
-                                  <li class="list-group-item list-group-item-normal">如果結果超過2筆，請輸入你目前擁有的票數，並使用全新搜尋重新搜尋(回到綠色步驟)。</li>
-                                  <li class="list-group-item list-group-item-normal">點選已篩選的結果，修改數值。</li>
-                                  <li class="list-group-item list-group-item-danger">注意: 數值超過255時，容易找不到記憶體位址，建議票數低於255再修改。</li>
-                              </ul>
-                          </div>
-                          <div class="col-md-6">
-                              <p class="h3">加速</p>
-                              <ul class="list-group">
-                                  <li class="list-group-item list-group-item-normal">開啟Game Guardian。若Game Guardian開啟一個應用程式選單，請選擇Pokemon Quest。</li>
-                                  <li class="list-group-item list-group-item-normal">長按Game Guardian的小圖示，直到出現目前速度倍率。</li>
-                                  <li class="list-group-item list-group-item-normal">點選快進圖標加速；點選快退圖標減速。</li>
-                                  <li class="list-group-item list-group-item-danger">注意: 速度高時不一定快，若遊戲時脈跟不上，過高的速率反而只會造成遊戲卡頓。</li>
-                                  <li class="list-group-item list-group-item-danger">注意: 部分動畫加速沒有太顯著的效果。</li>
-                              </ul>
-                          </div>
-                      </div>
-                      <hr />
-                  </div>
+<div class="container">
+    <div class="row set-center">
+        <div class="col-md-12 jumbotron">
+            <p class="h1">適度修改遊戲或許可以延長對遊戲的熱誠，過度修改遊戲將會讓你對遊戲失去興趣！</p>
+            <p class="h4">修改過程中若有任何問題，歡迎到<a href="{{ url_for(".about") }}">關於頁面</a>尋找聯絡方式，聯絡網站開發者。</p>
+            <p class="h4">本教學針對<strong>Android</strong>，恕<strong>無法提供iOS修改</strong>教學。</p>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <p class="h3">前置任務</p>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-normal">一台已經有Root權限的Android裝置</li>
+                <li class="list-group-item list-group-item-normal">
+                    下載Game Guardian<br />
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-normal"><a href="https://gameguardian.cn.uptodown.com/android">進入此網頁下載</a>。</li>
+                        <li class="list-group-item list-group-item-normal">安裝下載後的APK。</li>
+                        <li class="list-group-item list-group-item-normal">按照步驟執行安裝，Game Guardian會為了躲避遊戲追查而自體重新安裝，並以隨機產生的字串作為自己的名字。</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <p class="h3">改票、改素材(此處以改票示範，改素材同理)</p>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-normal">開啟Game Guardian。若Game Guardian開啟一個應用程式選單，請選擇Pokemon Quest。</li>
+                <li class="list-group-item list-group-item-normal">點選第二個頁籤(放大鏡圖標)。</li>
+                <li class="list-group-item list-group-item-normal">點選稍下方一排小圖示中的放大鏡圖標。</li>
+                <li class="list-group-item list-group-item-normal list-group-item-success">輸入目前你所擁有的票數。</li>
+                <li class="list-group-item list-group-item-normal">點選搜尋。</li>
+                <li class="list-group-item list-group-item-normal">搜尋完畢後，將Game Guardian縮小，回到遊戲畫面中，用任何手段改變票的數值。</li>
+                <li class="list-group-item list-group-item-normal">點選Game Guardian的小圖示，重新輸入現在票的數量。</li>
+                <li class="list-group-item list-group-item-normal">如果結果超過2筆，請輸入你目前擁有的票數，並使用全新搜尋重新搜尋(回到綠色步驟)。</li>
+                <li class="list-group-item list-group-item-normal">點選已篩選的結果，修改數值。</li>
+                <li class="list-group-item list-group-item-danger">注意: 數值超過255時，容易找不到記憶體位址，建議票數低於255再修改。</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <p class="h3">加速</p>
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-normal">開啟Game Guardian。若Game Guardian開啟一個應用程式選單，請選擇Pokemon Quest。</li>
+                <li class="list-group-item list-group-item-normal">長按Game Guardian的小圖示，直到出現目前速度倍率。</li>
+                <li class="list-group-item list-group-item-normal">點選快進圖標加速；點選快退圖標減速。</li>
+                <li class="list-group-item list-group-item-danger">注意: 速度高時不一定快，若遊戲時脈跟不上，過高的速率反而只會造成遊戲卡頓。</li>
+                <li class="list-group-item list-group-item-danger">注意: 部分動畫加速沒有太顯著的效果。</li>
+            </ul>
+        </div>
+    </div>
+    <hr />
+</div>
 {%- endblock %}

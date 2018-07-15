@@ -5,10 +5,17 @@ class official_probability(base_collection):
     DATABASE_NAME = "dict"
 
     def __init__(self, mongo_client):
-        super().__init__(mongo_client, official_probability.DATABASE_NAME, official_probability.COLLECTION_NAME, [probability_entry.POKEMON_ID])
+        super().__init__(mongo_client, official_probability.DATABASE_NAME, official_probability.COLLECTION_NAME, [probability_entry.POKEMON_ID, probability_entry.RECIPE_ID])
 
     def get_data_by_pokemon_id(self, poke_id):
-        return probability_result([probability_entry(e) for e in self.get_cache(probability_entry.POKEMON_ID, poke_id, self.find)])
+        return probability_result(
+            [probability_entry(e) for e in self.get_cache(probability_entry.POKEMON_ID, poke_id, self.find)],
+            probability_entry.RECIPE_ID, probability_entry.QUALITY_ID)
+
+    def get_data_by_recipe_id(self, recipe_id):
+        return probability_result(
+            [probability_entry(e) for e in self.get_cache(probability_entry.RECIPE_ID, recipe_id, self.find)],
+            probability_entry.POKEMON_ID, probability_entry.QUALITY_ID)
 
 class probability_entry(dict_like_mapping):
     POKEMON_ID = "i"
@@ -36,8 +43,8 @@ class probability_entry(dict_like_mapping):
         return self[probability_entry.PROBABILITY]
 
 class probability_result:
-    def __init__(self, data):
-        self._data = { "{}.{}".format(data.recipe_id, data.quality_id): data.probability for data in data }
+    def __init__(self, data, key_1, key_2):
+        self._data = { "{}.{}".format(data[key_1], data[key_2]): data.probability for data in data }
 
-    def get_data(self, recipe_id, quality_id):
-        return self._data.get("{}.{}".format(recipe_id, quality_id))
+    def get_data(self, key_val_1, key_val_2):
+        return self._data.get("{}.{}".format(key_val_1, key_val_2))

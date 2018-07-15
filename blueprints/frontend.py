@@ -144,7 +144,9 @@ def find_pokemon_index():
 
 @frontend.route("/find-pokemon/<int:id>")
 def find_pokemon_result(id):
-    return render_template("poke_result.html", result=cdm.get_poke_data_by_recipe_id(id))
+    return render_template("poke_result.html", 
+                           result=cdm.get_poke_data_by_recipe_id(id),
+                           off_prob=op.get_data_by_recipe_id(id))
 
 @frontend.route("/submit-result", methods=["GET"])
 @require_login(".submit_result")

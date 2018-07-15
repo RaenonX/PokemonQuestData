@@ -57,18 +57,23 @@
                     <thead>
                         <tr>
                             <th>寶可夢</th>
+                            <th>官方機率</th>
                             <th>機率</th>
                             <th>樣本</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for distribution_data in quality_unit.distribution.data %}
+                        {% set o_prob = off_prob.get_data(distribution_data.pokemon_id, quality_unit.quality) %}
                         <tr>
                             <td>
                                 <a href="{{ url_for('.find_recipe_result', id=distribution_data.pokemon_id) }}">
                                     <img class="icon" src="/static/Icon/{{ distribution_data.pokemon_id }}.png" />
                                     &nbsp;&nbsp;{{ distribution_data.pokename_zh }}
                                 </a>
+                            </td>
+                            <td>
+                                {{ "(無資料)" if o_prob == none else "{:.2%}".format(o_prob) }}
                             </td>
                             <td>
                                 {{ "{:.2%}".format(distribution_data.dist_percent) }}
