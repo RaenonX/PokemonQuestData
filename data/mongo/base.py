@@ -1,6 +1,7 @@
 from collections import MutableMapping
 
 from pymongo.collection import Collection
+from pymongo.cursor import Cursor
 
 class base_collection(Collection):
     def __init__(self, mongo_client, db_name, col_name, cache_keys=[]):
@@ -26,7 +27,14 @@ class base_collection(Collection):
             self.init_cache(cache_key)
 
         if item_key not in self._cache[cache_key]:
-            self.set_cache(cache_key, item_key, result_acquire_method({ cache_key: item_key }))
+            data = result_acquire_method({ cache_key: item_key })
+
+            if isinstance(data, Cursor):
+                data = list(data)
+
+            self.set_cache(cache_key, item_key, data)
+
+        # print(self._cache[cache_key][item_key])
 
         return self._cache[cache_key][item_key]
 
