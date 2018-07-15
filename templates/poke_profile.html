@@ -182,7 +182,7 @@
                         <tr>
                             <td><img class="skill-icon" src="/static/Skill/{{ skill.icon }}.png" /></td>
                             <td class="profile-text-skill">{{ skill.element|string() }}</td>
-                            <td class="profile-text-skill">{{ skill.name_zh }}</td>
+                            <td class="profile-text-skill"><a href="{{ url_for(".poke_skill_result", id=skill.id) }}">{{ skill.name_zh }}</a></td>
                             <td class="profile-text-skill">{{ skill.power }}</td>
                             <td class="profile-text-skill">{{ skill.cd }}</td>
                             <td>
