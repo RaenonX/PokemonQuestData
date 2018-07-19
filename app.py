@@ -69,4 +69,4 @@ if __name__ == "__main__":
     activate_sleep_preventer()
 
     app = create_app()
-    app.run(port=os.environ["PORT"], host="0.0.0.0", ssl_context='adhoc')
+    app.run(port=os.environ["PORT"], host="0.0.0.0")
