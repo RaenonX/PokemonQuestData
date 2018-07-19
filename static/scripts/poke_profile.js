@@ -12,7 +12,7 @@ $(document).ready(
     immUpdateVal("#lvValue", "#lvSlider"),
     $(".pot-btn").click(function () {
         let ix = $(this).val();
-        $("#potId").attr("data-value", ix).text(pot_data[ix].name);
+        $("#potId").data("pot", ix).text(pot_data[ix].name);
         update_ui();
     })
 )
@@ -30,7 +30,7 @@ function immUpdateVal(valId, sliderId) {
 }
 
 function update_ui() {
-    let current_pot = pot_data[$("#potId").attr("data-value")]
+    let current_pot = pot_data[$("#potId").data("pot")]
 
     let lv = parseInt($("#lvValue").text())
 

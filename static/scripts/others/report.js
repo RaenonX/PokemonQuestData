@@ -4,7 +4,7 @@
             var xhr = new XMLHttpRequest();
             xhr.open('POST', Flask.url_for('frontend.report_suspicious'));
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send('dataId=' + $(this).attr("data-id"));
+            xhr.send('dataId=' + $(this).data("id"));
             xhr.onload = function () {
                 if (xhr.responseText === "PASS") {
                     window.location.reload();

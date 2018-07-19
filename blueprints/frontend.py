@@ -1,7 +1,7 @@
-### Add statistics page
-### Recipe Simulator
-### Dark Zone - Change Ticket, Boost
-### Multilingual
+### https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xiii-i18n-and-l10n
+### http://jinja.pocoo.org/docs/2.10/extensions/
+### https://stackoverflow.com/questions/34579316/flask-babel-how-to-translate-variables
+### https://stackoverflow.com/questions/216616/how-to-create-strings-containing-double-quotes-in-excel-formulas
 
 import os
 from datetime import datetime, timedelta
@@ -171,7 +171,7 @@ def submit_result_post():
 @require_login_return_msg("請先登記身分再提報可疑資料。")
 def report_suspicious():
     data_id = request.form["dataId"]
-    report_result = cdm.report_suspicious(data_id)
+    report_result = cdm.report_suspicious(data_id, session[identity_entry_uid_key])
 
     if report_result:
         flash("資料舉報成功！")
