@@ -176,7 +176,7 @@ def report_suspicious():
     if report_result:
         flash("資料舉報成功！")
         msg = Message("Suspicious Data Report", recipients=["maplestory0710@gmail.com"])
-        msg.body = "An entry of data has been reported suspicious. {} Recommended to review before {}".format(data_id, datetime.utcnow() + timedelta(days))
+        msg.body = "An entry of data has been reported suspicious. {} Recommended to review before {}".format(data_id, datetime.utcnow() + timedelta(days=2))
         current_app.config["MAIL_INSTANCE"].send(msg)
         return "PASS"
     else:
