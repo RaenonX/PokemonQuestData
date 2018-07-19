@@ -8,3 +8,7 @@
     color: orangered;
     text-decoration: none;
 }
+
+.suspicious {
+    background-color: rgb(255, 230, 230) !important;
+}
