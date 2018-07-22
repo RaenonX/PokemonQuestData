@@ -23,7 +23,7 @@
                 <p><span class="h1-nbs">#{{ profile.id }} {{ profile.name_zh }}</span><span class="h3-nbs"> (英: {{ profile.name_en }}、日: {{ profile.name_jp }})</span></p>
             </div>
             <div>
-                <p>槽位出現機率: HP {{ profile.slot_percentage.hp }}% | ATK {{ profile.slot_percentage.atk }}% | 兩用 {{ profile.slot_percentage.multi_x1 }}%<br />(目前還在確認還在向資料提供者確認為何部分資料的加總不是100%)</p>
+                <p>槽位出現機率: HP {{ profile.slot_percentage.hp }}% | ATK {{ profile.slot_percentage.atk }}% | 兩用 {{ profile.slot_percentage.multi_x1 }}%<br />(日後會修正此區塊資料)</p>
             </div>
         </div>
         <div class="col-xs-2 set-center">
@@ -176,7 +176,7 @@
                         {% endfor %}
                         {% if profile.skills_dlc|length > 0 %}
                         <tr>
-                            <td colspan="6" class="set-center">DLC技能</td>
+                            <td colspan="7" class="set-center">DLC技能</td>
                         </tr>
                         {% for skill in profile.skills_dlc %}
                         <tr>
@@ -190,6 +190,28 @@
                                 <img class="skill-icon" src="/static/SStone/{{ sstone|int }}.png" />
                                 {% endfor %}
                             </td>
+                            <td class="description">{{ skill.description }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+
+                        {% if profile.skills_unsure|length > 0 %}
+                        <tr>
+                            <td colspan="7" class="set-center">不確定技能(通常是BOSS擁有)</td>
+                        </tr>
+                        {% for skill in profile.skills_unsure %}
+                        <tr>
+                            <td><img class="skill-icon" src="/static/Skill/{{ skill.icon }}.png" /></td>
+                            <td class="profile-text-skill">{{ skill.element|string() }}</td>
+                            <td class="profile-text-skill"><a href="{{ url_for(".poke_skill_result", id=skill.id) }}">{{ skill.name_zh }}</a></td>
+                            <td class="profile-text-skill">{{ skill.power }}</td>
+                            <td class="profile-text-skill">{{ skill.cd }}</td>
+                            <td>
+                                {% for sstone in skill.slots %}
+                                <img class="skill-icon" src="/static/SStone/{{ sstone|int }}.png" />
+                                {% endfor %}
+                            </td>
+                            <td class="description">{{ skill.description }}</td>
                         </tr>
                         {% endfor %}
                         {% endif %}

@@ -87,6 +87,7 @@ class pokemon(dict_like_mapping):
     IS_BASE_POKE = "is_base"
     SKILLS = "skill"
     SKILLS_DLC = "skill_dlc"
+    SKILLS_UNSURE = "skill_unsure"
     BATTLE_TYPE = "btl_type"
     BINGO = "bgo"
     BASE_VALUES = "val"
@@ -136,6 +137,11 @@ class pokemon(dict_like_mapping):
     @property
     def skill_ids_dlc(self):
         result = self[pokemon.SKILLS_DLC]
+        return [] if result is None else result
+
+    @property
+    def skill_ids_unsure(self):
+        result = self[pokemon.SKILLS_UNSURE]
         return [] if result is None else result
 
     @property

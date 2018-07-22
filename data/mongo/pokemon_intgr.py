@@ -14,6 +14,7 @@ class pokemon_profile(pokemon):
         super().__init__(pokemon_inst)
         self._skills = [skl_col.get_skill_data(i) for i in self.skill_ids]
         self._skills_dlc = [skl_col.get_skill_data(i) for i in self.skill_ids_dlc]
+        self._skills_unsure = [skl_col.get_skill_data(i) for i in self.skill_ids_unsure]
 
         _all_bingos = self.get_all_including_evolved_bingos(pkm_col)
         
@@ -42,3 +43,7 @@ class pokemon_profile(pokemon):
     @property
     def skills_dlc(self):
         return self._skills_dlc
+
+    @property
+    def skills_unsure(self):
+        return self._skills_unsure
