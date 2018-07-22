@@ -187,3 +187,9 @@ def about():
 @frontend.route("/dz")
 def dark_zone():
     return render_template("dz.html")
+
+### Deprecated URLs
+
+@frontend.route("/find-recipe/<int:id>")
+def find_recipe_result(id):
+    return redirect(url_for(".pokemon_profile_result", id=id) + "#recipe")
