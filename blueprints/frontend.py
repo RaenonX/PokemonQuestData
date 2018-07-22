@@ -111,7 +111,9 @@ def pokemon_profile_index():
 @frontend.route("/poke-profile/<int:id>")
 def pokemon_profile_result(id):
     return render_template("poke_profile.html", 
-                           profile=pi.get_pokemon_profile(id))
+                           profile=pi.get_pokemon_profile(id),
+                           result=cdm.get_cook_data_by_pokemon_id(id),
+                           off_prob=op.get_data_by_pokemon_id(id))
 
 @frontend.route("/poke-skill")
 def poke_skill_index():
@@ -128,15 +130,10 @@ def find_recipe_index():
     return render_template("poke_list.html", 
                            pokedata=pkc.get_all_pokemons(False),
                            poketype=PokeType,
-                           next_endpoint=".find_recipe_result",
+                           next_endpoint=".pokemon_profile_result",
                            title="從精靈查食譜",
-                           mesasage="煮鍋時，只能做出第一型態的精靈。所有進化過的精靈都無法藉由煮鍋獲得。")
-
-@frontend.route("/find-recipe/<int:id>")
-def find_recipe_result(id):
-    return render_template("recipe_result.html", 
-                           result=cdm.get_cook_data_by_pokemon_id(id),
-                           off_prob=op.get_data_by_pokemon_id(id))
+                           mesasage="煮鍋時，只能做出第一型態的精靈。所有進化過的精靈都無法藉由煮鍋獲得。",
+                           anchor="#recipe")
     
 @frontend.route("/find-pokemon")
 def find_pokemon_index():

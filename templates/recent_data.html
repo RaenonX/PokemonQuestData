@@ -88,7 +88,7 @@
                             {% for entry in data %}
                             <tr class="{{ "suspicious" if entry.suspicious else "" }}">
                                 <td>{{ entry.timestamp.strftime('%Y-%m-%d %T') }} (UTC)</td>
-                                <td><a href="{{ url_for('.find_recipe_result', id=entry.pokemon_id) }}"><img class="icon" src="/static/Icon/{{ entry.pokemon_id }}.png" /></a></td>
+                                <td><a href="{{ url_for('.pokemon_profile_result', id=entry.pokemon_id) }}"><img class="icon" src="/static/Icon/{{ entry.pokemon_id }}.png" /></a></td>
                                 <td><a href="{{ url_for('.find_pokemon_result', id=entry.recipe_id) }}"><img class="icon" src="/static/Recipe/{{ entry.recipe_id }}.png" /></a></td>
                                 <td>{{ entry.quality|string() }}</td>
                                 <td><a href="{{ url_for('.recent_new_data_by_user', uid=entry.adder_uid) }}">{{ entry.adder_uid }}</a></td>

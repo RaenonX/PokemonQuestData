@@ -134,17 +134,65 @@
             </div>
         </div>
     </div>
-
-
     <div class="row">
         <div class="col-xs-12">
             <div class="glyphicon glyphicon-pencil alert alert-info"> 遊戲開始時、每22小時拜訪及商店贈送的精靈的參數都沒有加成(視為鐵鍋)，IV可浮動。</div>
         </div>
     </div>
     <hr />
+    {% if result.data|length > 0 %}
+
     <div class="row">
         <div class="col-md-12 set-center">
-            <p class="h3-nbs">技能</p>
+            <a class="h3-nbs" id="recipe" href="#recipe">食譜</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 set-center">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="set-center">食譜</th>
+                            <th class="set-center">品質</th>
+                            <th class="set-center">官方機率</th>
+                            <th class="set-center">機率</th>
+                            <th class="set-center">樣本</th>
+                        </tr>
+                    </thead>
+                    {% for entry in result.data %}
+                    {% set o_prob = off_prob.get_data(entry.recipe.id, entry.recipe_quality|int) %}
+                    <tr>
+                        <td><a href="{{ url_for('.find_pokemon_result', id=entry.recipe.id) }}"><img class="icon" src="/static/Recipe/{{ entry.recipe.id }}.png" />&nbsp;{{ entry.recipe.title_zh }}</a></td>
+                        <td>{{ entry.recipe_quality|string() }}</td>
+                        <td>{{ "(無資料)" if o_prob == none else "{:.2%}".format(o_prob) }}</td>
+                        <td>{{ "{:.2%}".format(entry.probability) }}</td>
+                        <td>{{ entry.get_sample_size_string() }}</td>
+                    </tr>
+                    <tr>
+                        <td>配方</td>
+                        <td colspan="4">
+                            {% for comp in entry.recipe_dish.items %}
+                            <div class="comp-block">
+                                {% for item in comp %}
+                                <img class="icon" src="/static/Item/{{ item }}.png" />
+                                {% endfor %}
+                            </div>
+                            &nbsp;&nbsp;&nbsp;
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="well well-sm foot-info">資料處理花費 {{ "{:.3f}".format(result.time_consumed) }}秒</div>
+    <hr />
+    {% endif %}
+    <div class="row">
+        <div class="col-md-12 set-center">
+            <a class="h3-nbs" id="skill" href="#skill">技能</a>
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
@@ -223,8 +271,7 @@
     <hr />
     <div class="row">
         <div class="col-md-12 set-center">
-            <p><span class="h3-nbs">賓果</span> 請注意，進化後賓果可能會變化。</p>
-
+            <p><a class="h3-nbs" id="bingo" href="#bingo">賓果</a>&nbsp;請注意，進化後賓果可能會變化。</p>
             {% for i in range(1, 4) %}
             <div class="panel panel-default">
                 <div class="panel-heading">第{{ i }}條</div>
@@ -246,4 +293,4 @@
         </div>
     </div>
 </div>
-    {%- endblock %}
+        {%- endblock %}

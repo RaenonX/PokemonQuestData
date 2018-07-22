@@ -211,9 +211,6 @@
     <Content Include="static\layouts\recipe_list.css">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="static\layouts\recipe_result.css">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="static\layouts\skill_list.css">
       <SubType>Code</SubType>
     </Content>
@@ -471,9 +468,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="templates\recipe_list.html">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="templates\recipe_result.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="templates\submit_result.html" />

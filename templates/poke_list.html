@@ -40,7 +40,7 @@
     </div>
     {% for entry in pokedata %}
     <a class="col-md-1 col-sm-2 col-xs-3 icon-pokelist-wrapper poke"
-       href="{{ url_for(next_endpoint, id=entry.id) }}"
+       href="{{ url_for(next_endpoint, id=entry.id) }}{{ "" if anchor is none else anchor }}"
        poke_id="{{ entry.id }}"
        zh="{{ entry.name_zh }}"
        jp="{{ entry.name_jp }}"

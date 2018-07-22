@@ -40,6 +40,10 @@
     text-align: left;
 }
 
+.comp-block {
+    display: inline-block;
+}
+
 /* Slider */
 
 .slider {
