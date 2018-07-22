@@ -26,7 +26,7 @@
     </div>
     <div class="row">
         {% for entry in pokes %}
-        <a class="col-md-1 col-sm-2 col-xs-3 icon-poke-wrapper" href="{{ url_for(".pokemon_profile_result", id=entry.id) }}">
+        <a class="col-md-1 col-sm-2 col-xs-3 icon-poke-wrapper" href="{{ url_for(".pokemon_profile_result", id=entry.id) }}#skill">
             <img class="icon-poke" src="/static/Icon/{{ entry.id }}.png">
         </a>
         {% endfor %}
