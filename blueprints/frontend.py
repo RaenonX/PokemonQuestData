@@ -22,7 +22,7 @@ from data.mongo import (
     site_log_manager, pokemon_integrator,
     official_probability
 )
-from data.thirdparty import google_analytics, google_identity, identity_entry_uid_key
+from data.thirdparty import google_analytics, google_identity, google_recaptcha, identity_entry_uid_key
 
 from .nav import nav, render_template
 from .frontend_user import require_login, require_login_return_msg
@@ -45,6 +45,7 @@ op = official_probability(mongo)
 slm = site_log_manager(mongo)
 ga = google_analytics()
 gi = google_identity(mongo)
+gr = google_recaptcha()
 
 @frontend.route("/")
 def index():
@@ -157,11 +158,18 @@ def submit_result():
 @require_login(".submit_result")
 def submit_result_post():
     acknowledged = cdm.add_record(request.form["pokemon"], request.form["recipe"], request.form["quality"], session[identity_entry_uid_key])
-    if acknowledged:
+
+    submit_more = request.form["more"] == "TRUE"
+    recaptcha_pass = gr.verify(request.form["g-recaptcha-response"])
+
+    if acknowledged and recaptcha_pass:
         flash("感謝您協助提供資料！")
-        return redirect(url_for(".index"))
+        return redirect(url_for(".submit_result") if submit_more else url_for(".index"))
     else:
-        flash("資料提交失敗。請檢查提交的資料是否正確。", category="warning")
+        if not recaptcha_pass:
+            flash("reCAPTCHA驗證失敗。", category="warning")
+        else:
+            flash("資料提交失敗。請檢查提交的資料是否正確。", category="warning")
         return redirect(url_for(".submit_result"))
 
 @frontend.route("/report", methods=["POST"])

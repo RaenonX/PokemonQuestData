@@ -28,8 +28,6 @@ class official_probability(base_collection):
             filter = { probability_entry.POKEMON_ID: int(pokemon_id), 
                       probability_entry.RECIPE_ID: int(recipe_id), 
                       probability_entry.QUALITY_ID: int(quality_id) }
-            print(filter)
-            print(self.find_one(filter))
             self._cache_exists[key] = self.find_one(filter) is not None
        
         return self._cache_exists[key]

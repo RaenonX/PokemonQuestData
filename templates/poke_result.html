@@ -26,6 +26,8 @@
         </div>
     </div>
     {% for quality_unit in result.quality_unit_arr %}
+
+    {% if quality_unit.dishes|length > 0 -%}
     <hr />
     <div class="row">
         <div class="col-md-6">
@@ -34,7 +36,6 @@
                     <span class="h3">{{ quality_unit.quality|string() }}</span>
                 </div>
                 <div class="panel-body set-center">
-                    {% if quality_unit.dishes|length > 0 -%}
                     <p class="set-center">配方</p>
                     <ul class="list-group">
                         {% for dish in quality_unit.dishes -%}
@@ -45,9 +46,6 @@
                         </li>
                         {%- endfor %}
                     </ul>
-                    {%- else -%}
-                    <span class="h3">(配方不明)</span>
-                    {%- endif %}
                 </div>
             </div>
         </div>
@@ -86,7 +84,7 @@
             </div>
         </div>
     </div>
-
+    {%- endif %}
     {% endfor %}
     <div class="well well-sm foot-info">
         資料處理花費 {{ "{:.3f}".format(result.time_consumed) }}秒

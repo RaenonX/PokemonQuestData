@@ -8,6 +8,10 @@ $(document).ready(
     search_list_events(".poke", "#pokeSelected", "#pokeSearch", "#pokeList button"),
     search_list_events(".rcp", "#rcpSelected", "#rcpSearch", "#rcpList button"),
     search_list_events(".qlt", "#qltSelected", "#qltSearch", "#qltList button"),
+    $("#hasMore").click(function () {
+        $(this).toggleClass("active");
+        $("#submitMore").val($(this).hasClass("active") ? "TRUE" : "FALSE");
+    }),
     $("#resultForm").submit(function () {
         var pokeMissing = $("#pokeSelected").val() === ""
         if (pokeMissing) {

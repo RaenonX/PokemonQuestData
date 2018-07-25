@@ -1,6 +1,6 @@
 {%- extends "bootstrap/base.html" %}
 
-{% block title -%} {% block titleex %}{% endblock %} | Pokemon Quest 資料站 {%- endblock %}
+{% block title -%} {% block titleex %}{% endblock %} | 寶可夢探險尋寶 攻略資料站 {%- endblock %}
 
 {% import "bootstrap/fixes.html" as fixes %}
 {% import "bootstrap/google.html" as google %}
@@ -8,7 +8,7 @@
 {% block metas %}
 <meta name="google-signin-client_id" content="431200420774-gomqlh7uqa9a5m5fjfrqlnvn07ofdp4o.apps.googleusercontent.com">
 <meta name="description" content="本站提供各方面的資訊查閱，同時開放使用者擁有自己的紀錄。歡迎多加利用！。">
-<meta name="keywords" content="寶可夢探險尋寶,寶可夢探險尋寶攻略,攻略,Pokemon Quest,探險尋寶食譜,探險尋寶資料">
+<meta name="keywords" content="寶可夢探險尋寶,寶可夢探險尋寶 攻略,攻略,Pokemon Quest,探險尋寶食譜,探險尋寶資料">
 <meta name="author" content="水母">
 {%- endblock %}
 
@@ -20,7 +20,7 @@
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <script src={{ url_for('static', filename='less.min.js') }} type="text/javascript"></script>
 <script src={{ url_for('static', filename='jquery.min.js') }} type="text/javascript"></script>
-<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+{% block headex %}{% endblock %}
 {%- endblock %}
 
 {% block scripts %}
