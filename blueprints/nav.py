@@ -1,6 +1,6 @@
 from flask import session, render_template, url_for, request
 from flask_nav import Nav
-from flask_nav.elements import Navbar, View, Subgroup, Link, Text, Separator
+from flask_nav.elements import Navbar, View, Subgroup, Link, Text, Separator, RawTag
 
 from data.thirdparty import identity_entry_uid_key
 
