@@ -1,0 +1,53 @@
+{%- extends "base.html" %}
+
+{% block titleex -%} 站內搜尋 ({{ keyword }}) {%- endblock %}
+
+{% block layout %}<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layouts/insite_search.css') }}">{% endblock %}
+
+{% block scriptsex %}
+<script src={{ url_for('static', filename='scripts/insite_search.js') }} type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 jumbotron">
+            <p>搜尋關鍵字: {{ keyword }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="well">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="set-center">標題</th>
+                            <th class="set-center">部分內容</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in result %}
+                        <tr class="clickable-row" data-href="{{ entry.link }}">
+                            <td>{{ entry.title }}</td>
+                            <td>{{ entry.snippet }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row set-center">
+                {% if result|length > 0 %}
+                <a class="btn btn-success" href="{{ url_for('.insite_search', start=start+result_limit, q=keyword) }}">
+                    後{{ result_limit }}條結果
+                </a>
+                {% endif %}
+                {% if start > 1 %}
+                <a class="btn btn-danger" href="{{ url_for('.insite_search', start=start-result_limit, q=keyword) }}">前{{ result_limit }}條結果</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{%- endblock %}
+

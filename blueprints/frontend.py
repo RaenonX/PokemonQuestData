@@ -7,7 +7,7 @@ import os
 from datetime import datetime, timedelta
 
 from flask import (
-    Blueprint, 
+    Blueprint,
     flash, redirect, url_for, request, current_app, session
 )
 from flask_bootstrap import __version__ as FLASK_BOOTSTRAP_VERSION
@@ -22,7 +22,10 @@ from data.mongo import (
     site_log_manager, pokemon_integrator,
     official_probability
 )
-from data.thirdparty import google_analytics, google_identity, google_recaptcha, identity_entry_uid_key
+from data.thirdparty import (
+    google_analytics, google_identity, google_recaptcha, google_search,
+    identity_entry_uid_key
+)
 
 from .nav import nav, render_template
 from .frontend_user import require_login, require_login_return_msg
@@ -46,6 +49,7 @@ slm = site_log_manager(mongo)
 ga = google_analytics()
 gi = google_identity(mongo)
 gr = google_recaptcha()
+gs = google_search()
 
 @frontend.route("/")
 def index():
@@ -56,6 +60,18 @@ def index():
                            site_log=slm.get_last(7),
                            hotpages=ga.get_top_unique_pageviews_by_path(),
                            site_root=os.environ["APP_ROOT_URL"])
+    
+@frontend.route("/search")
+def insite_search():
+    q = request.args.get('q', "")
+    start = int(request.args.get('start', 0))
+    result_count = 20
+
+    return render_template("insite_search.html", 
+                           result=gs.search(q, result_count),
+                           start=start,
+                           result_limit=result_count,
+                           keyword=q)
 
 @frontend.route("/recent")
 def recent_new_data():

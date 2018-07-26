@@ -1,0 +1,16 @@
+﻿{%- extends "base.html" %}
+
+{% block titleex -%} 重新導向 {%- endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 jumbotron">
+            <h1>重新導向</h1>
+            <p>下一個頁面將不屬於本網站。</p>
+            <p>網址: {{ url }}</p>
+            <p><a class="h3-nbs" href="{{ url }}">點此前往</a></p>
+        </div>
+    </div>
+</div>
+{%- endblock %}

@@ -196,6 +196,9 @@
     <Content Include="static\layouts\index.css">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="static\layouts\insite_search.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\layouts\poke_list.css">
       <SubType>Code</SubType>
     </Content>
@@ -248,6 +251,12 @@
     <Content Include="static\Recipe\17.png" />
     <Content Include="static\respond.min.js" />
     <Content Include="static\main.css" />
+    <Content Include="static\scripts\index.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="static\scripts\insite_search.js">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\scripts\others\delete.js">
       <SubType>Code</SubType>
     </Content>
@@ -443,6 +452,9 @@
     <Content Include="templates\dz.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="templates\error\302.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="templates\error\404.html">
       <SubType>Code</SubType>
     </Content>
@@ -520,6 +532,9 @@
     <Compile Include="data\thirdparty\grecaptcha.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="data\thirdparty\gsearch.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="data\thirdparty\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -541,6 +556,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="static\scripts\user_verify.js">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="templates\insite_search.html">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="templates\skill_list.html">

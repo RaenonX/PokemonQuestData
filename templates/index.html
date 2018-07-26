@@ -6,6 +6,7 @@
 
 {% block scriptsex %}
 <script src={{ url_for('static', filename='scripts/others/report.js') }} type="text/javascript"></script>
+<script src={{ url_for('static', filename='scripts/index.js') }} type="text/javascript"></script>
 {%- endblock %}
 
 {% block titleex -%} 首頁 {%- endblock %}
@@ -35,16 +36,16 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3 set-center">
+        <div class="col-md-6 col-lg-3 set-center">
             <a class="btn btn-primary btn-big btn-func" href="{{ url_for('.find_recipe_index') }}">從精靈查食譜</a>
         </div>
-        <div class="col-md-3 set-center">
+        <div class="col-md-6 col-lg-3 set-center">
             <a class="btn btn-info btn-big btn-func" href="{{ url_for('.find_pokemon_index') }}">從食譜查精靈</a>
         </div>
-        <div class="col-md-3 set-center">
+        <div class="col-md-6 col-lg-3 set-center">
             <a class="btn btn-success btn-big btn-func" href="{{ url_for('.poke_skill_index') }}">從技能查精靈</a>
         </div>
-        <div class="col-md-3 set-center">
+        <div class="col-md-6 col-lg-3 set-center">
             <a class="btn btn-warning btn-big btn-func" href="{{ url_for('.pokemon_profile_index') }}">查詢精靈資料</a>
         </div>
     </div>
@@ -81,16 +82,6 @@
                     </div>
                 </div>
             </div>
-            <div class="well">
-                <p class="set-center h3-nbs">網站更新日誌</p>
-                <ul class="list-group">
-                    {% for entry in site_log %}
-                    <li class="list-group-item list-group-item-{{ entry.type }}">
-                        {{ entry.timestamp.strftime('%m/%d %T') }} (UTC): {{ entry.content }}
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
         </div>
         <div class="col-md-6 set-center">
             <div class="well">
@@ -125,9 +116,34 @@
                 </div>
                 <a class="btn btn-success" href="{{ url_for('.submit_result') }}">我也要登記</a>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
             <div class="well">
+                <p class="set-center h3-nbs">網站更新日誌</p>
+                <ul class="list-group">
+                    {% for entry in site_log %}
+                    <li class="list-group-item list-group-item-{{ entry.type }}">
+                        {{ entry.timestamp.strftime('%m/%d %T') }} (UTC): {{ entry.content }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-6 set-center">
+            <div class="well" style="margin-bottom: 10px;">
                 <p class="set-center h3-nbs">捐款支持</p>
                 <a class="btn btn-warning" href="http://paypal.me/RxALPHA">Paypal</a>
+            </div>
+            <div class="well">
+                <p class="set-center h3-nbs">站內搜尋</p>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="insiteSearch" value="">
+                    <span class="input-group-btn">
+                        <a class="btn btn-primary" id="insiteBtn" target="_blank">搜尋</a>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
