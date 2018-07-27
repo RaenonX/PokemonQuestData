@@ -34,7 +34,7 @@
     </div>
     <hr />
     <div class="row set-center">
-        <div class="col-xs-3">
+        <div class="col-sm-3">
             <div class="panel panel-default">
                 <div class="panel-heading">屬性</div>
                 <div class="panel-body">
@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-6">
+        <div class="col-sm-6">
             <p class="h3-nbs">進化型態</p>
             {% if profile.evolve_infos|length > 0 %}
             {% for evolve_info in profile.evolve_infos %}
@@ -63,17 +63,17 @@
             <p class="h1-nbs">(無進階型態)</p>
             {% endif %}
         </div>
-        <div class="col-xs-3">
+        <div class="col-sm-3">
             <p class="h3-nbs">每日拜訪機率</p>
             <p class="h1-nbs">{{ "{:.3%}".format(profile.appear_rate) }}</p>
         </div>
     </div>
     <hr />
     <div class="row set-center">
-        <div class="col-xs-3"><span class="h3-nbs">Lv:</span> <span class="h1-nbs" id="lvValue">1</span></div>
-        <div class="col-xs-3"><span class="h3-nbs">HP:</span> <span class="h1-nbs" id="hpValue"></span></div>
-        <div class="col-xs-3"><span class="h3-nbs">ATK:</span> <span class="h1-nbs" id="atkValue"></span></div>
-        <div class="col-xs-3"><span class="h1-nbs" id="potId" data-pot="0">鐵鍋</span></div>
+        <div class="col-xs-6 col-sm-3"><span class="h3-nbs">Lv:</span> <span class="h1-nbs" id="lvValue">1</span></div>
+        <div class="col-xs-6 col-sm-3"><span class="h1-nbs" id="potId" data-pot="0">鐵鍋</span></div>
+        <div class="col-xs-6 col-sm-3"><span class="h3-nbs">HP:</span> <span class="h1-nbs" id="hpValue"></span></div>
+        <div class="col-xs-6 col-sm-3"><span class="h3-nbs">ATK:</span> <span class="h1-nbs" id="atkValue"></span></div>
     </div>
 
     <input type="hidden" id="baseHp" value="{{ profile.base_values.hp }}" />
@@ -278,7 +278,7 @@
                 <div class="panel-body">
                     <div class="row">
                         {% for bingo_comp in profile.get_bingos(i) %}
-                        <div class="col-xs-4">
+                        <div class="col-sm-4">
                             <div class="list-group">
                                 {% for id, bingo in bingo_comp %}
                                 <a class="list-group-item list-group-action" href="{{ url_for(".pokemon_profile_result", id=id) }}"><img class="bingo-icon" src="/static/Icon/{{ id }}.png" />&nbsp;{{ bingo }}</a>

@@ -67,11 +67,9 @@ def insite_search():
     start = int(request.args.get('start', 0))
     result_count = 20
 
-    return render_template("insite_search.html", 
-                           result=gs.search(q, result_count),
-                           start=start,
-                           result_limit=result_count,
-                           keyword=q)
+    return render_template("insite_search.html",
+                           result=gs.search(q, result_count), start=start,
+                           result_limit=result_count, keyword=q)
 
 @frontend.route("/recent")
 def recent_new_data():
