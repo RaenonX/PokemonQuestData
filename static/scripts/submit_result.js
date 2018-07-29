@@ -37,13 +37,13 @@ $(document).ready(
             $("#QltMissing").fadeOut()
         }
 
-        result = pokeMissing || rcpMissing || qltMissing
+        let failed = pokeMissing || rcpMissing || qltMissing
 
-        if (result) {
+        if (failed) {
             $(window).scrollTop(0);
         }
 
-        return !result
+        return !failed
     })
 );
 

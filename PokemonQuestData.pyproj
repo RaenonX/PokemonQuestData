@@ -199,6 +199,12 @@
     <Content Include="static\layouts\insite_search.css">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="static\layouts\pokemanage\submit_pokemon.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="static\layouts\pokemanage\view_pokemon.css">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\layouts\poke_list.css">
       <SubType>Code</SubType>
     </Content>
@@ -261,6 +267,10 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="static\scripts\others\report.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="static\scripts\pokemanage\view_pokemon.js" />
+    <Content Include="static\scripts\pokemanage\submit_pokemon.js">
       <SubType>Code</SubType>
     </Content>
     <Content Include="static\scripts\poke_list.js">
@@ -455,16 +465,28 @@
     <Content Include="templates\error\302.html">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="templates\error\400.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="templates\error\404.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="templates\error\500.html" />
+    <Content Include="templates\pokemanage\edit_pokemon.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="templates\pokemanage\view_pokemon.html">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="templates\poke_profile.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="templates\recent_data_user.html" />
     <Content Include="templates\index.html" />
     <Content Include="templates\skill_result.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="templates\pokemanage\submit_pokemon.html">
       <SubType>Code</SubType>
     </Content>
     <Content Include="templates\user_verify.html">
@@ -487,10 +509,16 @@
   <ItemGroup>
     <Compile Include="app.py" />
     <Compile Include="app_local.py" />
+    <Compile Include="blueprints\api.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="blueprints\dummy.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="blueprints\frontend_user.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="blueprints\_objs.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="blueprints\__init__.py">
@@ -503,6 +531,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="data\mongo\pokemon_intgr.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="data\mongo\pokemon_record.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="data\mongo\prob.py">
@@ -575,14 +606,17 @@
     <Folder Include="static\Icon" />
     <Folder Include="static\Item" />
     <Folder Include="static\layouts\" />
+    <Folder Include="static\layouts\pokemanage\" />
     <Folder Include="static\scripts\" />
     <Folder Include="static\Pot" />
     <Folder Include="static\Recipe\" />
+    <Folder Include="static\scripts\pokemanage\" />
     <Folder Include="static\scripts\others\" />
     <Folder Include="static\Skill\" />
     <Folder Include="static\SStone\" />
     <Folder Include="templates" />
     <Folder Include="templates\error\" />
+    <Folder Include="templates\pokemanage\" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="Global|PythonCore|3.6" />

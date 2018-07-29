@@ -13,7 +13,7 @@ import blueprints
 
 sleep_preventer = ThreadPool()
 
-def create_app(configfile=None):
+def create_app(with_error=True, configfile=None):
     app = Flask(__name__)
 
     # Apply frameworks
@@ -22,7 +22,9 @@ def create_app(configfile=None):
     HerokuConfig(app, configfile)
     
     # Register blueprints
-    app.register_blueprint(blueprints.err)
+    if with_error:
+        app.register_blueprint(blueprints.err)
+    app.register_blueprint(blueprints.api)
     app.register_blueprint(blueprints.frontend)
     app.register_blueprint(blueprints.frontend_user)
     app.register_blueprint(blueprints.dummy)

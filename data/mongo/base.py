@@ -62,3 +62,10 @@ class dict_like_mapping(MutableMapping):
 
     def __repr__(self):
         return str(self._dict)
+
+    def __getnewargs__(self):
+        return self._dict
+
+    @property
+    def __dict__(self):
+        return self._dict

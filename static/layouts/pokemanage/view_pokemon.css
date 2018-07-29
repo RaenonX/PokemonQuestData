@@ -1,0 +1,9 @@
+.skill-comp {
+    display: inline;
+}
+
+.skill-icon {
+    width: 36px;
+    height: 36px;
+    margin: 0px 5px;
+}

@@ -1,4 +1,5 @@
 import math
+import json
 
 from data import PokeType, SkillStone, BattleType, Debuff
 
@@ -30,6 +31,9 @@ class pokemon_collection(base_collection):
             filter[pokemon.IS_BASE_POKE] = True
 
         return [pokemon(entry) for entry in self.find(filter).sort([(pokemon.ID, 1)])]
+
+    def get_max_params_of_pokemon(self, pokemon_id):
+        return PokemonParametersResult(self.get_pokemon_by_id(pokemon_id))
 
     def get_count_of_pokemons(self):
         return self.find().count()
@@ -269,6 +273,13 @@ class poke_skill(dict_like_mapping):
     @property
     def element(self):
         return PokeType(math.floor(self[poke_skill.ID] / 100))
+    
+    def to_serialize(self):
+        """
+        [<ID>, <ELEMENT_NAME>, <NAME_ZH>]
+        """
+
+        return [self.id, str(self.element), self.name_zh]
 
 class poke_bingo(dict_like_mapping):
     TYPE_ID = "type"
@@ -322,3 +333,28 @@ class bingo_entry(dict_like_mapping):
 
     def get_description(self, params):
         return self.pattern_zh.format(*params)
+
+# Result Classes
+
+class PokemonParametersResult(dict_like_mapping):
+    def __init__(self, pokemon):
+        self._base = pokemon.base_values
+
+    @property
+    def min_atk(self):
+        return self._base.atk + 1
+    
+    @property
+    def max_atk(self):
+        return self._base.atk + 301
+    
+    @property
+    def min_hp(self):
+        return self._base.hp + 1
+    
+    @property
+    def max_hp(self):
+        return self._base.hp + 301
+
+    def toJSON(self):
+        return { "min": { "atk": self.min_atk, "hp": self.min_hp }, "max": { "atk": self.max_atk, "hp": self.max_hp } }

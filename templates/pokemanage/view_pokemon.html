@@ -1,0 +1,84 @@
+﻿{%- extends "base.html" %}
+
+{% import "bootstrap/utils.html" as utils %}
+
+{% block titleex -%} 瀏覽擁有的精靈 {%- endblock %}
+
+{% block layout %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layouts/pokemanage/view_pokemon.css') }}">
+{% endblock %}
+
+{% block scriptsex %}
+<script src={{ url_for('static', filename='scripts/pokemanage/view_pokemon.js') }} type="text/javascript"></script>
+{%- endblock %}
+
+{% block content %}
+<div class="container">
+    {%- with messages = get_flashed_messages(with_categories=True) %}
+    {%- if messages %}
+    <div class="row">
+        {{ utils.flashed_messages(messages) }}
+    </div>
+    {%- endif %}
+    {%- endwith %}
+    <div class="row">
+        <div class="col-md-12 jumbotron">
+            <h1>我的精靈一覽</h1>
+            <div class="row">
+                <div class="col-md-12">
+                    <a class="btn btn-primary" href="{{ url_for('frontend_user.submit_owned_pokemon') }}">登記擁有精靈</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" colspan="2" class="set-center">精靈</th>
+                            <th colspan="3" class="set-center">賓果</th>
+                            <th rowspan="2" class="set-center">技能</th>
+                            <th colspan="3" class="set-center">槽位數量</th>
+                            <th rowspan="2" class="set-center">等級</th>
+                            <th colspan="2" class="set-center">IV</th>
+                        </tr>
+                        <tr>
+                            <th class="set-center">第一條</th>
+                            <th class="set-center">第二條</th>
+                            <th class="set-center">第三條</th>
+                            <th class="set-center">ATK</th>
+                            <th class="set-center">HP</th>
+                            <th class="set-center">兩用</th>
+                            <th class="set-center">ATK</th>
+                            <th class="set-center">HP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rec in records %}
+                        <tr>
+                            <td><img src="/static/Icon/{{ rec.pokemon_id }}.png" /></td>
+                            <td>{{ rec.pokemon_name }}</td>
+                            <td>{{ bingo_trans(rec.bingo[0]) }}</td>
+                            <td>{{ bingo_trans(rec.bingo[1]) }}</td>
+                            <td>{{ bingo_trans(rec.bingo[2]) }}</td>
+                            <td>
+                                <div class="skill-comp">
+                                    {% for skl in rec.skill %}
+                                    <img class="skill-icon" src="/static/Icon/{{ rec.pokemon_id }}.png" />
+                                    {% endfor %}
+                                </div>
+                            </td>
+                            <td>{{ rec.slots_dist.atk }}</td>
+                            <td>{{ rec.slots_dist.hp }}</td>
+                            <td>{{ rec.slots_dist.duo }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{%- endblock %}

@@ -1,0 +1,12 @@
+.poke-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.select-wrapper {
+    margin: 5px 0px;
+}
+
+.incomplete-field {
+    background-color: rgb(255, 200, 200);
+}

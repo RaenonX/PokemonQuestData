@@ -1,0 +1,179 @@
+﻿{%- extends "base.html" %}
+
+{% import "bootstrap/utils.html" as utils %}
+
+{% block titleex -%} 提交擁有的精靈 {%- endblock %}
+
+{% block layout %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layouts/pokemanage/submit_pokemon.css') }}">
+{% endblock %}
+
+{% block scriptsex %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+<script src={{ url_for('static', filename='scripts/pokemanage/submit_pokemon.js') }} type="text/javascript"></script>
+{%- endblock %}
+
+{% block styleex %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {%- with messages = get_flashed_messages(with_categories=True) %}
+    {%- if messages %}
+    <div class="row">
+        {{ utils.flashed_messages(messages) }}
+    </div>
+    {%- endif %}
+    {%- endwith %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="glyphicon glyphicon-remove-circle alert alert-danger hide" role="alert" id="incomplete">
+                請檢查輸入資料是否全部無誤。
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="glyphicon glyphicon-remove-circle alert alert-danger hide" role="alert" id="slotSumIncorrect">
+                槽位數量錯誤。總和數量應為9。
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 jumbotron">
+            <h1>提交擁有的寶可夢</h1>
+        </div>
+    </div>
+    <form class="form-horizontal" method="post" action="{{ url_for("frontend_user.submit_owned_pokemon") }}" id="submitPokemon">
+        <input type="hidden" id="count" name="count" value="1" />
+
+        <div id="entry-area">
+            <div class="form-group" data-index="1" id="entry-group">
+                <input type="hidden" class="poke-field" name="pokemon1" value="-1" />
+                <input type="hidden" class="bingo-field" name="bingo1_1" value="-1" />
+                <input type="hidden" class="bingo-field" name="bingo2_1" value="-1" />
+                <input type="hidden" class="bingo-field" name="bingo3_1" value="-1" />
+                <input type="hidden" class="skill-field" name="skill1_1" value="-1" />
+                <input type="hidden" class="skill-field" name="skill2_1" value="-1" />
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-info set-center">
+                            <div class="panel-heading">
+                                <h3>精靈</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="select-wrapper">
+                                    <select class="selectpicker show-tick show-menu-arrow poke-list" data-live-search="true" id="pokeList1" data-style="btn-info" data-width="100%">
+                                        <option selected data-tokens="-1">請選擇精靈</option>
+                                        {% for pokemon in pokemons %}
+                                        <option data-tokens="{{ pokemon.id }}">
+                                            #{{ pokemon.id }}&nbsp;{{ pokemon.name_zh }}&nbsp;({{ pokemon.name_en }}、{{ pokemon.name_jp }})
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2">名稱</label>
+                                    <div class="col-sm-10">
+                                        <input class="form-control param" type="text" name="pokename1" id="pokename" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-success set-center">
+                            <div class="panel-heading">
+                                <h3>賓果</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="select-wrapper"><select class="selectpicker show-tick show-menu-arrow bingoList" id="bingoList1" data-style="btn-success" data-group="1" data-width="100%" disabled></select></div>
+                                <div class="select-wrapper"><select class="selectpicker show-tick show-menu-arrow bingoList" id="bingoList2" data-style="btn-success" data-group="1" data-width="100%" disabled></select></div>
+                                <div class="select-wrapper"><select class="selectpicker show-tick show-menu-arrow bingoList" id="bingoList3" data-style="btn-success" data-group="1" data-width="100%" disabled></select></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-warning set-center">
+                            <div class="panel-heading">
+                                <h3>技能</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="select-wrapper"><select class="selectpicker show-tick show-menu-arrow skillList" id="skillList1" data-style="btn-warning" data-group="1" data-width="100%" disabled></select></div>
+                                <div class="select-wrapper"><select class="selectpicker show-tick show-menu-arrow skillList" id="skillList2" data-style="btn-warning" data-group="1" data-width="100%" disabled></select></div>
+                            </div>
+                        </div>
+                        <div class="panel panel-danger">
+                            <div class="panel-heading set-center">
+                                <h3>參數/槽位</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h3>參數</h3>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2">HP</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control param" type="number" name="hp1" id="hp" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2">ATK</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control param" type="number" name="atk1" id="atk" disabled />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2">Lv</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control param" type="number" min="1" max="100" name="lv1" id="lv" disabled />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h3>槽位</h3>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2">HP</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control param" type="number" min="1" max="9" name="slotHp1" id="slotHp" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2">ATK</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control param" type="number" min="1" max="9" name="slotAtk1" id="slotAtk" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2">兩用</label>
+                                            <div class="col-sm-10">
+                                                <input class="form-control param" type="number" min="1" max="9" name="slotDuo1" id="slotDuo" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary" id="addBlock">新增資料區</button>
+                <button type="button" class="btn btn-danger hide" id="delBlock">刪除資料區</button>
+                <button type="submit" class="btn btn-success">提交結果</button>
+            </div>
+        </div>
+    </form>
+</div>
+{%- endblock %}

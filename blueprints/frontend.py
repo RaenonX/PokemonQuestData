@@ -3,6 +3,8 @@
 ### https://stackoverflow.com/questions/34579316/flask-babel-how-to-translate-variables
 ### https://stackoverflow.com/questions/216616/how-to-create-strings-containing-double-quotes-in-excel-formulas
 
+### https://stackoverflow.com/questions/15530487/restful-api-and-google-analytics
+
 import os
 from datetime import datetime, timedelta
 
@@ -10,46 +12,13 @@ from flask import (
     Blueprint,
     flash, redirect, url_for, request, current_app, session
 )
-from flask_bootstrap import __version__ as FLASK_BOOTSTRAP_VERSION
 from flask_mail import Message
 from markupsafe import escape
-import pymongo
 
-from data import RecipeQuality, PokeType
-from data.mongo import (
-    cook_data_manager,
-    pokemon_collection, pokemon_skill_collection, pokemon_bingo_collection, recipe_collection, 
-    site_log_manager, pokemon_integrator,
-    official_probability
-)
-from data.thirdparty import (
-    google_analytics, google_identity, google_recaptcha, google_search,
-    identity_entry_uid_key
-)
-
-from .nav import nav, render_template
-from .frontend_user import require_login, require_login_return_msg
+from .nav import render_template
+from ._objs import *
 
 frontend = Blueprint("frontend", __name__)
-
-mongo = pymongo.MongoClient(os.environ["MONGO_URI"])
-
-cdm = cook_data_manager(mongo)
-
-pkc = pokemon_collection(mongo)
-rcc = recipe_collection(mongo)
-skc = pokemon_skill_collection(mongo)
-bgc = pokemon_bingo_collection(mongo, pkc)
-
-pi = pokemon_integrator(pkc, skc, bgc)
-
-op = official_probability(mongo)
-
-slm = site_log_manager(mongo)
-ga = google_analytics()
-gi = google_identity(mongo)
-gr = google_recaptcha()
-gs = google_search()
 
 @frontend.route("/")
 def index():
@@ -102,19 +71,6 @@ def recent_new_data_by_user(uid=""):
                                result_count=result_count,
                                user_owned=(uid == session.get(identity_entry_uid_key, "")))
     
-@frontend.route("/del-record", methods=["POST"])
-@require_login_return_msg("登記身分並記錄開鍋結果才可以使用此功能。")
-def delete_record_user():
-    data_id = request.form["dataId"]
-    deletion_succeed = cdm.del_record(data_id)
-
-    if deletion_succeed:
-        flash("資料刪除成功！", category='success')
-        return "PASS"
-    else:
-        flash("資料刪除失敗。(資料ID: {})".format(data_id), category='danger')
-        return "FAIL"
-    
 @frontend.route("/poke-profile")
 def pokemon_profile_index():
     return render_template("poke_list.html", 
@@ -159,48 +115,6 @@ def find_pokemon_result(id):
     return render_template("poke_result.html", 
                            result=cdm.get_poke_data_by_recipe_id(id),
                            off_prob=op.get_data_by_recipe_id(id))
-
-@frontend.route("/submit-result", methods=["GET"])
-@require_login(".submit_result")
-def submit_result():
-    return render_template('submit_result.html', 
-                           poke_choices=pkc.get_pokemon_choices(False), 
-                           recipe_choices=rcc.get_recipe_choices(), 
-                           quality_choices=RecipeQuality.get_choices())
-
-@frontend.route("/submit-result", methods=["POST"])
-@require_login(".submit_result")
-def submit_result_post():
-    acknowledged = cdm.add_record(request.form["pokemon"], request.form["recipe"], request.form["quality"], session[identity_entry_uid_key])
-
-    submit_more = request.form["more"] == "TRUE"
-    recaptcha_pass = gr.verify(request.form["g-recaptcha-response"])
-
-    if acknowledged and recaptcha_pass:
-        flash("感謝您協助提供資料！")
-        return redirect(url_for(".submit_result") if submit_more else url_for(".index"))
-    else:
-        if not recaptcha_pass:
-            flash("reCAPTCHA驗證失敗。", category="warning")
-        else:
-            flash("資料提交失敗。請檢查提交的資料是否正確。", category="warning")
-        return redirect(url_for(".submit_result"))
-
-@frontend.route("/report", methods=["POST"])
-@require_login_return_msg("請先登記身分再提報可疑資料。")
-def report_suspicious():
-    data_id = request.form["dataId"]
-    report_result = cdm.report_suspicious(data_id, session[identity_entry_uid_key])
-
-    if report_result:
-        flash("資料舉報成功！")
-        msg = Message("Suspicious Data Report", recipients=["maplestory0710@gmail.com"])
-        msg.body = "An entry of data has been reported suspicious. {} Recommended to review before {}".format(data_id, datetime.utcnow() + timedelta(days=2))
-        current_app.config["MAIL_INSTANCE"].send(msg)
-        return "PASS"
-    else:
-        flash("資料舉報失敗。(資料ID: {})".format(data_id))
-        return "FAIL"
 
 @frontend.route("/about")
 def about():

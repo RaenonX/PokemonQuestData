@@ -49,7 +49,7 @@
         <h1>感謝您為Pokemon Quest資料站提供資料！</h1>
     </div>
 
-    <form class="form-horizontal" method="post" action="{{ url_for(".submit_result") }}" id="resultForm">
+    <form class="form-horizontal" method="post" action="{{ url_for("frontend_user.submit_result") }}" id="resultForm">
         <div class="row">
             <div class="col-md-6">
                 <input type="hidden" id="rcpSelected" name="recipe">

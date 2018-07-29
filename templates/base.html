@@ -19,8 +19,6 @@
 {{ JSGlue.include() }}
 {% block layout %}{% endblock %}
 <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-<script src={{ url_for('static', filename='less.min.js') }} type="text/javascript"></script>
-<script src={{ url_for('static', filename='jquery.min.js') }} type="text/javascript"></script>
 {% block headex %}{% endblock %}
 {%- endblock %}
 
@@ -35,6 +33,7 @@
 {{ super() }}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='pokemon.css') }}">
+{% block styleex %}{% endblock %}
 {% endblock %}
 
 {% block navbar %}

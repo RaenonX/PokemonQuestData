@@ -26,6 +26,7 @@
     {%- endwith %}
     <div class="row">
         <div class="col-md-12 set-center">
+            {% if data|length > 0 %}
             <div class="well">
                 <p><span class="h3-nbs">使用者ID: </span><span class="h1-nbs">{{ data[0].adder_uid }}</span><span class="h3-nbs">的開鍋紀錄</span></p>
                 <div class="table-responsive">
@@ -67,6 +68,11 @@
                 </a>
                 {% endif %}
             </div>
+            {% else %}
+            <div class="jumbotron">
+                <h1>無紀錄。</h1>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>

@@ -9,6 +9,16 @@ class pokemon_integrator:
     def get_pokemon_profile(self, pokemon_id):
         return pokemon_profile(self._pkm_col.get_pokemon_by_id(pokemon_id), self._pkm_col, self._skl_col, self._bgo_col)
 
+    def get_pokemon_bingo(self, pokemon_id):
+        ret = []
+
+        bingo_data = self._pkm_col.get_pokemon_by_id(pokemon_id).bingos
+
+        for idx, bingo_entry in enumerate(bingo_data):
+            ret.append((idx, self._bgo_col.get_bingo_description(bingo_entry)))
+
+        return ret
+
 class pokemon_profile(pokemon):
     def __init__(self, pokemon_inst, pkm_col, skl_col, bgo_col):
         super().__init__(pokemon_inst)
