@@ -6,10 +6,13 @@
 
 {% block layout %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layouts/pokemanage/view_pokemon.css') }}">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 {% endblock %}
 
 {% block scriptsex %}
-<script src={{ url_for('static', filename='scripts/pokemanage/view_pokemon.js') }} type="text/javascript"></script>
+<script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript" charset="utf8"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js" type="text/javascript" charset="utf8"></script>
+<script src="{{ url_for('static', filename='scripts/pokemanage/view_pokemon.js') }}" type="text/javascript"></script>
 {%- endblock %}
 
 {% block content %}
@@ -18,6 +21,11 @@
     {%- if messages %}
     <div class="row">
         {{ utils.flashed_messages(messages) }}
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="glyphicon glyphicon-remove-circle alert alert-danger hide" id="msg"></div>
+        </div>
     </div>
     {%- endif %}
     {%- endwith %}
@@ -34,45 +42,64 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table class="table table-striped table-hover">
+                <table class="display order-column" id="myPokemon">
                     <thead>
                         <tr>
-                            <th rowspan="2" colspan="2" class="set-center">精靈</th>
+                            <th rowspan="2" class="set-center">精靈</th>
+                            <th rowspan="2" class="set-center">精靈名</th>
+                            <th rowspan="2" class="set-center">精靈原名(Dummy)</th>
                             <th colspan="3" class="set-center">賓果</th>
                             <th rowspan="2" class="set-center">技能</th>
+                            <th rowspan="2" class="set-center">技能名(Dummy)</th>
                             <th colspan="3" class="set-center">槽位數量</th>
                             <th rowspan="2" class="set-center">等級</th>
                             <th colspan="2" class="set-center">IV</th>
+                            <th rowspan="2" class="set-center">刪除</th>
                         </tr>
                         <tr>
                             <th class="set-center">第一條</th>
                             <th class="set-center">第二條</th>
                             <th class="set-center">第三條</th>
-                            <th class="set-center">ATK</th>
-                            <th class="set-center">HP</th>
+                            <th class="set-center">攻擊</th>
+                            <th class="set-center">體力</th>
                             <th class="set-center">兩用</th>
-                            <th class="set-center">ATK</th>
-                            <th class="set-center">HP</th>
+                            <th class="set-center">攻擊</th>
+                            <th class="set-center">體力</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for rec in records %}
-                        <tr>
-                            <td><img src="/static/Icon/{{ rec.pokemon_id }}.png" /></td>
-                            <td>{{ rec.pokemon_name }}</td>
-                            <td>{{ bingo_trans(rec.bingo[0]) }}</td>
-                            <td>{{ bingo_trans(rec.bingo[1]) }}</td>
-                            <td>{{ bingo_trans(rec.bingo[2]) }}</td>
-                            <td>
+                        <tr class="clickable-row" data-href="{{ url_for("frontend.pokemon_profile_result", id=rec.pokemon_id) }}">
+                            <td data-sort="{{ rec.pokemon_id }}">
+                                <img class="poke-icon" src="/static/Icon/{{ rec.pokemon_id }}.png" />
+                            </td>
+                            <td>{{ rec.pokemon_name }}{% for elem in rec.elements %}{{ elem|string() }}{% endfor %}</td>
+                            <td>{{ rec.poke_data.name_zh }}&nbsp;{{ rec.poke_data.name_jp }}&nbsp;{{ rec.poke_data.name_en }}</td>
+                            <td class="set-center">{{ bingo_trans(rec.bingo_datas[0]) }}</td>
+                            <td class="set-center">{{ bingo_trans(rec.bingo_datas[1]) }}</td>
+                            <td class="set-center">{{ bingo_trans(rec.bingo_datas[2]) }}</td>
+                            <td data-sort="{{ rec.skill_datas[0].id }}">
                                 <div class="skill-comp">
-                                    {% for skl in rec.skill %}
-                                    <img class="skill-icon" src="/static/Icon/{{ rec.pokemon_id }}.png" />
+                                    {% for skl in rec.skill_datas %}
+                                    <a href="{{ url_for("frontend.poke_skill_result", id=skl.id) }}">
+                                        <img class="skill-icon" src="/static/Skill/{{ skl.icon }}.png" />
+                                    </a>
                                     {% endfor %}
                                 </div>
                             </td>
-                            <td>{{ rec.slots_dist.atk }}</td>
-                            <td>{{ rec.slots_dist.hp }}</td>
-                            <td>{{ rec.slots_dist.duo }}</td>
+                            <td>
+                                {% for skl in rec.skill_datas %}
+                                {{ skl.name_zh }}{{ skl.element|string() }}
+                                {% endfor %}
+                            </td>
+                            {% set max_p = [rec.slots_dist.atk, rec.slots_dist.hp, rec.slots_dist.duo]|max %}
+                            <td class="param-value {{ "max-pstone" if max_p == rec.slots_dist.atk else "" }}">{{ "" if rec.slots_dist.atk < 1 else rec.slots_dist.atk }}</td>
+                            <td class="param-value {{ "max-pstone" if max_p == rec.slots_dist.hp else "" }}">{{ "" if rec.slots_dist.hp < 1 else rec.slots_dist.hp }}</td>
+                            <td class="param-value {{ "max-pstone" if max_p == rec.slots_dist.duo else "" }}">{{ "" if rec.slots_dist.duo < 1 else rec.slots_dist.duo }}</td>
+                            <td class="param-value">{{ rec.iv_param.lv }}</td>
+                            <td class="param-value {{ rec.iv_param.atk_iv_obj.value_class }} {{ rec.iv_param.atk_iv_obj.pot_class }}">{{ "" if rec.iv_param.atk_iv_obj.value == -1 else rec.iv_param.atk_iv_obj.value }}</td>
+                            <td class="param-value {{ rec.iv_param.hp_iv_obj.value_class }} {{ rec.iv_param.hp_iv_obj.pot_class }}">{{ "" if rec.iv_param.hp_iv_obj.value == -1 else rec.iv_param.hp_iv_obj.value }}</td>
+                            <td><div class="glyphicon glyphicon-trash del-icon set-center" data-id="{{ rec.id }}"></div></td>
                         </tr>
                         {% endfor %}
                     </tbody>

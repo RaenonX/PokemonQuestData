@@ -59,3 +59,10 @@ class SkillStone(ex.EnumWithName):
     STONE_MULTI = 3, "連連石"
     STONE_BUFF = 4, "團團石"
     STONE_TIME = 5, "恒恒石"
+
+class PotClass(ex.EnumWithName):
+    UNKNOWN = -1, 'pot-unknown'
+    STEEL = 0, 'pot-steel'
+    BRONZE = 1, 'pot-bronze'
+    SILVER = 2, 'pot-silver'
+    GOLD = 3, 'pot-gold'

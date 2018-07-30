@@ -190,6 +190,7 @@
     <Content Include="static\Item\4.png" />
     <Content Include="static\Item\5.png" />
     <Content Include="static\jquery.min.js" />
+    <Content Include="static\jquery.tablesort.min.js" />
     <Content Include="static\layouts\dz.css">
       <SubType>Code</SubType>
     </Content>
@@ -472,9 +473,6 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="templates\error\500.html" />
-    <Content Include="templates\pokemanage\edit_pokemon.html">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="templates\pokemanage\view_pokemon.html">
       <SubType>Code</SubType>
     </Content>
@@ -531,6 +529,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="data\mongo\pokemon_intgr.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="data\mongo\pokemon_iv.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="data\mongo\pokemon_record.py">

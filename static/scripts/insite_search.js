@@ -1,5 +1,5 @@
-$(document).ready(function () {
+$(document).ready(
     $(".clickable-row").click(function () {
         window.location = $(this).data("href");
-    });
-});
+    })
+);

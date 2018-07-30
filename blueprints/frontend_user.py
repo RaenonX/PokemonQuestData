@@ -51,6 +51,8 @@ def is_safe_url(target):
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http', 'https') and ref_url.netloc == test_url.netloc
 
+### POT RESULT SUBMISSION
+
 @frontend_user.route("/submit-result", methods=["GET"])
 @require_login("frontend_user.submit_result")
 def submit_result():
@@ -69,13 +71,15 @@ def submit_result_post():
 
     if acknowledged and recaptcha_pass:
         flash("感謝您協助提供資料！")
-        return redirect(url_for("frontend_user.submit_result") if submit_more else url_for(".index"))
+        return redirect(url_for("frontend_user.submit_result") if submit_more else url_for("frontend.index"))
     else:
         if not recaptcha_pass:
             flash("reCAPTCHA驗證失敗。", category="warning")
         else:
             flash("資料提交失敗。請檢查提交的資料是否正確。", category="warning")
         return redirect(url_for("frontend_user.submit_result"))
+
+### POT RESULT MANIPULATION
 
 @frontend_user.route("/report", methods=["POST"])
 @require_login_return_msg("請先登記身分再提報可疑資料。")
@@ -106,12 +110,27 @@ def delete_record_user():
         flash("資料刪除失敗。(資料ID: {})".format(data_id), category='danger')
         return "FAIL"
 
+### OWNED POKEMON CRUD ###
+
 @frontend_user.route("/view-poke", methods=["GET"])
-@require_login(".view_owned_pokemon")
+@require_login("frontend_user.view_owned_pokemon")
 def view_owned_pokemon():
     return render_template("pokemanage/view_pokemon.html", 
-                           records=pm.get_records_of_user(session[identity_entry_uid_key]), 
+                           records=pm.get_records_for_user(session[identity_entry_uid_key]), 
                            bingo_trans=bgc.get_bingo_description)
+
+@frontend_user.route("/del-poke", methods=["POST"])
+@require_login("frontend_user.delete_owned_pokemon")
+def delete_owned_pokemon():
+    data_id = request.form["dataId"]
+    deletion_succeed = pm.delete_record(data_id)
+
+    if deletion_succeed:
+        flash("資料刪除成功！", category='success')
+        return "PASS"
+    else:
+        flash("資料刪除失敗。(資料ID: {})".format(data_id), category='danger')
+        return "FAIL"
 
 @frontend_user.route("/add-poke", methods=["GET"])
 @require_login("frontend_user.submit_owned_pokemon")
@@ -124,34 +143,33 @@ def submit_owned_pokemon():
 @require_login("frontend_user.submit_owned_pokemon")
 def submit_owned_pokemon_post():
     print(request.form)
+
     failed = False
+    submit_more = request.form["submitMore"] == "TRUE"
 
-    for i in range(1, int(request.form["count"]) + 1):
-        i = str(i)
+    poke_id = int(request.form["pokemon"])
+    poke_name = request.form["pokename"]
 
-        poke_id = request.form["pokemon" + i]
-        poke_name = request.form["pokename" + i]
-
-        bingo_arr = [int(request.form["bingo1_" + i]), int(request.form["bingo2_" + i]), int(request.form["bingo3_" + i])]
+    bingo_arr = [int(request.form["bingo1"]), int(request.form["bingo2"]), int(request.form["bingo3"])]
+    
+    skill_arr = [int(request.form["skill1"])]
+    skill2_id = int(request.form["skill2"])
+    if skill2_id > 0:
+        skill_arr.append(skill2_id)
         
-        skill_arr = [int(request.form["skill1_" + i])]
-        skill2_id = int(request.form["skill2_" + i])
-        if skill2_id > 0:
-            skill_arr.append(skill2_id)
-            
-        slotHp = int(request.form["slotHp" + i] if request.form["slotHp" + i] else -1)
-        slotAtk = int(request.form["slotAtk" + i] if request.form["slotAtk" + i] else -1)
-        slotDuo = int(request.form["slotDuo" + i] if request.form["slotDuo" + i] else -1)
+    slotHp = int(request.form["slotHp"] if request.form["slotHp"] else -1)
+    slotAtk = int(request.form["slotAtk"] if request.form["slotAtk"] else -1)
+    slotDuo = int(request.form["slotDuo"] if request.form["slotDuo"] else -1)
 
-        hp = int(request.form["hp" + i] if request.form["hp" + i] else -1)
-        atk = int(request.form["atk" + i] if request.form["atk" + i] else -1)
-        lv = int(request.form["lv" + i] if request.form["lv" + i] else -1)
+    hp = int(request.form["hp"] if request.form["hp"] else -1)
+    atk = int(request.form["atk"] if request.form["atk"] else -1)
+    lv = int(request.form["lv"] if request.form["lv"] else -1)
 
-        failed = pm.insert_record(session[identity_entry_uid_key], poke_id, poke_name, bingo_arr, skill_arr, slotHp, slotAtk, slotDuo, hp, atk, lv) or failed
-
-    if failed:
+    failed = not(pm.insert_record(session[identity_entry_uid_key], poke_id, poke_name, bingo_arr, skill_arr, slotHp, slotAtk, slotDuo, hp, atk, lv)) or failed
+    
+    if not failed:
         flash("資料提交成功！")
-        return redirect(url_for("frontend_user.view_owned_pokemon"))
+        return redirect(url_for("frontend_user.submit_owned_pokemon") if submit_more else url_for("frontend_user.view_owned_pokemon"))
     else:
-        flash("資料提交失敗。", category='danger')
+        flash("資料提交失敗。請檢查提交的資料是否正確。", category='danger')
         return redirect(url_for("frontend_user.submit_owned_pokemon")) 

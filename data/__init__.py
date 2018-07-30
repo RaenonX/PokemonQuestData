@@ -1,1 +1,1 @@
-from .references import PokeType, RecipeQuality, RecipeItem, SkillStone, BattleType, Debuff
+from .references import PokeType, RecipeQuality, RecipeItem, SkillStone, BattleType, Debuff, PotClass

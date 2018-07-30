@@ -9,15 +9,19 @@ class pokemon_integrator:
     def get_pokemon_profile(self, pokemon_id):
         return pokemon_profile(self._pkm_col.get_pokemon_by_id(pokemon_id), self._pkm_col, self._skl_col, self._bgo_col)
 
-    def get_pokemon_bingo(self, pokemon_id):
-        ret = []
+    def get_pokemon_data_add_poke(self, pokemon_id):
+        bingo = []
 
-        bingo_data = self._pkm_col.get_pokemon_by_id(pokemon_id).bingos
+        _pokemon = self._pkm_col.get_pokemon_by_id(pokemon_id)
+        bingo_data = _pokemon.bingos
 
         for idx, bingo_entry in enumerate(bingo_data):
-            ret.append((idx, self._bgo_col.get_bingo_description(bingo_entry)))
+            bingo.append((idx, self._bgo_col.get_bingo_description(bingo_entry)))
 
-        return ret
+        return { "bingo": bingo,
+                 "skill": [self._skl_col.get_skill_data(sid).to_serialize() for sid in _pokemon.skill_ids],
+                 "param": self._pkm_col.get_max_params_of_pokemon(_pokemon).toJSON(),
+                 "name": _pokemon.name_zh }
 
 class pokemon_profile(pokemon):
     def __init__(self, pokemon_inst, pkm_col, skl_col, bgo_col):

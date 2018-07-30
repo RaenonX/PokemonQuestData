@@ -7,3 +7,86 @@
     height: 36px;
     margin: 0px 5px;
 }
+
+.poke-icon {
+    width: 36px;
+    height: 36px;
+    margin: 0px 5px;
+}
+
+.clickable-row:hover {
+    cursor: pointer;
+    background-color: rgb(220, 233, 255);
+}
+
+th:hover {
+    cursor: pointer;
+    user-select: none;
+    background-color: rgb(200, 255, 255);
+}
+
+.iv-low {
+    color: rgb(165, 0, 0);
+}
+
+.iv-medium {
+    color: rgb(165, 165, 0);
+}
+
+.iv-high {
+    color: rgb(0, 0, 0);
+}
+
+.iv-ex {
+    color: rgb(0, 165, 0);
+}
+
+.pot-steel {
+    --steel-color: 0, 0, 0;
+    --steel-margin: rgba(var(--steel-color), 0);
+    --steel-center: rgba(var(--steel-color), 0.5);
+    background: radial-gradient(var(--steel-margin), var(--steel-margin), var(--steel-center), var(--steel-margin), var(--steel-margin));
+}
+
+.pot-bronze {
+    --bronze-color: 170, 95, 20;
+    --bronze-margin: rgba(var(--bronze-color), 0);
+    --bronze-center: rgba(var(--bronze-color), 0.5);
+    background: radial-gradient(var(--bronze-margin), var(--bronze-margin), var(--bronze-center), var(--bronze-margin), var(--bronze-margin));
+}
+
+.pot-silver {
+    --silver-color: 128, 128, 128;
+    --silver-margin: rgba(var(--silver-color), 0);
+    --silver-center: rgba(var(--silver-color), 0.5);
+    background: radial-gradient(var(--silver-margin), var(--silver-margin), var(--silver-center), var(--silver-margin), var(--silver-margin));
+}
+
+.pot-gold {
+    --gold-color: 170, 170, 20;
+    --gold-margin: rgba(var(--gold-color), 0);
+    --gold-center: rgba(var(--gold-color), 0.5);
+    background: radial-gradient(var(--gold-margin), var(--gold-margin), var(--gold-center), var(--gold-margin), var(--gold-margin));
+}
+
+.max-pstone {
+    color: red;
+}
+
+.param-value {
+    font-family: monospace;
+    font-size: 24px;
+    text-align: center;
+}
+
+.del-icon {
+    font-size: 24px;
+    cursor: pointer;
+    text-decoration: none;
+    color: dodgerblue;
+}
+
+.del-icon:hover {
+    color: orangered;
+    text-decoration: none;
+}

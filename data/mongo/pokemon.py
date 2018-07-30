@@ -1,9 +1,10 @@
 import math
 import json
 
-from data import PokeType, SkillStone, BattleType, Debuff
+from data import PokeType, SkillStone, BattleType, Debuff, PotClass
 
 from .base import dict_like_mapping, base_collection
+from .pokemon_iv import pokemon_iv_object
 
 # Collection
 
@@ -15,9 +16,11 @@ class pokemon_collection(base_collection):
         super().__init__(mongo_client, pokemon_collection.DB_NAME, pokemon_collection.COL_NAME, cache_keys=[pokemon.ID])
 
     def get_pokemon_by_id(self, id):
-        return pokemon(self.get_cache(pokemon.ID, id))
+        """Using cache."""
+        return pokemon(self.get_cache(pokemon.ID, int(id)))
 
     def get_pokemon_choices(self, including_evolved=True):
+        """Not using cache, get_all_pokemons called."""
         ret = []
 
         for entry in self.get_all_pokemons(including_evolved):
@@ -26,19 +29,29 @@ class pokemon_collection(base_collection):
         return ret
 
     def get_all_pokemons(self, including_evolved=True):
+        """Not using cache."""
         filter = {}
         if not including_evolved:
             filter[pokemon.IS_BASE_POKE] = True
 
         return [pokemon(entry) for entry in self.find(filter).sort([(pokemon.ID, 1)])]
 
-    def get_max_params_of_pokemon(self, pokemon_id):
-        return PokemonParametersResult(self.get_pokemon_by_id(pokemon_id))
+    def load_pokemons_to_cache(self, ids):
+        """Using cache."""
+        for entry in self.find({ pokemon.ID: { "$in": ids } }):
+            new_poke = pokemon(entry)
+            self.set_cache(pokemon.ID, new_poke.id, new_poke)
+
+    def get_max_params_of_pokemon(self, pokemon):
+        """Not using cache."""
+        return PokemonParametersResult(pokemon)
 
     def get_count_of_pokemons(self):
+        """Not using cache."""
         return self.find().count()
 
     def get_pokemons_by_skill_owned(self, skill_id):
+        """Not using cache."""
         return [pokemon(p) for p in self.find({ pokemon.SKILLS: { "$elemMatch": { "$eq": skill_id } } }).sort([(pokemon.ID, 1)])]
 
 class pokemon_skill_collection(base_collection):
@@ -53,6 +66,12 @@ class pokemon_skill_collection(base_collection):
 
     def get_all_skills(self):
         return [poke_skill(entry) for entry in self.find().sort([(poke_skill.ID, 1)])]
+
+    def load_skills_to_cache(self, ids):
+        """Using cache."""
+        for entry in self.find({ poke_skill.ID: { "$in": ids } }):
+            skill_data = poke_skill(entry)
+            self.set_cache(pokemon.ID, skill_data.id, skill_data)
 
 class pokemon_bingo_collection(base_collection):
     DB_NAME = "dict"
@@ -100,6 +119,7 @@ class pokemon(dict_like_mapping):
 
     def __init__(self, org_dict):
         super().__init__(org_dict)
+
         self[pokemon.ELEMENTS] = [PokeType(elem) for elem in self[pokemon.ELEMENTS]]
         
     @property
@@ -179,6 +199,56 @@ class pokemon(dict_like_mapping):
     @property
     def slot_percentage(self):
         return poke_slot_pct(self[pokemon.SLOT_PCT])
+
+    def get_hp_iv_obj(self, hp, lv):
+        if hp > 0:
+            remainder = hp - self.base_values.hp - lv
+            
+            return self._calc_iv(remainder)
+        else:
+            return pokemon_iv_object.init_by_field(PotClass.UNKNOWN, -1)
+        
+    def get_atk_iv_obj(self, atk, lv):
+        if atk > 0:
+            remainder = atk - self.base_values.atk - lv
+
+            return self._calc_iv(remainder)
+        else:
+            return pokemon_iv_object.init_by_field(PotClass.UNKNOWN, -1)
+
+    def _calc_iv(self, remainder):
+        checked = False
+        pot = PotClass.UNKNOWN
+
+        if remainder < 0:
+            remainder = -1
+            checked = True
+        else:
+            if not checked and remainder >= 0 and remainder <= 10:
+                pot = PotClass.STEEL
+                remainder *= 10
+                checked = True
+            
+            if not checked:
+                remainder -= 50
+                if remainder >= 0 and remainder <= 50:
+                    pot = PotClass.BRONZE
+                    remainder *= 2
+                    checked = True
+                    
+            if not checked:
+                remainder -= 150
+                if remainder >= 0 and remainder <= 100:
+                    pot = PotClass.SILVER
+                    checked = True
+                    
+            if not checked:
+                remainder -= 300
+                if remainder >= 0 and remainder <= 100:
+                    pot = PotClass.GOLD
+                    checked = True
+
+        return pokemon_iv_object.init_by_field(pot, remainder if checked else -1)
 
 class poke_evolve_info(dict_like_mapping):
     REQ_LV = "req_lv"
@@ -346,7 +416,7 @@ class PokemonParametersResult(dict_like_mapping):
     
     @property
     def max_atk(self):
-        return self._base.atk + 301
+        return self._base.atk + 501
     
     @property
     def min_hp(self):
@@ -354,7 +424,7 @@ class PokemonParametersResult(dict_like_mapping):
     
     @property
     def max_hp(self):
-        return self._base.hp + 301
+        return self._base.hp + 501
 
     def toJSON(self):
         return { "min": { "atk": self.min_atk, "hp": self.min_hp }, "max": { "atk": self.max_atk, "hp": self.max_hp } }
