@@ -25,6 +25,7 @@
     <Content Include="static\BattleType\N1.png" />
     <Content Include="static\BattleType\T0.png" />
     <Content Include="static\BattleType\T1.png" />
+    <Content Include="static\favicon.ico" />
     <Content Include="static\html5shiv.min.js" />
     <Content Include="static\Icon\1.png" />
     <Content Include="static\Icon\10.png" />
