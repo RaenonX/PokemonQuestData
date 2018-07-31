@@ -120,7 +120,7 @@ def find_pokemon_result(id):
 def about():
     return render_template("about.html")
 
-@frontend.route("/dz")
+@frontend.route("/dark-zone")
 def dark_zone():
     return render_template("dz.html")
 
