@@ -32,11 +32,11 @@ def create_app(with_error=True, configfile=None):
     # Configure app for flask-mail
     app.config['MAIL_SERVER']='smtp.gmail.com'
     app.config['MAIL_PORT'] = 465
-    app.config['MAIL_USERNAME'] = 'raenonx0710@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'ligdmsqeobfkjttt'
+    app.config['MAIL_USERNAME'] = os.environ["GM_EMAIL"]
+    app.config['MAIL_PASSWORD'] = os.environ["GM_PASSWORD"]
     app.config['MAIL_USE_TLS'] = False
     app.config['MAIL_USE_SSL'] = True
-    app.config['MAIL_DEFAULT_SENDER'] = 'raenonx0710@gmail.com'
+    app.config['MAIL_DEFAULT_SENDER'] = os.environ["GM_EMAIL"]
 
     # Set jinja cache to unlimited 
     app.jinja_env.cache = {}
