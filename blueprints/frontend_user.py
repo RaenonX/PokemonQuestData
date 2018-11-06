@@ -142,8 +142,6 @@ def submit_owned_pokemon():
 @frontend_user.route("/add-poke", methods=["POST"])
 @require_login("frontend_user.submit_owned_pokemon")
 def submit_owned_pokemon_post():
-    print(request.form)
-
     failed = False
     submit_more = request.form["submitMore"] == "TRUE"
 

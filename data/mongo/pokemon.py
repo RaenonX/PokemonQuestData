@@ -201,8 +201,11 @@ class pokemon(dict_like_mapping):
         return poke_slot_pct(self[pokemon.SLOT_PCT])
 
     def get_hp_iv_obj(self, hp, lv):
+        print(hp)
+
         if hp > 0:
             remainder = hp - self.base_values.hp - lv
+            print(remainder)
             
             return self._calc_iv(remainder)
         else:
@@ -237,13 +240,13 @@ class pokemon(dict_like_mapping):
                     checked = True
                     
             if not checked:
-                remainder -= 150
+                remainder -= 100
                 if remainder >= 0 and remainder <= 100:
                     pot = PotClass.SILVER
                     checked = True
                     
             if not checked:
-                remainder -= 300
+                remainder -= 150
                 if remainder >= 0 and remainder <= 100:
                     pot = PotClass.GOLD
                     checked = True
