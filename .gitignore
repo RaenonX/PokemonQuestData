@@ -261,3 +261,6 @@ __pycache__/
 *.pyc
 /app_local.py
 /sandbox.py
+
+# Virtual environment
+venv/
