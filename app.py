@@ -58,7 +58,7 @@ def create_app(with_error=True, configfile=None):
     return app
 
 def activate_sleep_preventer():
-    sleep_preventer.Process(target=_proc_prevent_sleep).start()
+    sleep_preventer.apply_async(_proc_prevent_sleep)
 
 def _proc_prevent_sleep():
     while True:
