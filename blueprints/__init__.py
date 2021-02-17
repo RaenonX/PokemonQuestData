@@ -4,3 +4,4 @@ from .api import api
 from .frontend_user import frontend_user
 from .nav import nav
 from .dummy import dummy
+from .static import static
