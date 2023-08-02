@@ -6,7 +6,7 @@ click==7.1.2
 dnspython==2.1.0
 dominate==2.6.0
 Flask==1.1.2
-flask-appconfig==0.11.1
+flask-appconfig
 Flask-Bootstrap==3.3.7.1
 Flask-JSGlue==0.3.1
 Flask-Mail==0.9.1
