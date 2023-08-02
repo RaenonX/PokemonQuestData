@@ -5,7 +5,7 @@ chardet==4.0.0
 click==7.1.2
 dnspython==2.1.0
 dominate==2.6.0
-Flask==1.1.2
+Flask==2.2.5
 flask-appconfig
 Flask-Bootstrap==3.3.7.1
 Flask-JSGlue==0.3.1
