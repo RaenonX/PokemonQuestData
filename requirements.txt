@@ -3,7 +3,7 @@ cachetools==4.2.1
 certifi==2020.12.5
 chardet==4.0.0
 click==7.1.2
-dnspython==2.1.0
+dnspython==2.6.1
 dominate==2.6.0
 Flask==1.1.2
 flask-appconfig
